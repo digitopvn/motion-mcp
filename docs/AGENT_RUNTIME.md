@@ -2,126 +2,116 @@
 
 Pi is the scene-implementation and patch worker. It is not the job scheduler:
 `packages/pipeline` owns job state, retries and budgets, and it calls Pi one
-scene at a time. All Pi calls go through `packages/pi-runtime`, which is
-planned. Once that package exists, its source is the authority for the exact
-session options. The decision record is
+scene at a time through the `SceneWorker` interface. All Pi calls go through
+`packages/pi-runtime`, whose source (`pi-worker.ts`, `path-guard.ts`,
+`prompt-builder.ts`, `trace-mapper.ts`) is the authority for the exact session
+options. The decision record is
 [ADR 0006](decisions/0006-pi-embedded-runtime.md).
 
 ## Two build tiers
 
 | Tier | When it runs | Cost | Role |
 |---|---|---|---|
-| Deterministic compiler (`hyperframes-adapter`) | This is the default for every scene. It maps IR elements and beats to HyperFrames HTML using typed motion primitives. | No model spend. | The reliability floor and the CI path. |
-| Pi worker | Runs when `scene.needsCustomCode` is true, or when a `ScenePatch` change cannot be applied deterministically. | Cheap coder tokens. | Widens the vocabulary beyond the compiler's primitives. |
+| Deterministic compiler (`hyperframes-adapter`) | The default for every scene. It maps IR elements and beats to HyperFrames HTML using typed motion primitives. | No model spend. | The reliability floor and the CI path. |
+| Pi worker | Scenes chosen by `IMPLEMENTATION_MODE` (`auto`: scenes with `implementation: "custom"`; `pi`: every scene; `deterministic`: none), mechanical fixes that no IR patch can express, and patch changes the IR cannot represent. | Cheap coder tokens. | Widens the vocabulary beyond the compiler's primitives. |
 
-When a Pi build fails its gates within its retry budget, the pipeline falls
-back to compiling that scene deterministically. This keeps the video
-renderable, and the fallback is recorded on the trace.
+The worker exists only when `OPENROUTER_API_KEY` is set, `IMPLEMENTATION_MODE`
+is not `deterministic`, and Pi initializes. If initialization fails, for
+example because `CODER_MODEL` is missing from Pi's bundled model catalog, the
+server logs `pi.unavailable` and every scene uses the compiler.
+
+When a worker-built scene fails lint or check, the pipeline reverts that scene
+to the compiler's output before classifying issues, and reports the reversion
+in the job warnings. This keeps the video renderable, and it stops worker
+mistakes from being escalated as creative problems.
 
 ## Session configuration
 
 The runtime embeds Pi in-process through the SDK
-(`@earendil-works/pi-coding-agent`, pinned exactly to 0.87.1) using
-`createAgentSession`. Each session uses these settings:
+(`@earendil-works/pi-coding-agent`, pinned exactly) using
+`createAgentSession`:
 
-| Setting | Value | Reason |
+| Setting | Choice | Reason |
 |---|---|---|
-| `cwd` | The job's working directory for the project | Scopes resource discovery and default tool paths. It is not a sandbox (see Isolation). |
-| `sessionManager` | `SessionManager.inMemory(cwd)` | Nothing persists between jobs. |
-| `settingsManager` | In memory, with compaction off and provider retry on (`maxRetries: 2`) | Scene tasks are short, so compaction would only add cost. |
-| `thinkingLevel` | `off` | Keeps scene-building cheap. |
-| `resourceLoader` | `DefaultResourceLoader` with an explicit skills override | Skills are injected, never discovered. |
-| Project trust | Untrusted | The project-local `.pi/` directory is never loaded. |
+| `cwd` | The version's compiled project directory | Scopes default tool paths. It is not a sandbox (see Isolation). |
+| Session and settings | In memory, compaction off, provider retry on (2 retries) | Nothing persists between jobs, and scene tasks are short. |
+| Thinking level | `off` | Keeps scene building cheap. |
+| Resources | A private temporary agent directory; no extensions, skills, prompt templates, themes or context files are discovered; a short custom system prompt | The user's and the project's Pi setup never leak into a worker. |
+| Model catalog | Pi's bundled catalog, with no network refresh; the key is set through the runtime's API-key setter | The key never enters a prompt or a file. |
+| Budgets | A turn limit, a wall-clock timeout and the job's abort signal | A runaway session fails fast with `budget_exceeded`, `timeout` or `cancelled`. |
 
 ## Tool allow-list
 
-- **Built-in tools:** `read`, `write`, `edit`, `ls`, `grep` and `find`. The
-  `bash` and `powershell` tools are excluded, because a shell bypasses the path
-  guard.
-- **Custom tools:** these are defined with TypeBox, which is what Pi requires,
-  and they call engine functions directly rather than a shell:
-  - `motion_read_spec` and `motion_scene_build`
-  - `motion_scene_patch`
-  - `motion_snapshot`, `motion_render_preview` and `motion_report`
-- **Media tools:** `motion_asset_search`, `motion_asset_generate`,
-  `motion_audio_mix` and `motion_ffmpeg` are granted only to jobs whose route
-  includes the media worker.
-
-The full list of internal tools is in [MCP_API.md](MCP_API.md#internal-worker-tools).
+- **Built-in tools:** `read`, `write`, `edit`, `ls`, `grep` and `find`.
+  `bash` is available only through an explicit `allowBash` option, which the
+  pipeline never sets, because a shell bypasses the path guard. `powershell` is
+  never granted.
+- **Custom tool:** `submit_scene` (below).
+- **Planned:** engine-backed custom tools such as `motion_read_spec`,
+  `motion_snapshot`, `motion_asset_generate` and an allow-listed `motion_ffmpeg`.
+  Until they exist, the scene IR and context are supplied in the task prompt.
 
 ## Submit tool
 
-A session ends when Pi calls `submit_scene`. Its parameters are
-`{ files: string[], notes: string }`, and it returns `terminate: true`, so the
-run ends without paying for another model turn. The runtime treats the
-`details` of the submit call as the structured result. A session that settles
-without calling submit is a failed attempt.
+A session ends when Pi calls `submit_scene`. The tool checks that the scene
+file exists and is not empty, then returns `terminate: true`, so the run ends
+without paying for another model turn. A wrong file is rejected and the model is
+asked to retry. A session that settles without a submission is a failed,
+retryable attempt.
 
 ## Path guard
 
-An extension hooks `tool_call` and blocks any `read`, `write`, `edit`, `ls`,
-`grep` or `find` call whose resolved path is outside the job's working
-directory. It returns `{ block: true, reason }`. Symlinks are resolved before
-the check. The guard is a correctness aid, not the security boundary. Isolation
-is the boundary.
+An inline extension hooks Pi's `tool_call` event and blocks, with a reason:
 
-## Skills injection
+- any path outside the project directory, after Pi's own path normalization and
+  after resolving symlinks of the nearest existing ancestor;
+- `find` and `grep` patterns that escape the project;
+- writes to the protected `motion-ir.json` and `hyperframes.json`, and reads of
+  them unless the policy allows protected reads;
+- writes to anything except the scene's own `compositions/<sceneId>.html`;
+- unknown tools, and `bash` or `powershell` unless explicitly allowed.
 
-The runtime sets the skill set explicitly through the skills override. Each
-session gets three things:
+The guard is a correctness aid, not the security boundary. Isolation is the
+boundary.
 
-- a HyperFrames authoring skill covering the composition contract, determinism
-  rules and renderer limits;
-- the domain-pack slices resolved for this scene (see
-  [ADR 0012](decisions/0012-domain-pack-lift-and-wrap.md));
-- the invariant rules that are always injected.
+## Task prompt
 
-Pi places only each skill's name, description and path into the system prompt,
-and the model reads the full skill on demand. Whole style profiles are never
-injected.
+`prompt-builder.ts` builds each build or patch task from the scene IR, a
+compact video context (format, brand, motion language), the composition
+contract, and domain-pack snippets resolved for the scene, trimmed to a fixed
+token budget. Patch tasks add the patch instructions and the scene's QA issues,
+errors first. Whole style profiles are never injected
+([ADR 0012](decisions/0012-domain-pack-lift-and-wrap.md)).
 
 ## Model configuration
 
-| Key | Default | Requirement |
-|---|---|---|
-| `CODER_MODEL` | `deepseek/deepseek-v4-flash` (OpenRouter slug) | Must advertise `tools` on OpenRouter. The check runs at startup, and startup fails fast if it does not pass. |
-
-The OpenRouter key is supplied through the Pi model runtime's API-key setter,
-never through a prompt. The design ranks these alternatives by price and
-capability flags only: `z-ai/glm-5.3-flash`, then `qwen/qwen3.8-flash`, then
-`moonshotai/kimi-k2.7-code` as a quality fallback. They must be benchmarked on
-real HyperFrames scene tasks before any of them replaces the default.
-`typesafe/jev-router` is not a coder model.
-
-## Retries
-
-| Layer | Behavior |
-|---|---|
-| Provider | Pi retries transient provider errors, up to 2 times. |
-| Gate | After a submit, the pipeline runs lint and check on the scene. If they fail, the findings go back to Pi as a patch task. |
-| Fallback | If the scene still fails after its patch attempts, it is built by the deterministic compiler. |
-| Budget | Every attempt is checked against the job's remaining credits before it starts. |
+`CODER_MODEL` (default `deepseek/deepseek-v4-flash`, an OpenRouter slug) must
+exist in Pi's bundled catalog and support tool calls. The design ranks these
+alternatives by price and capability flags only: `z-ai/glm-5.3-flash`, then
+`qwen/qwen3.8-flash`, then `moonshotai/kimi-k2.7-code` as a quality fallback.
+They must be benchmarked on real HyperFrames scene tasks before any of them
+replaces the default. `typesafe/jev-router` is not a coder model.
 
 ## Events to traces
 
-The runtime subscribes to session events and maps them onto the job trace (see
-[OBSERVABILITY.md](OBSERVABILITY.md)).
-
-| Pi event | Trace effect |
-|---|---|
-| Session start | Opens a `pi.session` span (scene id, model, tier). |
-| `tool_execution_start` / `tool_execution_end` | Opens and closes a child `pi.tool` span carrying the tool name, `isError` and duration. Arguments are redacted. |
-| `message_end` (assistant) | Records a `model_call` with tokens in, tokens out, cache reads and cost from the message usage. |
-| Session stats at the end | Totals are written on the `pi.session` span, and the session is disposed. |
+`trace-mapper.ts` maps session events onto the job trace (see
+[OBSERVABILITY.md](OBSERVABILITY.md)): one span per scene task, one model call
+per assistant message with its usage and cost, and tool calls, tool errors,
+blocked calls, turns, retries and the stop reason as `pi.*` attributes. Session
+totals are copied onto the span when the session ends.
 
 ## Isolation
 
-- Pi's `cwd` is not a sandbox. Its tools can reach any path the process can.
-- Pi sessions run inside the worker container. The only writable mount is the
-  job's working directory, and the process runs as a non-root user.
+- Pi's `cwd` is not a sandbox. Its file tools can reach any path the process
+  can, which is why the path guard exists and why production runs in a
+  container.
+- The production image runs as the non-root `node` user, and its only
+  persistent writable volume is `DATA_DIR`. Per-job container or mount
+  isolation, so that a worker can write only to its own job directory, is
+  **planned**.
 - Workers have no shell tool, and no shell is ever exposed publicly.
-- The worker environment contains only the variables the worker needs. Provider
-  credentials never appear in prompts, tool results or skill text (see
+- Provider credentials never appear in prompts, tool results or task text (see
   [SECURITY.md](SECURITY.md)).
 - HTML produced by Pi is untrusted input. It is linted, checked and rendered
-  only inside the container.
+  only by the pipeline, and it is served back to clients as non-executable
+  content.

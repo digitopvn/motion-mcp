@@ -1,8 +1,9 @@
 # Product
 
 Motion MCP is an open-source (MIT) motion-video production runtime exposed as a
-Streamable HTTP MCP server. The design is recorded here; the code has not been
-written yet. The [roadmap](ROADMAP.md) tracks which parts are built.
+Streamable HTTP MCP server. This document records the product intent. The v0.1
+vertical slice implements it end to end, and the [roadmap](ROADMAP.md) tracks
+which parts are still planned.
 
 ## Objective
 
@@ -35,8 +36,8 @@ does not set this project apart. Motion MCP differs in three ways:
 
 ## Director modes
 
-The client chooses the director mode on each call, or the workspace default
-applies. The server never infers the mode from model names
+The client chooses the director mode on each call, explicitly or by supplying a
+spec, or the server default applies. The server never infers the mode from model names
 ([ADR 0003](decisions/0003-explicit-director-mode.md)). The full contract is in
 [DIRECTOR_PROTOCOL.md](DIRECTOR_PROTOCOL.md).
 
@@ -45,8 +46,9 @@ applies. The server never infers the mode from model names
 | `host-opus` | The calling host model writes the spec, using the JSON Schema that `motion_inspect` returns. | The host is already a frontier model, so paying for a second Opus call would duplicate taste the client has already paid for. |
 | `internal-opus` | Motion MCP calls Opus through OpenRouter. | The host is a small model or a script, or the user wants the platform's direction. |
 
-The design also reserves a third value, `custom`. It runs the same contracts
-with a planner model the workspace configures.
+The design also reserves a third value, `custom`, which would run the same
+contracts with a planner model the workspace configures. The server rejects it
+until workspace models can be configured.
 
 **Example, `internal-opus`:**
 
@@ -58,24 +60,24 @@ with a planner model the workspace configures.
 
 **Example, `host-opus`.** The host calls `motion_inspect({ "target": "capabilities" })`,
 writes a `CreativeSpec` that validates against the returned schema, and then
-sends it:
+sends it. Supplying a spec selects `host-opus` even without `directorMode`:
 
 ```json
 { "name": "motion_create", "arguments": {
   "brief": "30s launch video for Tracekit ...",
   "directorMode": "host-opus",
-  "creativeSpec": { "tastePacket": { "...": "..." }, "sceneArchitecture": { "...": "..." } } } }
+  "creativeSpec": { "tastePacket": { "...": "..." }, "scenes": [ "..." ] } } }
 ```
 
-If the spec is valid, the internal director is skipped. If it is invalid, the
-call returns validation issues so the host can fix the spec, and no Opus spend
-occurs.
+Complete specs are in [`fixtures/golden/`](../fixtures/golden/). If the spec is
+valid, the internal director is skipped. If it is invalid, the call returns
+validation issues so the host can fix the spec, and no Opus spend occurs.
 
 ## Non-goals for v1
 
-- A polished dashboard, the marketing site, billing, hybrid search and Taste
-  Memory learning must not block the vertical slice. They are designed now and
-  land in later phases.
+- A polished dashboard, full billing (checkout, subscriptions, BYOK), hybrid
+  search and Taste Memory learning must not block the vertical slice. They are
+  designed now and land in later phases.
 - Team and workspace management, 4K cloud rendering and generative video are
   outside the first slice.
 - The public tool surface stays at eight tools ([MCP_API.md](MCP_API.md)). New
@@ -124,8 +126,8 @@ nobody escalates by default.
    context is paid for once.
 4. **Respect a host spec.** A valid `host-opus` spec skips the internal director
    entirely.
-5. **Jev gates escalation.** Critique and polish run only when a Jev decision
-   says Opus is needed.
+5. **Jev gates escalation.** Critique (and the planned polish pass) runs only
+   when a Jev decision says Opus is needed.
 6. **Cheap coder by default.** Pi runs on the configured `CODER_MODEL`, which
    defaults to `deepseek/deepseek-v4-flash`.
 7. **The compiler before Pi.** The deterministic compiler builds each scene
@@ -133,7 +135,8 @@ nobody escalates by default.
 8. **Scene isolation.** Critique, patches and rebuilds touch only the affected
    scenes, never the whole video.
 9. **Snapshot before render.** Quality checks run on the contact sheet and on
-   `check` output. A render happens only when Jev judges it justified.
+   `check` output before anything renders. The final render happens only when
+   the render gate passes.
 10. **Draft previews.** Previews render at draft quality. The final render runs
     once, after the spec is accepted.
 11. **Bounded loops.** Revision loops have a fixed maximum, and the remaining
