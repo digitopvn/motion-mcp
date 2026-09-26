@@ -63,7 +63,11 @@ export function scrubbedEnv(extra: Record<string, string | undefined> = {}): Nod
 }
 
 /** Spawn a command with an argv array (never a shell string). Output is redacted. */
-export function runCommand(command: string, args: string[], opts: RunCommandOptions): Promise<RunCommandResult> {
+export function runCommand(
+  command: string,
+  args: string[],
+  opts: RunCommandOptions,
+): Promise<RunCommandResult> {
   const started = Date.now();
   const maxBuffer = opts.maxBuffer ?? 16 * 1024 * 1024;
   return new Promise((resolve, reject) => {

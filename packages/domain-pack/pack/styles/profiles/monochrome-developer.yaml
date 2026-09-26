@@ -1,0 +1,56 @@
+id: monochrome-developer
+name: Monochrome Developer
+family: brand-inspired
+aliases: [vercel, vercel-like, vercel style, nextjs style]
+summary: Stark black-and-white developer platform; plus-marked grid lines, deploy logs, spotlight beams and edge-network globes.
+energy: 3
+best_for: [developer-platform, deploy-flow, infrastructure, launch-week]
+character: >-
+  Pure monochrome with engineering swagger: black canvases ruled by fine grid
+  lines with plus marks at intersections, build logs streaming to a
+  successful deploy, and a soft spotlight beam or a dotted globe for scale.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#000000", ink: "#ededed", mute: "#a1a1a1", line: "rgba(255,255,255,0.12)", surface: "#0a0a0a", ok: "#4bd69a", accent: "#ffffff", err: "#ff6a4d"}
+    rule: "Strict monochrome; ok and err only on status dots and log words. Light inversions (bg #ffffff, ink #0a0a0a) allowed for chapter cards."
+  typography:
+    - "Inter Tight 700 headlines 88 px at -0.05em, 400 body 28 px mute"
+    - "JetBrains Mono 400 20 px logs, URLs and labels"
+    - "Headlines centred; kicker as mono uppercase 16 px (scaled 24 px)"
+  layout:
+    - "Visible grid: 1 px line rules framing content cells, plus marks at corners"
+    - "Terminal or log panel centre; headline above"
+  material: ["Surface cells with 1 px line borders, radius 0 or 6", "Buttons as solid white pills with black text"]
+  texture: ["Conic spotlight beam from top baked PNG at 20%", "Dotted globe as baked PNG with SVG arcs on top"]
+  camera:
+    - "Locked-off grid; content pans inside cells"
+    - "Slow globe rotation (rotate background-position 0 -> 400 px over the scene)"
+  transitions: ["grid-draw (grid lines draw across frame with draw(), then content fills cells)", "cell-swap (cells flip their content in a stagger along the grid)", "beam-sweep (spotlight sweeps and reveals next scene)", "cut on terminal enter"]
+  pacing:
+    bpm: [110, 128]
+    rhythm: "Log-driven: bursts of fast log lines (0.04 s each) then 4-beat holds on results; hero scenes 6 beats."
+  beat_response: ["Grid plus marks blink on downbeats", "Log bursts start on beats"]
+  ui_choreography:
+    - "Logs stream line by line with typeIn; timestamps in mute, success word in ok"
+    - "Deploy status pill steps Building -> Ready with dot colour change and a check drawn in"
+    - "Preview URL types, then a browser frame (generic) rises with the site"
+  diagrams: ["Edge network: points on a dotted globe light up and arcs draw between them", "Request flow as mono labels in cells linked by 1 px arrows"]
+  character_motion: ["No mascot"]
+  captions: ["Black box with 1 px line border, radius 6, 40 px Be Vietnam Pro 600 ink; unread words mute"]
+  sound: ["Dark minimal techno 110-128 BPM", "Keyboard ticks on logs, a clean chime on Ready, low density"]
+scene_types:
+  prefer: [terminal, code, diagram, title, stats, cta]
+  avoid: [testimonial, montage]
+signature_moves:
+  - "Grid lines drawing across the frame with plus marks"
+  - "Build log burst to a Ready state"
+  - "Spotlight beam sweep reveal"
+  - "Edge globe with arcs lighting up"
+strengths: ["Crisp developer credibility", "Very strong typographic contrast"]
+constraints:
+  - "No colour beyond status accents"
+  - "Grid lines 1 px only"
+  - "No triangle logo shapes or brand wordmarks"
+avoid: ["Gradients and colour meshes", "Soft pastel UI", "Bouncy easing"]
+pairs_well_with: [precision-dark-product, terminal-ops, developer-workflow, gradient-fintech]

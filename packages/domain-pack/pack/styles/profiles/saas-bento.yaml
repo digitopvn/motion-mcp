@@ -1,0 +1,52 @@
+id: saas-bento
+name: SaaS Bento
+family: aesthetic
+aliases: [bento grid, bento box, feature bento]
+summary: Rounded bento-grid feature tiles that expand, reflow and swap content; clean SaaS landing-page motion.
+energy: 3
+best_for: [feature-tour, saas-launch, changelog, product-overview]
+character: >-
+  Organised and friendly, like a modern landing page in motion: a bento grid
+  of rounded tiles each holding one feature. Tiles fill in, one expands to
+  full frame to demo, then shrinks back as the grid reflows around it.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f5f6f8", ink: "#0f172a", accent: "#6366f1", tile: "#ffffff", mute: "#64748b", line: "#e2e8f0", mint: "#10b981", peach: "#fb923c"}
+    rule: "White tiles on light grey; accent indigo for the active tile and CTAs; mint/peach only as small tile illustrations. Dark variant bg #0b0d12, tile #151821."
+  typography:
+    - "Manrope 800 headlines 72-96 px, -0.03em tracking; tile titles 34 px 700"
+    - "Manrope 500 body 26 px; JetBrains Mono 500 for metrics and tags"
+    - "Headline top-left, grid below; tile text top-left inside 32 px padding"
+  layout:
+    - "Bento grid 4x3 with 20 px gaps, 96 px outer margin; tiles span 1x1, 2x1, 2x2"
+    - "One tile active at a time; others dim to 60%"
+    - "Headline + grid never overlap; grid occupies lower 75%"
+  material: ["White tiles, radius 28, 1 px #e2e8f0 border, shadow 0 12px 32px rgba(15,23,42,0.08); active tile gets 2 px accent ring"]
+  texture: ["None; optional subtle baked PNG gradient mesh in the top-right corner of bg"]
+  camera: ["Locked-off on the grid; FLIP expand of one tile to full frame is the only zoom"]
+  transitions: ["tile-expand (active tile FLIPs to full frame, power3.inOut 0.6 s)", "tile-collapse (reverse into its slot)", "grid-reflow (tiles swap positions with 0.03 s stagger, power2.inOut 0.5 s)", "stagger-fill (grid tiles pop in from scale 0.92, 0.05 s stagger)"]
+  pacing:
+    bpm: [104, 122]
+    rhythm: "Section rhythm: grid fill (4 beats), then each feature = expand, demo 6-10 beats, collapse; recap grid holds 8 beats."
+  beat_response: ["Active tile ring brightens on downbeats", "Tile icons nudge 4 px on kicks", "No flashes or shake"]
+  ui_choreography: ["Real UI fragments cropped inside tiles, animating their own micro-state (toggle flips, counter odo, chart draw)", "Children stagger 0.05 s with power2.out 0.4 s", "Cursor moves in curved eased paths and clicks on spoken words"]
+  diagrams: ["Small inline flow diagrams inside a 2x1 tile with 2 px accent connectors", "Sparklines and mini bars drawn with draw()"]
+  character_motion: ["No mascot; tile illustrations may bounce subtly (back.out(1.4))"]
+  captions: ["White pill radius 18, 1 px line border, soft shadow, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Light upbeat corporate electronic or lo-fi house 104-122 BPM", "Soft UI clicks, toggles and swishes; moderate density"]
+scene_types:
+  prefer: [feature, ui-demo, stats, comparison, cta, cover]
+  avoid: [quote, montage]
+signature_moves:
+  - "Tile expands to full frame for the demo, then collapses back"
+  - "Grid reflow as a new feature takes the big slot"
+  - "Stagger-fill of the whole bento on the section title"
+  - "Recap grid with every tile lit in sequence"
+strengths: ["Many features explained without clutter", "Familiar SaaS look", "Easy to extend per feature"]
+constraints:
+  - "Every tile snaps to the bento grid; no free-floating cards"
+  - "One active (expanded or ringed) tile at a time"
+  - "Tile radius and gap consistent across the video"
+avoid: ["Dense text inside tiles", "Heavy textures or glitch", "Full-frame hard cuts in the feature run"]
+pairs_well_with: [glass-keynote, premium-ui-demo, neo-brutalist-web, data-editorial]

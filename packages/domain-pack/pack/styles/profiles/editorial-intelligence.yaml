@@ -1,0 +1,54 @@
+id: editorial-intelligence
+name: Editorial Intelligence
+family: brand-inspired
+aliases: [anthropic, anthropic-like, anthropic-style, thoughtful ai editorial]
+summary: Thoughtful AI editorial; warm paper tones, serif headlines, hand-drawn line illustrations and measured reveals.
+energy: 2
+best_for: [ai-research, safety-explainer, thought-leadership, product-announcement]
+character: >-
+  Considered and humane: warm ivory paper, a literary serif headline, simple
+  hand-drawn line illustrations that draw themselves and a clay-orange accent.
+  It explains ideas like a well-edited essay, trusting the viewer to read.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f5f0e8", ink: "#191919", accent: "#d0804e", clay: "#b8683c", oat: "#e8dfd0", slate: "#5f5c55", mute: "#8a8680", dark: "#23221e"}
+    rule: "Ivory paper with near-black ink; clay orange for one highlight per scene; dark variant bg #23221e ink #f5f0e8."
+  typography:
+    - "Fraunces 500 headlines 72 px (soft serif, opsz 72), -0.015em, sentence case"
+    - "Manrope 400 body 30 px, line-height 1.45"
+    - "JetBrains Mono 400 for code and model output; Be Vietnam Pro 500 for captions"
+  layout:
+    - "Essay column: headline and body left at x 180, max width 1000 px; illustration right third"
+    - "Pull quotes centred with generous margins"
+  material: ["Paper surfaces, no glass; cards #fffdf8 radius 12 with 1 px oat border"]
+  texture: ["Baked PNG fine paper fibre at 5%", "Hand-drawn line illustrations as SVG paths with slight stroke variance"]
+  camera: ["Locked-off; slow vertical scroll through long essays (y -300 px over a scene, power1.inOut)"]
+  transitions: ["line draw-on (next scene's illustration draws itself, text fades up after, 0.9 s)", "page turn (scene slides up like scrolling a long page)", "ink fade (outgoing fades to paper, 0.5 s)", "section rule (a hairline draws across and the new section rises beneath)"]
+  pacing:
+    bpm: [75, 95]
+    rhythm: "Reading pace: holds sized to the words, 6-10 beats per idea, pull quotes held longest, calm close."
+  beat_response: ["None visible; transitions land on downbeats only"]
+  ui_choreography:
+    - "Chat or product UI in a paper-toned frame; messages rise 20 px + fade (power2.out 0.5 s)"
+    - "Model output streams in JetBrains Mono line by line, 0.08 s per line"
+    - "Highlights sweep behind key phrases in clay at 25% (scaleX 0 -> 1, 0.4 s)"
+  diagrams: ["Hand-drawn line diagrams: nodes as imperfect circles, arrows drawn with draw() power1.inOut 1.2 s", "One clay-highlighted path; annotations in small serif italic"]
+  character_motion: ["No mascot; simple line-drawn hands and objects may draw on"]
+  captions: ["No pill; 42 px Be Vietnam Pro 500 ink, bottom band on paper; current word clay, unread mute"]
+  sound: ["Warm acoustic or chamber strings, soft piano", "SFX nearly none: faint pencil scratch on draw-ons"]
+scene_types:
+  prefer: [title, quote, diagram, feature, ui-demo, cta]
+  avoid: [montage, stats]
+signature_moves:
+  - "Hand-drawn illustration that draws itself before the text arrives"
+  - "Clay highlighter sweep behind a key phrase"
+  - "Essay-style scroll through a long argument"
+  - "Section rule transition"
+strengths: ["Explaining nuanced ideas", "Trust and thoughtfulness", "Research and policy communication"]
+constraints:
+  - "One clay highlight per scene"
+  - "No flashes, shake, glow or sci-fi imagery"
+  - "No logos, marks or product names of any AI lab"
+avoid: ["Neon or dark cyber aesthetics", "Fast cutting", "Stock AI imagery (robots, brains)"]
+pairs_well_with: [ambient-intelligence, swiss-kinetic-editorial, data-editorial, calm-workspace]

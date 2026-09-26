@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { EasingToken, SizeToken, ColorToken, WeightToken } from "./tokens.ts";
 import { LayoutTemplate, MotionPrimitive, TransitionKind } from "./motion-ir.ts";
+import { ColorToken, EasingToken, SizeToken, WeightToken } from "./tokens.ts";
 
 export const PatchChangeType = z.enum([
   "timing",

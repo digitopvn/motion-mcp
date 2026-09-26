@@ -1,0 +1,52 @@
+id: terminal-ops
+name: Terminal Ops
+family: aesthetic
+aliases: [terminal, command line, cli aesthetic]
+summary: Full-frame terminal session; typed commands, streaming logs, status glyphs and cursor-driven cuts.
+energy: 3
+best_for: [cli-launch, developer-tool, devops-explainer, changelog]
+character: >-
+  Honest and technical: the whole frame is a terminal. Commands type in
+  character by character, output streams, and green check glyphs close each
+  step. The blinking cursor is the camera; a clear screen is the cut.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0c0f0a", ink: "#d7e0d0", accent: "#39ff88", mute: "#6b7a66", warn: "#ffcc4d", error: "#ff5f56", info: "#5ccfe6"}
+    rule: "ANSI-like semantic colours only: accent = success/prompt, warn/error/info for status; no decorative colour."
+  typography:
+    - "JetBrains Mono 500 at 34 px for commands and output, 1.35 line-height; 700 for prompts"
+    - "Headlines as ASCII-banner style: JetBrains Mono 800 96 px, uppercase"
+    - "Monospace everywhere except captions"
+  layout:
+    - "Full-frame terminal, 80-column feel, 96 px padding; prompt anchored left"
+    - "Optional split panes (tmux-style) divided by 1 px mute lines"
+    - "Status line pinned top (branch, time, step n/N)"
+  material: ["Flat black, no window chrome or a minimal 1 px mute frame; no glass"]
+  texture: ["Baked PNG faint scanlines at 4% opacity", "Soft green text glow via text-shadow 0 0 8px rgba(57,255,136,0.35)"]
+  camera: ["Locked-off; buffer scrolls up line by line; one zoom to 1.6 on a key output line"]
+  transitions: ["clear (screen wipes to empty prompt in one frame, cursor stays)", "scroll-push (whole buffer scrolls up, power2.inOut 0.35 s)", "pane-split (new pane slides from the right, 0.4 s)", "type-over (next headline types in over the cleared screen)"]
+  pacing:
+    bpm: [100, 120]
+    rhythm: "Typing at ~22 chars/s timed so commands finish on a beat; output streams 1 line per 1/8 beat; holds 2-4 beats on results."
+  beat_response: ["Cursor blink locked to beats (on/off each half beat)", "Progress bars advance one block per beat", "Status glyphs pop on downbeats"]
+  ui_choreography: ["typeIn for commands with stepped character reveal", "Logs stream with stepped y and 0.04 s line stagger", "Spinners as stepped Braille frames at 12 fps; check glyph replaces spinner on the spoken word"]
+  diagrams: ["ASCII box-drawing diagrams (single/double line chars) revealed row by row", "Tree views and tables drawn with box characters"]
+  character_motion: ["No mascot; optional ASCII art logo revealed row by row"]
+  captions: ["Black bar with 1 px mute top rule, 40 px Be Vietnam Pro 600 ink; current word accent green"]
+  sound: ["Dark synth or minimal techno 100-120 BPM", "Key-tap clicks while typing (quiet, vol 0.15), soft blip on each check; no whooshes"]
+scene_types:
+  prefer: [terminal, code, hook, feature, timeline, cta]
+  avoid: [product-hero, testimonial, quote]
+signature_moves:
+  - "Command types in and finishes exactly on the beat"
+  - "Spinner resolves into a green check on the spoken word"
+  - "Clear-screen cut with the cursor surviving"
+  - "ASCII banner headline"
+strengths: ["Credible with developers", "Shows real workflows", "Cheap to render"]
+constraints:
+  - "Monospace grid for all on-screen text except captions"
+  - "Text reveals stepped per character or line, never faded"
+  - "Colours carry status meaning only"
+avoid: ["Fake hacker clichés (matrix rain)", "Glossy UI chrome", "Serif or display fonts"]
+pairs_well_with: [monochrome-developer, developer-workflow, blueprint-engineering, retro-crt-broadcast]

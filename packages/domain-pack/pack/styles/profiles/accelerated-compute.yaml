@@ -1,0 +1,56 @@
+id: accelerated-compute
+name: Accelerated Compute
+family: brand-inspired
+aliases: [nvidia, nvidia-like, nvidia-style, gpu keynote]
+summary: GPU-keynote energy; black stage, acid-green circuitry, particle data streams and benchmark bars that surge.
+energy: 4
+best_for: [ai-infrastructure, benchmark-reveal, chip-launch, developer-platform]
+character: >-
+  Raw computational power: acid-green light races along circuit traces on a
+  black stage, particle streams pour through the frame and benchmark bars
+  surge past the competition. Choose it for performance claims and AI scale.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#050505", ink: "#ffffff", accent: "#4cc41c", lime: "#a4e22b", steel: "#1a1a1a", mute: "#8c8c8c", cyan: "#00c2ff"}
+    rule: "Green is the energy colour: traces, bars, highlights; cyan only for secondary data series; no other hues."
+  typography:
+    - "Sora 700 headlines 76 px, -0.02em; Sora 800 for 220 px benchmark numbers"
+    - "JetBrains Mono 500 for labels, units and model names"
+    - "Be Vietnam Pro 600 for captions"
+  layout:
+    - "Headline top-left at 120/100 with green 6 px bar; hero chip or chart centre-right"
+    - "Benchmark charts full width, bars horizontal, value labels at bar ends"
+  material: ["Dark steel panels #1a1a1a with 1 px green edge at 40% and inner glow", "Chip die render with green emissive traces"]
+  texture: ["Baked PNG circuit-trace pattern at 8% opacity", "Particle field from seeded rng (max 120 dots)", "Green bloom via one blurred duplicate layer, not per-element filters"]
+  camera:
+    - "Push-in through the chip die (scale 1 -> 3 over 2 s, expo.in) into the next scene"
+    - "Low-angle tilt on hardware (rotateX 12 deg -> 0)"
+  transitions: ["trace-through (green light runs along a circuit path, scene reveals behind it, 0.5 s)", "die zoom (push into the chip core)", "grid build (tiles light up in a seeded order over 0.4 s)", "hard cut on kicks"]
+  pacing:
+    bpm: [120, 135]
+    rhythm: "Keynote build: steady 4-beat scenes, accelerating to 2-beat benchmark hits, one big drop at the flagship reveal."
+  beat_response: ["Circuit traces flash green along one random seeded path per kick", "Particle stream speed x1.6 on kick beats", "#pulse 1% on kick downbeats"]
+  ui_choreography:
+    - "Benchmark bars grow from 0 with power4.out 0.9 s; ours overshoots the rival by a visible margin then label pops"
+    - "Terminal/log lines stream at 0.03 s per line in JetBrains Mono"
+    - "Rack tiles multiply (1 -> 8 -> 64) in a grid on beats"
+  diagrams: ["Node graphs with green data packets travelling along edges", "Layered architecture stacks that separate on z (translateZ spread 40 px each)"]
+  character_motion: ["No mascot; hardware and particles are the characters"]
+  captions: ["Dark pill rgba(5,5,5,0.78), 1 px green border, 44 px Be Vietnam Pro 600 ink; current word #a4e22b"]
+  sound: ["Driving electronic / synthwave 125-130 BPM", "SFX: electric surges on traces, data-chirps on counters, sub hit on drop"]
+scene_types:
+  prefer: [product-hero, stats, chart, diagram, terminal, spec]
+  avoid: [testimonial, quote]
+signature_moves:
+  - "Green trace-through transition along a circuit path"
+  - "Push through the chip die into the next scene"
+  - "Benchmark bar surge that clears the rival"
+  - "Tile multiplication grid on beats (1 -> 8 -> 64)"
+strengths: ["Performance claims", "AI and infrastructure scale", "High-energy technical keynotes"]
+constraints:
+  - "Green is the only energy colour"
+  - "Bloom via one shared blurred layer; keep filtered elements under 20"
+  - "Every benchmark shows units and a baseline"
+avoid: ["Pastel or warm palettes", "Soft organic shapes", "Slow lifestyle footage"]
+pairs_well_with: [terminal-ops, data-editorial, holographic-hud, precision-dark-product]

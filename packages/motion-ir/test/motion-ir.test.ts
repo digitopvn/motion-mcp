@@ -2,16 +2,21 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  CreativeSpec,
-  MotionIR,
   applyScenePatch,
+  CreativeSpec,
   compileCreativeSpec,
   jsonSchemas,
+  MotionIR,
   totalDuration,
 } from "../src/index.ts";
 
 const fixture = (name: string) =>
-  JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../fixtures/golden", name, "creative-spec.json"), "utf8"));
+  JSON.parse(
+    readFileSync(
+      resolve(import.meta.dirname, "../../../fixtures/golden", name, "creative-spec.json"),
+      "utf8",
+    ),
+  );
 
 describe("CreativeSpec → MotionIR", () => {
   const spec = CreativeSpec.parse(fixture("product-launch"));
@@ -28,7 +33,9 @@ describe("CreativeSpec → MotionIR", () => {
       expect(scene.choreography.length).toBe(scene.elements.length);
       const hero = scene.elements.find((e) => e.role === "hero");
       expect(scene.choreography[0]?.target).toBe(hero?.id);
-      const lastEnd = Math.max(...scene.choreography.map((b) => (typeof b.at === "number" ? b.at : 0) + b.duration));
+      const lastEnd = Math.max(
+        ...scene.choreography.map((b) => (typeof b.at === "number" ? b.at : 0) + b.duration),
+      );
       expect(lastEnd).toBeLessThanOrEqual(scene.duration * (1 - ir.motionLanguage.holdRatio) + 0.5);
     }
   });
@@ -61,12 +68,26 @@ describe("ScenePatch", () => {
 
   it("applies parameterized changes and defers instruction-only ones", () => {
     const before = ir.scenes[1]!.choreography.find((b) => b.target === "metric")!;
-    const { ir: next, applied, deferred } = applyScenePatch(ir, {
+    const {
+      ir: next,
+      applied,
+      deferred,
+    } = applyScenePatch(ir, {
       sceneId: "s02-problem",
       source: "opus",
       changes: [
-        { type: "timing", target: "metric", instruction: "Delay the metric reveal by 240ms.", params: { delaySeconds: 0.24 } },
-        { type: "motion", target: "metric", instruction: "Remove spring easing.", params: { easing: "decelerate" } },
+        {
+          type: "timing",
+          target: "metric",
+          instruction: "Delay the metric reveal by 240ms.",
+          params: { delaySeconds: 0.24 },
+        },
+        {
+          type: "motion",
+          target: "metric",
+          instruction: "Remove spring easing.",
+          params: { easing: "decelerate" },
+        },
         { type: "motion", instruction: "Make the numbers feel heavier." },
       ],
     });

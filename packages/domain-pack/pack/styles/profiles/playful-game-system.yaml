@@ -1,0 +1,54 @@
+id: playful-game-system
+name: Playful Game System
+family: brand-inspired
+aliases: [nintendo, nintendo-like, nintendo-style, family game promo]
+summary: Bright family-game joy; white stage, primary colour pops, bouncy springy UI, click sounds and characters that hop.
+energy: 4
+best_for: [game-promo, family-product, playful-feature, social-cut]
+character: >-
+  Pure play: a clean white stage, bold primary-red accents, UI that clicks
+  and springs, and icons that hop, wobble and bounce like toys. Friendly,
+  inclusive and immediately fun, with tactile click feedback on every action.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#ffffff", ink: "#1a1a1a", accent: "#e8402a", blue: "#00a7e1", yellow: "#ffd400", green: "#3ec13e", paper: "#f3f3f3", mute: "#8a8a8a"}
+    rule: "White stage with red as the hero colour; blue, yellow and green as secondary pops, one per element; no gradients."
+  typography:
+    - "Rubik 800 headlines 80 px, rounded and chunky, sentence case"
+    - "Rubik 500 body 30 px"
+    - "Be Vietnam Pro 700 for captions"
+  layout:
+    - "Centred compositions, big friendly icons; one idea per scene"
+    - "Rounded grid tiles 3 x 2 for menus and feature lists"
+  material: ["Flat rounded shapes radius 28 with 0 8 0 darker bottom edge (toy-button depth)", "White cards with 4 px ink outline for highlights"]
+  texture: ["None; flat colour only"]
+  camera: ["Locked-off; occasional bouncy zoom (scale 1 -> 1.15, back.out 2) on the hero"]
+  transitions: ["pop-swap (outgoing scales to 0 with back.in, incoming pops from 0 with back.out 1.8, 0.35 s)", "slide-click (panel slides in and snaps with a click and 6 px overshoot)", "iris to a star or circle shape", "colour wipe (red panel sweeps)"]
+  pacing:
+    bpm: [120, 140]
+    rhythm: "Bouncy and quick: 2-4 beat scenes, a joyful mid-point hero hold, upbeat end card with a jingle."
+  beat_response: ["Icons hop (y -24 px, sine.out/in) on every beat", "Squash 1.15/0.85 on landing", "No flashes or shake"]
+  ui_choreography:
+    - "Menu tiles pop in with 0.05 s stagger (scale 0 -> 1, back.out 2, 0.4 s)"
+    - "Cursor or finger taps: tile presses down 4 px then springs back (elastic.out 1, 0.5)"
+    - "Progress stars fill one by one with a twinkle"
+  diagrams: ["Rounded bubble diagrams with thick 6 px connectors", "Step-by-step numbered bubbles that bounce in"]
+  character_motion: ["Simple geometric characters (circle bodies, dot eyes) that hop, squash and wave", "Idle bob 4 px sine.inOut on held characters, finite repeats sized to the hold"]
+  captions: ["White pill with 4 px ink outline, radius 24, 42 px Be Vietnam Pro 700 ink; current word red"]
+  sound: ["Chiptune-flavoured bright pop 125-135 BPM", "Frequent playful SFX: clicks, boings, coin-like chimes (original)"]
+scene_types:
+  prefer: [cover, hook, feature, ui-demo, montage, cta]
+  avoid: [terminal, spec, chart]
+signature_moves:
+  - "Pop-swap scene change with back eases"
+  - "Tactile click-and-spring on every tap"
+  - "Icons hopping on the beat with squash"
+  - "Star-shaped iris transition"
+strengths: ["Fun and approachability", "Family and youth audiences", "Simple feature explainers"]
+constraints:
+  - "Flat colours only, no gradients or textures"
+  - "Every tap or selection gets a visible press and spring"
+  - "No existing game characters, sounds or logos"
+avoid: ["Dark moody palettes", "Dense text", "Realistic rendering"]
+pairs_well_with: [pixel-arcade, character-comedy, joyful-pop, modular-build]

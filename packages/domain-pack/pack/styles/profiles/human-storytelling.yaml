@@ -1,0 +1,56 @@
+id: human-storytelling
+name: Human Storytelling
+family: brand-inspired
+aliases: [airbnb, airbnb-like, airbnb-style, hospitality story]
+summary: Warm, human travel story; rounded photo cards, soft coral accent, gentle parallax and handwritten-feeling pacing.
+energy: 2
+best_for: [community-story, marketplace-promo, testimonial-film, brand-story]
+character: >-
+  Warm and personal: rounded photo cards float over off-white paper, a coral
+  accent points at people and places, and motion breathes like a slow story
+  told by a host. Choose it when belonging and trust matter more than specs.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#fffaf6", ink: "#222222", accent: "#ef6f58", blush: "#ffe3dd", sand: "#f2e7dc", mute: "#717171", teal: "#1a9e7e"}
+    rule: "Coral for pins, hearts and one underline per scene; teal only for positive states; photos carry the colour."
+  typography:
+    - "Nunito 800 headlines at 72 px, -0.01em, sentence case"
+    - "Nunito 400 body 30 px, mute for secondary lines"
+    - "Fraunces italic 500 for quotes and host names"
+  layout:
+    - "Asymmetric: photo card stack right, headline left at x 160"
+    - "Generous 120 px margins; at most two cards fully in focus"
+  material: ["Photo cards radius 24, white 10 px border, shadow 0 20 40 rgba(34,34,34,0.12)", "Rounded pill chips for places and dates"]
+  texture: ["Subtle paper tone only (flat #fffaf6); no grain, no patterns"]
+  camera:
+    - "Gentle two-layer parallax (bg 20 px, cards 60 px over the scene)"
+    - "Slow push on portraits (scale 1.0 -> 1.05, sine.inOut)"
+  transitions: ["card shuffle (top card slides off with 6 deg tilt, next rises from behind, power2.inOut 0.7 s)", "map pan (dotted route line leads the camera to the next place)", "soft cross-dissolve 0.6 s", "photo expand (card grows to full-bleed)"]
+  pacing:
+    bpm: [80, 100]
+    rhythm: "Story arc with long holds on faces (6-8 beats); quicker 2-beat card runs for place lists; slow warm outro."
+  beat_response: ["Very light: map pins drop on beats with a small bounce (back.out 1.4)", "No flashes or shake"]
+  ui_choreography:
+    - "Listing cards rise 40 px + fade (power2.out 0.6 s), stagger 0.1 s"
+    - "Heart icon pops (scale 0 -> 1.2 -> 1) and fills coral on the spoken word"
+    - "Date chips and rating stars fill left to right, 0.05 s stagger"
+  diagrams: ["Dotted coral route lines drawn between map pins with draw() power1.inOut", "Illustrated rounded icons, 3 px stroke"]
+  character_motion: ["Real people in photos; no mascot", "Hand-drawn doodle accents (hearts, arrows) drawn on with draw()"]
+  captions: ["White pill rgba(255,255,255,0.92), radius 22, 42 px Be Vietnam Pro 600 ink; current word coral"]
+  sound: ["Acoustic guitar, light percussion, warm piano", "Very few SFX: soft page flick on card shuffle, gentle pin tick"]
+scene_types:
+  prefer: [hook, testimonial, quote, montage, feature, cta]
+  avoid: [terminal, code, spec, chart]
+signature_moves:
+  - "Card shuffle between stories"
+  - "Dotted route line that pans the map to the next place"
+  - "Heart pop on the emotional word"
+  - "Photo card expanding to full-bleed portrait"
+strengths: ["Trust and warmth", "Community and people stories", "Approachable marketplace explanation"]
+constraints:
+  - "Every scene features a person, place or hand-made detail"
+  - "No hard cuts, flashes or shake"
+  - "Coral limited to one focal element per scene"
+avoid: ["Dark tech backgrounds", "Dense data", "Aggressive kinetic type"]
+pairs_well_with: [documentary-purpose, calm-workspace, friendly-system-motion, paper-cut-collage]

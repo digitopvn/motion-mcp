@@ -1,0 +1,52 @@
+id: blueprint-engineering
+name: Blueprint Engineering
+family: aesthetic
+aliases: [blueprint, technical drawing, engineering schematic]
+summary: Cyanotype blueprint sheet; white linework drawn stroke by stroke, dimension lines, callouts and exploded views.
+energy: 2
+best_for: [architecture-explainer, hardware-spec, technical-deep-dive, how-it-works]
+character: >-
+  Precise and constructive: a blue drafting sheet with a fine grid where
+  every object is drawn live in white line, dimensioned and annotated. Things
+  are explained by being built on paper, then exploded into their parts.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0d3b6e", ink: "#e8f1ff", accent: "#ffd166", grid: "rgba(232,241,255,0.10)", grid_major: "rgba(232,241,255,0.22)", mute: "rgba(232,241,255,0.55)"}
+    rule: "White line on blueprint blue; yellow accent only for the highlighted part or measurement; no fills except 10% ink hatching."
+  typography:
+    - "IBM Plex Mono 500 uppercase labels 22 px at +0.08em; dimension numerals 20 px"
+    - "Archivo 700 condensed-feel headlines 80 px uppercase inside a title block"
+    - "Title block bottom-right style: sheet no., rev, scale (moved above the caption band)"
+  layout:
+    - "Drafting sheet: 24 px minor / 120 px major grid, 48 px border frame with tick marks"
+    - "Subject centred; callouts on leader lines to left and right margins"
+    - "Title block top-right, clear of the caption band"
+  material: ["Line only: 2 px primary strokes, 1 px construction lines at mute, dashed hidden lines"]
+  texture: ["Baked PNG paper fibre + slight cyanotype mottling at 8% opacity", "Grid baked into the same PNG"]
+  camera: ["Slow pan across the sheet to the next drawing (power2.inOut 1.2 s)", "Zoom 1.0 -> 2.0 into a detail circle"]
+  transitions: ["sheet-pan (camera travels across one continuous sheet to the next view)", "detail-zoom (detail circle drawn, then camera zooms into it)", "redraw (lines erase in reverse draw order, new drawing draws in)", "exploded (assembly separates along axes, power3.inOut 0.8 s)"]
+  pacing:
+    bpm: [84, 104]
+    rhythm: "Deliberate: drawing takes 2-4 beats per part, holds 4-6 beats for reading annotations; faster pans between sections."
+  beat_response: ["Construction lines tick in on beats", "Dimension numerals count up on downbeats", "No flashes or pulse"]
+  ui_choreography: ["UI shown as wireframe line drawings with labelled regions", "Callout leaders draw first, labels typeIn after, 0.1 s stagger"]
+  diagrams: ["Everything drawn with draw() in ink, construction lines first at mute then final strokes", "Dimension lines with arrowheads and numerals; section hatching at 45 deg", "Exploded isometric assemblies with dashed axis guides"]
+  character_motion: ["No mascot; mechanisms move as linkages (rotate about pivots, slide on rails)"]
+  captions: ["Blueprint-blue bar at 88% alpha with 1 px ink top rule, 40 px Be Vietnam Pro 600 ink; current word accent yellow"]
+  sound: ["Ambient electronic or minimal orchestral 84-104 BPM", "Pencil and ruler scratches while drawing (soft), paper slide on pans; low density"]
+scene_types:
+  prefer: [diagram, spec, feature, product-hero, timeline]
+  avoid: [montage, testimonial]
+signature_moves:
+  - "Object drawn stroke by stroke, construction lines first"
+  - "Exploded view separating parts along dashed axes"
+  - "Detail circle drawn then zoomed into"
+  - "Dimension numerals counting up on leader lines"
+strengths: ["Explains how things work", "Credible engineering tone", "Excellent for architecture and hardware"]
+constraints:
+  - "Line art only; no solid fills beyond 10% hatching"
+  - "All motion along drawn axes or pivots"
+  - "Grid and title block persist across scenes"
+avoid: ["Glossy renders", "Neon glow", "Playful bounces"]
+pairs_well_with: [isometric-systems, terminal-ops, product-spec-film, precision-hardware]

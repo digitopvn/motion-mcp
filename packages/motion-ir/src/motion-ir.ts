@@ -220,7 +220,15 @@ export const AssetNeed = z.object({
 });
 export type AssetNeed = z.infer<typeof AssetNeed>;
 
-export const LayoutTemplate = z.enum(["center", "split", "stack", "grid", "full-bleed", "lower-third", "statement"]);
+export const LayoutTemplate = z.enum([
+  "center",
+  "split",
+  "stack",
+  "grid",
+  "full-bleed",
+  "lower-third",
+  "statement",
+]);
 
 export const MotionScene = z.object({
   id: Id,
@@ -231,7 +239,11 @@ export const MotionScene = z.object({
   duration: z.number().min(0.5).max(60),
   focalPoint: z.string().max(160),
   visualHierarchy: z
-    .object({ hero: z.string().max(80), secondary: z.string().max(80).optional(), tertiary: z.string().max(80).optional() })
+    .object({
+      hero: z.string().max(80),
+      secondary: z.string().max(80).optional(),
+      tertiary: z.string().max(80).optional(),
+    })
     .optional(),
   layout: z
     .object({
@@ -273,12 +285,20 @@ export const MotionIR = z
     const sceneIds = new Set<string>();
     for (const [si, scene] of ir.scenes.entries()) {
       if (sceneIds.has(scene.id)) {
-        ctx.addIssue({ code: "custom", message: `duplicate scene id ${scene.id}`, path: ["scenes", si, "id"] });
+        ctx.addIssue({
+          code: "custom",
+          message: `duplicate scene id ${scene.id}`,
+          path: ["scenes", si, "id"],
+        });
       }
       sceneIds.add(scene.id);
       const elementIds = new Set(scene.elements.map((e) => e.id));
       if (elementIds.size !== scene.elements.length) {
-        ctx.addIssue({ code: "custom", message: `duplicate element id in ${scene.id}`, path: ["scenes", si] });
+        ctx.addIssue({
+          code: "custom",
+          message: `duplicate element id in ${scene.id}`,
+          path: ["scenes", si],
+        });
       }
       for (const [bi, beat] of scene.choreography.entries()) {
         const refs = [beat.target];

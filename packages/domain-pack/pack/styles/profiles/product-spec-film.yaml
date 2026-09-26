@@ -1,0 +1,57 @@
+id: product-spec-film
+name: Product Spec Film
+family: brand-inspired
+aliases: [apple technical film, apple engineering film, apple spec film, apple exploded view]
+summary: Engineering showcase; exploded layers, x-ray linework, leader-line callouts and precise spec numbers on graphite.
+energy: 2
+best_for: [hardware-spec, architecture-reveal, engineering-story, feature-deep-dive]
+character: >-
+  The product taken apart with surgical calm: layers separate along one axis,
+  outlines turn to x-ray line drawings, thin leader lines pin exact numbers to
+  parts. It reads as craftsmanship and measured precision, not hype.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0b0c0e", ink: "#e6e6e2", mute: "rgba(230,230,226,0.5)", line: "rgba(230,230,226,0.35)", accent: "#74b0f7", warm: "#f29a4a"}
+    rule: "Graphite stage, ink linework, one cool accent for the highlighted part; warm only for heat or power callouts."
+  typography:
+    - "Inter 300-500: spec numbers 140 px weight 300 with units at 40 px weight 500"
+    - "IBM Plex Mono 400 20 px uppercase labels at +0.08em on callouts"
+    - "Short headline 56 px Inter 600, top-left or centred above the object"
+  layout:
+    - "Object centred and large; callouts radiate to left/right columns at 180 px margins"
+    - "Max 4 callouts per shot, aligned to a vertical baseline"
+    - "Spec number block lower-left with a thin rule above"
+  material: ["Object as layered flat SVG/PNG plates with 1 px ink edges", "X-ray mode: fills fade to 0, strokes stay at line alpha"]
+  texture: ["Fine engineering grid 40 px at 4% ink, baked PNG", "Soft top-down light falloff baked into bg"]
+  camera:
+    - "Slow orbit faked by rotationY -12 -> 12 on layered plates with parallax offsets"
+    - "Macro push (scale 1 -> 1.25) onto one part, sine.inOut 2-3 s"
+  transitions: ["explode (layers separate along z/y with 0.08 s stagger, power2.inOut 1.2 s) then reassemble into next", "x-ray dissolve (fills fade, strokes remain, next shot draws in)", "macro-push through a part into the next shot", "slow cross-fade 0.8 s"]
+  pacing:
+    bpm: [70, 95]
+    rhythm: "Long measured holds: 8-16 beats per shot; callouts arrive on words, spec numbers land on downbeats."
+  beat_response: ["None; downbeats only time number landings"]
+  ui_choreography: ["Rare; UI shown as a flat plate that can explode into its layers like hardware"]
+  diagrams:
+    - "Leader lines: 1 px line from a 6 px accent dot on the part, drawn with draw() 0.5 s, then label types in with typeIn"
+    - "Cutaway sections with dashed hidden edges and dimension arrows"
+    - "Flow of heat or data as a thin accent pulse travelling a path"
+  character_motion: ["No mascot"]
+  captions: ["No pill; 40 px Be Vietnam Pro 500 ink with soft shadow, bottom band left-aligned to the spec column"]
+  sound: ["Sparse ambient or minimal piano 70-95 BPM", "Micro mechanical ticks on callouts, vol 0.15-0.25; a low whoom on explode"]
+scene_types:
+  prefer: [spec, diagram, product-hero, feature, stats]
+  avoid: [montage, testimonial, hook]
+signature_moves:
+  - "Exploded view that separates, holds, then reassembles"
+  - "Fill-to-linework x-ray dissolve"
+  - "Leader-line callouts drawn from dot to label"
+  - "Thin-weight spec number with a counting odo"
+strengths: ["Communicates engineering depth", "Makes specs feel beautiful", "Pairs with any premium base"]
+constraints:
+  - "Max 4 callouts on screen"
+  - "All lines 1-1.5 px; no thick strokes or glows"
+  - "Every move eased; no beat-driven motion"
+avoid: ["Hype typography", "Colourful gradients", "Mascots"]
+pairs_well_with: [cinematic-product-launch, blueprint-engineering, precision-hardware, keynote-stage]

@@ -1,0 +1,56 @@
+id: sensory-tech
+name: Sensory Tech
+family: brand-inspired
+aliases: [samsung, samsung-like, samsung-style]
+summary: Vivid consumer-tech showcase; fluid colour gradients, device morphs, sensory close-ups and bright rhythmic UI.
+energy: 3
+best_for: [device-launch, feature-showcase, display-tech, consumer-promo]
+character: >-
+  Sensory and vivid: liquid colour gradients flow behind devices, the product
+  folds and morphs between forms, and macro close-ups of screen, camera and
+  sound make features felt. Brighter and more colourful than a minimal launch.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#0a0a14", ink: "#ffffff", accent: "#3a2fb5", violet: "#7b61ff", coral: "#ff7a8a", mint: "#5ef2c2", paper: "#f7f7fa", mute: "rgba(255,255,255,0.6)"}
+    rule: "One liquid gradient per scene built from two of violet/coral/mint over bg; deep blue accent for chips and CTAs."
+  typography:
+    - "Sora 600 headlines 72 px, -0.015em; large feature words at 140 px"
+    - "Sora 400 body 28 px"
+    - "Be Vietnam Pro 600 for captions"
+  layout:
+    - "Device centred, headline above in two lines; feature labels orbit the device"
+    - "Split screens for before/after camera comparisons"
+  material: ["Glossy device renders with coloured reflections sampled from the gradient", "Rounded feature chips radius 999, frosted white at 14%"]
+  texture: ["Liquid gradient mesh baked to 4-6 PNG frames and crossfaded (no live blurs)", "Soft light leaks on reveals"]
+  camera:
+    - "Macro push onto device details (scale 1 -> 2.2 over 1.6 s, power2.inOut)"
+    - "Floating device rotation (rotateY -25 -> 25 deg, sine.inOut 4 s)"
+  transitions: ["colour flood (gradient blob expands from device to fill frame, 0.6 s power2.inOut)", "fold (scene folds at the centre like a hinge, rotateY 90 deg each half)", "morph (device shape tweens into the next scene's device)", "lens zoom (push into the camera ring, iris out)"]
+  pacing:
+    bpm: [110, 124]
+    rhythm: "Showcase rhythm: 4-beat feature scenes, a montage of camera shots at 1-2 beats, a hero hold for the flagship."
+  beat_response: ["Gradient shifts hue slightly on kick beats", "Feature chips pop in on beats", "#pulse 0.8% on kick downbeats"]
+  ui_choreography:
+    - "Screen UI slides up inside the device (y 60 -> 0, power3.out 0.5 s), widgets stagger 0.06 s"
+    - "Before/after slider sweeps across a photo on the spoken word"
+    - "AI feature highlights draw a glowing outline around the edited region"
+  diagrams: ["Rounded flow diagrams with gradient strokes", "Sound waves via envKeys from the voice envelope"]
+  character_motion: ["No mascot"]
+  captions: ["Frosted pill rgba(255,255,255,0.14), radius 24, 44 px Be Vietnam Pro 600 ink; current word #5ef2c2"]
+  sound: ["Bright electronic pop with glossy synths 115-122 BPM", "SFX: liquid swooshes on colour floods, soft shutter on camera shots"]
+scene_types:
+  prefer: [product-hero, feature, ui-demo, comparison, montage, cta]
+  avoid: [terminal, code]
+signature_moves:
+  - "Colour flood from the device into the next scene"
+  - "Hinge fold transition"
+  - "Before/after slider on a photo"
+  - "Macro push into the camera ring with iris out"
+strengths: ["Feature showcases", "Colour and display quality", "Consumer excitement"]
+constraints:
+  - "Gradient meshes baked to PNG, never live blur stacks"
+  - "Max two gradient hues per scene"
+  - "Device always in frame on feature scenes"
+avoid: ["Monochrome austerity", "Dense text", "Hand-made textures"]
+pairs_well_with: [cinematic-technology, expressive-material, premium-ui-demo, y2k-liquid-chrome]

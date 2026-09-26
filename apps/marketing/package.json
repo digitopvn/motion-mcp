@@ -1,0 +1,14 @@
+{
+  "name": "@motion-mcp/marketing",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.141.0"
+  }
+}

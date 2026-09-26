@@ -1,0 +1,56 @@
+id: developer-workflow
+name: Developer Workflow
+family: brand-inspired
+aliases: [github, github-like, github style, github universe]
+summary: Code-collaboration story; dark editor, diffs, branching commit graphs, checks turning green and activity grids.
+energy: 3
+best_for: [dev-tool, open-source, ci-cd, collaboration]
+character: >-
+  The developer's day as a narrative: a branch grows off the main line,
+  diffs add and remove lines, reviewers comment, checks tick to green and the
+  merge lands. Warm community energy on a dark code-first stage.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#10131a", ink: "#e8ecef", mute: "#808891", surface: "#171b24", border: "#2f3540", accent: "#4a74f0", add: "#3ab86e", del: "#ec6040", merge: "#b46ee8", warn: "#c98126"}
+    rule: "Dark editor neutrals; green/red only for diff lines and checks, purple for merge moments, blue for links and focus."
+  typography:
+    - "Inter 700 headlines 72 px, 400 body 28 px"
+    - "JetBrains Mono 400 22 px code and diffs, line numbers mute"
+    - "Hero headline may glow softly in merge purple on finale"
+  layout:
+    - "Editor or PR panel centred-left, commit graph or checks list right"
+    - "Activity grid as a full-width band behind stats"
+  material: ["Surface panels radius 6, 1 px border; flat, minimal shadow", "Status badges as rounded pills"]
+  texture: ["Faint starfield or dot grid at 5% baked PNG for hero scenes"]
+  camera:
+    - "Scroll through code (translateY on the panel, power2.inOut)"
+    - "Push along the commit graph as it grows (x travel 200-400 px)"
+  transitions: ["branch-off (a line forks from the graph and leads into the next scene)", "diff-scroll (panel scrolls up and next panel follows beneath)", "merge-join (two lines converge with a purple pulse and the scene resolves)", "fade 0.3 s"]
+  pacing:
+    bpm: [100, 120]
+    rhythm: "Narrative arc: setup 6-8 beat scenes, review/CI section steps every 2 beats, merge moment holds 8 beats."
+  beat_response: ["Activity grid cells light on beats in a seeded pattern", "Checks tick on successive beats"]
+  ui_choreography:
+    - "Diff lines slide in: additions with add background at 15%, deletions strike and collapse (height to 0)"
+    - "Review comments pop in as threaded cards with avatar circles"
+    - "CI checks list: spinner -> check drawn with draw(), staggered one per beat"
+  diagrams: ["Commit graph: coloured branch lines with commit dots drawn with draw(), merges as curves", "Activity grid: 7xN squares in 5 green steps filling with seeded rng"]
+  character_motion: ["No mascot; contributors shown as coloured circles with initials"]
+  captions: ["Surface pill with 1 px border, radius 8, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Lo-fi or synthwave-lite 100-120 BPM", "Key taps, soft ticks per check, a warm swell on merge; moderate density"]
+scene_types:
+  prefer: [code, terminal, timeline, stats, feature, outro]
+  avoid: [product-hero, spec]
+signature_moves:
+  - "Branch forking off and merging back with a purple pulse"
+  - "Checks turning green one per beat"
+  - "Diff lines adding and collapsing"
+  - "Activity grid lighting up behind a stat"
+strengths: ["Tells developer stories as narrative", "Community warmth", "Clear CI/CD visuals"]
+constraints:
+  - "Diff colours only for code changes"
+  - "No brand mascot, logos or wordmarks"
+  - "Code shown must be legible at 22 px minimum"
+avoid: ["Light pastel themes", "Heavy textures", "Hype stutter cuts"]
+pairs_well_with: [monochrome-developer, terminal-ops, precision-dark-product, isometric-systems]

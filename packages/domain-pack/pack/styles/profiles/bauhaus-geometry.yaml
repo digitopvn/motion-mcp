@@ -1,0 +1,51 @@
+id: bauhaus-geometry
+name: Bauhaus Geometry
+family: aesthetic
+aliases: [bauhaus, primary geometry, constructivist shapes]
+summary: Primary-colour circles, squares and triangles that roll, rotate and assemble into type and diagrams.
+energy: 3
+best_for: [explainer, brand-promo, concept-intro, education]
+character: >-
+  Constructive and playful: circle, square and triangle in red, blue and
+  yellow on cream, moving like parts of a machine. Shapes roll in, pivot on
+  corners and lock together to form layouts, numerals and diagrams.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#efe8d8", ink: "#1a1a1a", accent: "#d62828", blue: "#1d4e9e", yellow: "#f2b705", mute: "#b9b09c"}
+    rule: "Red, blue, yellow and ink only; each primary tied to one shape family per video (e.g. circle=red)."
+  typography:
+    - "Josefin Sans 700 uppercase headlines 110-160 px, +0.04em tracking"
+    - "Josefin Sans 400 body 34 px; words may run vertically along a bar"
+    - "Numerals built from geometric shapes where possible"
+  layout:
+    - "Diagonal and quartered compositions; one large circle anchoring each scene"
+    - "Text blocks sit on solid bars rotated 0, 45 or 90 deg only"
+  material: ["Flat solid shapes, no borders, no shadows; occasional 50% multiply overlap where shapes cross"]
+  texture: ["Baked PNG lithographic paper grain at 6% opacity"]
+  camera: ["Locked-off; whole composition rotates 90 deg around the frame centre as a scene change"]
+  transitions: ["roll (circle rolls in along the baseline, rotation matched to distance, power2.out 0.6 s)", "pivot (square tips over a corner by 90 deg, power3.inOut 0.45 s)", "quarter-turn (full layout rotates 90 deg, expo.inOut 0.6 s)", "shape-cover (circle scales from 0 to cover the frame, then reveals next)"]
+  pacing:
+    bpm: [96, 116]
+    rhythm: "Measured, mechanical: shapes arrive on beats, assemble over 2-4 beats, hold 4 beats once locked."
+  beat_response: ["Shapes click into place on downbeats (tiny 1.03 overshoot)", "Circle rotates 45 deg per bar", "No flashes"]
+  ui_choreography: ["UI panels framed as rectangles that slide in on rails, then shapes slot into their corners", "Cards enter by pivoting over their bottom edge"]
+  diagrams: ["Flows drawn as primary shapes joined by thick 8 px ink bars", "Charts as stacked squares and pie circles that roll and fill"]
+  character_motion: ["No mascot; shapes behave like gears and levers with eased mechanical motion"]
+  captions: ["Cream bar with 4 px ink top rule, 42 px Be Vietnam Pro 700 ink; current word in accent red"]
+  sound: ["Jazzy or minimal percussive electronic 96-116 BPM", "Wooden clacks and mechanical clicks when shapes lock, medium density"]
+scene_types:
+  prefer: [title, diagram, chart, feature, timeline, outro]
+  avoid: [terminal, testimonial]
+signature_moves:
+  - "Circle rolls in and locks the headline bar in place"
+  - "Numerals assembled from primary shapes"
+  - "Quarter-turn of the entire composition between scenes"
+  - "Square tipping over its corner to reveal the next card"
+strengths: ["Explains structure visually", "Distinctive without being loud", "Timeless design reference"]
+constraints:
+  - "Only circle, square, triangle and straight bars as graphic elements"
+  - "Rotations in 45 deg multiples when shapes rest"
+  - "Primaries plus ink on cream; no gradients"
+avoid: ["Organic curves and blobs", "Photography", "Glass or glow"]
+pairs_well_with: [swiss-kinetic-editorial, paper-cut-collage, isometric-systems, kinetic-typography]

@@ -1,0 +1,57 @@
+id: mission-control
+name: Mission Control
+family: brand-inspired
+aliases: [spacex, spacex-like, spacex-style, launch broadcast]
+summary: Live launch-broadcast feel; telemetry readouts, T-minus countdowns, trajectory arcs and stark white-on-black type.
+energy: 4
+best_for: [launch-event, milestone-reveal, deep-tech, roadmap-story]
+character: >-
+  Mission-control tension: a countdown ticks, telemetry numbers stream in
+  monospace, a trajectory arc draws across a dark globe and the frame holds
+  its breath before liftoff. Stark, factual and thrilling at once.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#000000", ink: "#ffffff", accent: "#ffffff", signal: "#2a5aa8", amber: "#ffb000", mute: "rgba(255,255,255,0.45)", hair: "rgba(255,255,255,0.18)"}
+    rule: "Monochrome white on black; amber only for live/hold states, blue signal only for trajectory and data lines."
+  typography:
+    - "Space Grotesk 500 uppercase, 0.18em tracking, 64 px titles"
+    - "IBM Plex Mono 500 for telemetry values, T-minus clock at 160 px tabular numerals"
+    - "Be Vietnam Pro 500 for captions"
+  layout:
+    - "Broadcast overlay: stage label top-left, telemetry blocks top-right and as side rails at mid-height; nothing in the caption band"
+    - "Hero (vehicle, globe, product) centred with thin crosshair guides"
+  material: ["Flat; 1 px hairline boxes with corner ticks, no fills", "Globe as dotted sphere of seeded points"]
+  texture: ["Baked PNG starfield (static)", "Subtle video-feed scanline PNG at 5% on 'live camera' shots"]
+  camera:
+    - "Locked tracking shot that slowly tilts up (y 0 -> -200 px over 4 s, sine.in) at liftoff"
+    - "Slight seeded jitter (1-2 px) on 'onboard camera' scenes only"
+  transitions: ["countdown cut (clock hits 0, white frame 2 frames, cut)", "stage separation (scene splits horizontally, lower half drops away 0.6 s power2.in)", "trajectory wipe (arc line draws across and reveals next scene)", "feed switch (brief signal-loss bars 0.15 s)"]
+  pacing:
+    bpm: [100, 120]
+    rhythm: "Tension build: slow T-minus holds, ticking beats, then release at liftoff into faster 2-beat telemetry scenes; calm orbit outro."
+  beat_response: ["Countdown digits tick exactly on beats", "Telemetry values update on each beat", "Liftoff drop = white flash 0.6 plus 1.2 shake decaying over 1 s"]
+  ui_choreography:
+    - "Telemetry blocks draw their hairline box first (draw() 0.3 s), then values type in with typeIn()"
+    - "Stage checklist rows switch HOLD (amber) -> GO (white) on spoken words"
+    - "Progress timeline along the top edge with event ticks (MAX-Q, MECO style labels as generic STAGE 1/2)"
+  diagrams: ["Trajectory arcs over a dotted globe drawn with draw() 1.5 s power1.inOut", "Orbital rings as ellipses with a travelling dot", "Staged roadmap as a launch timeline"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 42 px Be Vietnam Pro 500 ink with black shadow, owns the bottom band alone (no telemetry beside it); current word ink"]
+  sound: ["Ambient orchestral tension with ticking pulse, swelling at liftoff", "SFX: countdown beeps, radio chatter-style blips (synthesised), low rumble on liftoff"]
+scene_types:
+  prefer: [hook, timeline, stats, product-hero, diagram, outro]
+  avoid: [testimonial, code]
+signature_moves:
+  - "T-minus countdown landing exactly on the drop"
+  - "Stage-separation transition"
+  - "Trajectory arc drawn over a dotted globe"
+  - "HOLD to GO checklist flips"
+strengths: ["Tension and anticipation", "Milestones and roadmaps", "Hard-tech credibility"]
+constraints:
+  - "Telemetry values must be real numbers from the script, not invented"
+  - "Monochrome except amber states and blue trajectory lines"
+  - "One liftoff drop per video"
+  - "Captions own the bottom band; telemetry and timelines stay out of it"
+avoid: ["Colourful gradients", "Rounded friendly UI", "Mascots"]
+pairs_well_with: [holographic-hud, blueprint-engineering, accelerated-compute, data-editorial]

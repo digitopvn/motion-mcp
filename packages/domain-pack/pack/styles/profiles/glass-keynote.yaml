@@ -1,0 +1,51 @@
+id: glass-keynote
+name: Glass Keynote
+family: house
+aliases: [glass, keynote glass, dewee keynote]
+summary: Calm premium tech keynote; indigo space, drifting colour orbs, frosted glass cards, gradient type.
+energy: 3
+best_for: [product-launch, changelog, explainer, feature-tour]
+character: >-
+  Polished and clear, like a product keynote: dark indigo space with slow
+  colour orbs, frosted glass panels and gradient display type with an italic
+  serif accent. Choose it when clarity and polish matter more than raw energy.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#070817", ink: "#f5f3ff", mute: "#aeacd6", lilac: "#c4b5fd", violet: "#8b5cf6", pink: "#f0abfc", accent: "#60a5fa", green: "#34d399", amber: "#fbbf24", red: "#f87171"}
+    rule: "Gradient accent linear-gradient(100deg, #f0abfc, #a78bfa 45%, #60a5fa); state colours only on chips."
+  typography:
+    - "Plus Jakarta Sans 800 headlines, 70 px, -0.035em tracking"
+    - "Instrument Serif Italic accent words inside headlines, gradient-filled"
+    - "JetBrains Mono kickers, labels and code; 200 px gradient .slam word for big numbers"
+  layout:
+    - "Kicker top-left at 120/88 with gradient number badge; headline under it"
+    - "Glass cards grouped centre or right; HUD counter for feature runs"
+  material: ["Frosted glass cards: vertical indigo gradient at 94% alpha, 1.5 px lilac stroke, radius 24, deep soft shadow plus inner top highlight"]
+  texture: ["Three large radial orbs on 48 s sine drift", "Dot grid with radial mask brightening on beats", "Vignette"]
+  camera: ["Mostly locked-off; zoom-through (scale 2.2) into the drop scene"]
+  transitions: ["up (y 110 -> 0, power3.out 0.5 s)", "zoom (scale 1.3 -> 1, expo.out)", "flip (rotationY -70, perspective 2200)", "iris (clip-path circle 0 -> 80%)", "fade for the outro", "rotate kinds so neighbours never share one; out = fade + scale 0.95 in 0.22 s"]
+  pacing:
+    bpm: [118, 128]
+    rhythm: "Steady keynote cadence; one drop around beat 36 that the previous scene zooms through."
+  beat_response: ["Orbs and dot grid pulse on kick beats", "#pulse wrapper ~1% on kick downbeats", "Light flash (0.14, 0.3 on kicks) and rotated #wipe band on kick cuts"]
+  ui_choreography: ["Chips pop with state colours", "Chat bubbles and terminal lines type in", "Odometer tiles roll digits (odo)", "3D flip cards reveal back faces", "Level badge with XP bar fill"]
+  diagrams: ["Data packets and sparks travel along drawn SVG paths", "Glass nodes connected by lilac strokes"]
+  character_motion: ["Soft violet blob mascot with accessories (headphones, cape, glasses)", "Small HUD mascot squashes on every kick"]
+  captions: ["Dark translucent pill rgba(10,8,30,0.72), radius 20, 46 px Be Vietnam Pro 700; unread 50% white, current #e9d5ff then white"]
+  sound: ["Bright electronic pop ~124 BPM", "Soft whooshes on cuts, pops on chips; music 4-6 dB under speech (not the reference's -10 dB)"]
+scene_types:
+  prefer: [cover, stats, feature, ui-demo, terminal, diagram, outro]
+  avoid: [testimonial]
+signature_moves:
+  - "Gradient serif accent word inside a sans headline"
+  - "Zoom-through into the drop"
+  - "Light band wipe on kick cuts"
+  - "Odometer stat tiles"
+strengths: ["Clear feature explanation", "Premium but friendly", "Proven on a finished 144 s edition"]
+constraints:
+  - "Neighbouring scenes never share a transition"
+  - "Gradient reserved for display words and badges"
+avoid: ["Hard stepped motion", "Halftone or comic textures"]
+pairs_well_with: [saas-bento, precision-dark-product, data-editorial]
+detail: references/style-glass-keynote.md

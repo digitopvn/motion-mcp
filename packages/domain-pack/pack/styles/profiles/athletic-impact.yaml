@@ -1,0 +1,54 @@
+id: athletic-impact
+name: Athletic Impact
+family: brand-inspired
+aliases: [nike, nike-like, nike style, nike ad]
+summary: Raw athletic hype; frame-filling condensed type, hard beat cuts, stutter frames, speed ramps and a high-vis accent.
+energy: 5
+best_for: [hype-launch, finale, sports-promo, motivational]
+character: >-
+  Loud, physical and certain: huge stacked uppercase words fill the frame and
+  slam in on kicks, cuts land exactly on the beat, motion speed-ramps and
+  stutters like sprint footage. Stark black and white with one high-vis accent.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#000000", ink: "#ffffff", accent: "#d4ff00", red: "#ff3b1f", mute: "rgba(255,255,255,0.4)"}
+    rule: "Black/white only, accent on one word or block per scene; red only for a single finale flash. Inverse white-bg scenes allowed as punches."
+  typography:
+    - "Anton uppercase 220-420 px, tracking -0.01em, line-height 0.85, stacked to fill width"
+    - "Archivo Black 40 px uppercase for small labels and numbers"
+    - "Words set edge to edge; one word may bleed off-frame"
+  layout:
+    - "Type fills 80-100% of frame width; image or product cut behind or between lines"
+    - "Hard off-centre crops; diagonal compositions"
+    - "Stats as one giant number, no chart chrome"
+  material: ["Flat, high-contrast; product/athlete as cut-out PNG with no shadow"]
+  texture: ["Heavy film grain baked PNG at 0.18", "Motion-blur streaks baked PNG on fast moves"]
+  camera:
+    - "Speed ramp: fast push (power4.in) into a freeze, then slow drift (sine.out)"
+    - "Shake 1.2-1.6 on slams; whip-pans of 1200 px with streak overlay"
+  transitions: ["hard-cut on every kick", "slam (word scale 1.6 -> 1, power4.in 0.18 s + shake + white flash)", "stutter (3 frames repeated forward/back, 0.12 s)", "invert flash (1 frame white-on-black inverse)", "whip-pan with streaks"]
+  pacing:
+    bpm: [120, 150]
+    rhythm: "Builds from sparse 2-beat cuts to 1-beat and half-beat cuts; drop freezes for 4 beats of silence before the finale word."
+  beat_response: ["Every kick = cut or slam", "Accent block flashes on snares", "#pulse 2% on kick downbeats during the build"]
+  ui_choreography: ["UI shown as a cut-out screen slammed in with a word; updates as hard state swaps, no easing"]
+  diagrams: ["Avoid; replace with a single giant number and a one-word label"]
+  character_motion: ["No mascot; cut-out figures move via speed ramps and stutters"]
+  captions: ["Black block with 4 px accent left bar, 44 px Be Vietnam Pro 800 uppercase white; current word accent"]
+  sound: ["Hard trap, drill or drum-and-bass 120-150 BPM", "Dense impacts: slams, whooshes, sub drops, crowd breath; a hard stop before the finale"]
+scene_types:
+  prefer: [hook, title, montage, stats, product-hero, cta, outro]
+  avoid: [ui-demo, diagram, code, terminal]
+signature_moves:
+  - "Frame-filling stacked word slam on the kick"
+  - "Speed ramp into a freeze frame"
+  - "Three-frame stutter cut"
+  - "Silence drop, then one giant accent word"
+strengths: ["Maximum momentum", "Great finales and social hooks"]
+constraints:
+  - "Cuts only on beats or half-beats"
+  - "One accent colour per scene"
+  - "Flashes max 1 per 2 beats"
+avoid: ["Soft pastel palettes", "Gentle cross-fades", "Dense explanatory UI"]
+pairs_well_with: [kinetic-typography, sport-editorial, extreme-energy, cinematic-product-launch]

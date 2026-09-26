@@ -1,0 +1,52 @@
+# Motion MCP domain pack: quality rubric used by critique, QA and the director.
+# Original paraphrase informed by ak-motion-video / ak-motion-design (MIT, see NOTICE), adapted to Motion IR.
+kind: quality-rubric
+entries:
+  - id: gate-lint-check
+    text: "Hard gate: the compiled composition passes renderer lint and layout check with zero errors before any render is billed."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: true}
+  - id: gate-output-spec
+    text: "Hard gate: final MP4 matches the IR format (width, height, fps), H.264 yuv420p with faststart, AAC 48 kHz audio when audio exists, and duration within one frame of the IR total."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: true}
+  - id: gate-loudness
+    text: "Hard gate: integrated loudness about -14 LUFS with true peak at or below -1 dBTP on the finished file."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: gate-no-black
+    text: "Hard gate: no black or blank frames longer than 0.1 s except inside an intended fade; snapshots at every scene midpoint must show the focal point."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: true}
+  - id: gate-facts-sourced
+    text: "Hard gate: every number or claim on screen traces to the brief or a provided source. Invented metrics fail review."
+    tags: {role: director, scene_types: [evidence, payoff], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: critical-linear-spatial
+    text: "Critical: linear easing on position or scale moves, or a stagger step above 0.5 s. Both read as robotic or broken."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: critical-unreadable-text
+    text: "Critical: text on screen for less than roughly 0.3 s per word plus 0.5 s, or type below the caption size token on a busy background."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: high-wrong-direction-ease
+    text: "High: entrances using accelerate or exits using decelerate; entrances should settle (decelerate) and exits should leave (accelerate)."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: high-no-focal-point
+    text: "High: a frame where two elements compete as hero. The declared visualHierarchy.hero must be the largest or highest-contrast element."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: high-overshoot
+    text: "High: overshoot above about 25% on scale-in or emphasize reads as broken; keep spring-soft for small objects only."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: medium-safe-area
+    text: "Medium: any text or hero element outside layout.safeArea, or touching the caption band when captions exist."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: medium-palette-drift
+    text: "Medium: colours outside the brand token set, or more than three prominent colours in one frame for restrained styles."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [1, 2, 3], pipeline_step: validate, invariant: false}
+  - id: medium-cut-budget
+    text: "Medium: premium restrained styles allow at most two hard cuts per video; other scene changes should use fade, match-cut or scale-through."
+    tags: {role: both, scene_types: [], styles: [cinematic-product-launch, monochrome-luxury, glass-keynote], format: [], energy: [1, 2], pipeline_step: validate, invariant: false}
+  - id: score-taste
+    text: "Taste score 1-5: does each scene feel intentional, does motion serve meaning, is there rhythm contrast, and would a designer ship it without edits?"
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: score-brief-fit
+    text: "Brief-fit score 1-5: does the video deliver the creativeIntent feeling and concept, and is the cta the one the brief asked for?"
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: critique-as-patches
+    text: "Critique returns concrete scene patches (element, primitive, timing, token) ranked by severity, not general adjectives. Stop revising once no high or critical issue remains."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}

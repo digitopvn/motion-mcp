@@ -1,0 +1,52 @@
+id: retro-crt-broadcast
+name: Retro CRT Broadcast
+family: aesthetic
+aliases: [crt, vhs broadcast, retro tv]
+summary: Late-night analogue TV; scanlines, phosphor glow, channel-change static, lower thirds and test cards.
+energy: 3
+best_for: [retro-promo, nostalgia-campaign, announcement, explainer]
+character: >-
+  A signal coming in off an old tube set: curved glass, scanlines, phosphor
+  bloom and chunky broadcast lower thirds. Scenes arrive as channels, not
+  slides, so cuts feel like someone turning the dial.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0b0d0a", ink: "#e8f5d0", accent: "#ffb000", phosphor: "#39ff88", signal: "#ff3b3b", blue: "#2f6bff", mute: "rgba(232,245,208,0.55)"}
+    rule: "Ink and accent glow via text-shadow 0 0 12px at 60% alpha; SMPTE bar colours only on test-card and bumper scenes."
+  typography:
+    - "VT323 for on-screen text and counters, 72-120 px, tracking 0.02em"
+    - "Archivo Black uppercase for lower-third titles, 56 px, on a solid accent bar"
+    - "IBM Plex Mono 500 for timestamps, channel numbers and REC labels"
+  layout:
+    - "Safe-area frame inset 96 px with rounded 48 px corners (tube mask PNG)"
+    - "Channel number top-right, REC/timestamp top-left, lower third at y 700-800 above the caption band"
+    - "One subject per channel, centred"
+  material: ["Curved tube glass: baked vignette + corner mask PNG, faint top reflection gradient; lower thirds are flat opaque bars with 4 px ink rule"]
+  texture: ["Baked scanline PNG (2 px period, 18% alpha) over everything", "Baked static-noise sprite sheet (8 frames) stepped with seeded rng", "Chromatic fringe via 2 px red/blue text-shadow offsets"]
+  camera: ["Locked-off, like a studio camera", "Occasional 1-2 px vertical jitter on cuts only (seeded, 3 frames)", "Slow 1.00 -> 1.03 zoom on held title cards"]
+  transitions: ["channel-change (0.2 s static burst sprite + 6 px horizontal tear, hard cut under it)", "power-off (scaleY 1 -> 0.004 then scaleX -> 0, power2.in 0.35 s, white dot fades)", "v-roll (frame rolls up 100% with a black sync bar, steps(8) ease 0.4 s)", "test-card (0.5 s SMPTE bars bumper between sections)"]
+  pacing:
+    bpm: [84, 100]
+    rhythm: "Broadcast segments: each channel holds 6-10 beats; bumpers 2 beats; outro powers off on the last downbeat."
+  beat_response: ["Scanline layer opacity 0.18 -> 0.26 on kick beats", "Phosphor glow text-shadow blur 12 -> 18 px on kick downbeats", "No screen pulse; static bursts only on cuts"]
+  ui_choreography: ["UI shown inside a 'monitor' inset with the tube mask", "Rows appear line by line like teletext (typeIn, 0.03 s per char, block cursor)", "Values tick through odo with VT323 digits"]
+  diagrams: ["Teletext block graphics: 24 px cells filled on a grid, drawn row by row", "Waveform/oscilloscope lines in phosphor green drawn with draw()"]
+  character_motion: ["No mascot; a presenter silhouette or test-card figure may hold still"]
+  captions: ["Black teletext box rgba(0,0,0,0.85), no radius, 44 px Be Vietnam Pro 600 ink; current word accent with 8 px glow; bottom band"]
+  sound: ["Synthwave or library funk 84-100 BPM with tape saturation", "SFX: dial click + static on each cut, tube power-down whine on the outro; light density"]
+scene_types:
+  prefer: [cover, hook, title, quote, timeline, stats, outro]
+  avoid: [ui-demo, code]
+signature_moves:
+  - "Channel-change static burst between scenes"
+  - "CRT power-off collapse to a line and a dot for the ending"
+  - "Broadcast lower third wiping in on an accent bar"
+  - "SMPTE bars bumper to open a new section"
+strengths: ["Instant nostalgia", "Strong section framing", "Cheap to render with baked textures"]
+constraints:
+  - "Scanlines, static and vignette baked to PNG; no live noise filters"
+  - "Static bursts max 0.25 s and only on cuts"
+  - "Glow never applied to caption text except the current word"
+avoid: ["Glossy glass cards", "Smooth parallax camera", "Dense modern UI screens"]
+pairs_well_with: [pixel-arcade, vaporwave-memphis, terminal-ops, kinetic-typography]

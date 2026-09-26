@@ -1,0 +1,58 @@
+id: keynote-stage
+name: Keynote Stage
+family: brand-inspired
+aliases: [apple keynote, apple event, apple keynote-like, apple presentation]
+summary: Live-stage presentation feel; black stage, one giant word or number per slide, builds and shared-element morphs.
+energy: 2
+best_for: [product-launch, announcement, stats-reveal, event-recap]
+character: >-
+  A presenter on a dark stage clicking through slides: one enormous word,
+  number or product per slide, bullets that build one at a time and objects
+  that morph into their place on the next slide. Choose it when the story is
+  a sequence of big claims delivered with confidence.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#000000", ink: "#ffffff", mute: "rgba(255,255,255,0.5)", accent: "#f5821f", grad_a: "#ff6b3d", grad_b: "#b44cff", grad_c: "#3d8bff"}
+    rule: "Black stage, white type; one gradient (grad_a -> grad_b -> grad_c at 100deg) reserved for the hero word or number per slide."
+  typography:
+    - "Inter 700 display 180-320 px for single words and numbers, -0.045em tracking"
+    - "Inter 600 slide titles 72 px; 400 body 36 px; left-aligned bullets only in build slides"
+    - "Hero number filled with the stage gradient via background-clip text"
+  layout:
+    - "One idea per slide: centred giant word, or title top-left at 160/140 with up to 3 bullets"
+    - "Product or screenshot centre with a single caption line under it"
+    - "Generous 160 px safe margins; no HUD, no kickers"
+  material: ["Flat black stage; screenshots in thin 1 px hair frames with a soft 60 px drop glow in accent at 12%"]
+  texture: ["Faint radial stage spotlight baked to PNG behind the hero, 0.25 opacity"]
+  camera:
+    - "Locked-off like a projected slide"
+    - "Occasional slow push 1.00 -> 1.03 on hero slides only"
+  transitions: ["magic-move (shared element tweens position/scale/colour into the next slide's slot, power2.inOut 0.8 s)", "dissolve (0.5 s cross-fade)", "build (bullets appear one by one with 24 px rise, power2.out 0.4 s)", "push-left for chapter changes"]
+  pacing:
+    bpm: [80, 100]
+    rhythm: "Slide cadence: each claim holds 4-8 beats after it lands; builds advance on spoken words; chapter slides hold longest."
+  beat_response: ["None on screen; beats only time slide advances and builds"]
+  ui_choreography:
+    - "Screenshot enters as a slide object (scale 0.94 -> 1, fade, power2.out 0.6 s)"
+    - "Callout labels build next to UI one at a time on W(word)"
+    - "UI element magic-moves out of the screenshot to become the next slide's hero"
+  diagrams: ["Big simple charts: 2-4 bars grow with power2.out 0.8 s, value counts up with odo, winning bar in gradient"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 42 px Be Vietnam Pro 600 white, centred bottom band, unread words at mute"]
+  sound: ["Warm cinematic pad or light electronic bed 80-100 BPM", "Near-silent SFX: a soft click on builds at vol 0.2, applause-like swell avoided"]
+scene_types:
+  prefer: [title, stats, product-hero, feature, comparison, outro]
+  avoid: [terminal, montage, code]
+signature_moves:
+  - "Giant gradient number that counts up and then holds"
+  - "Magic-move: an object glides from one slide into the next slide's layout"
+  - "Bullet build timed to spoken words"
+  - "Single-word slide held in silence before the reveal"
+strengths: ["Confident, legible claims", "Very easy to structure from a script", "Works with minimal assets"]
+constraints:
+  - "One idea per slide; max 3 bullets"
+  - "Gradient only on one hero element per slide"
+  - "No beat pulses, flashes or shake"
+avoid: ["Dense UI collages", "Decorative textures", "Fast cutting"]
+pairs_well_with: [cinematic-product-launch, premium-ui-demo, data-editorial, product-spec-film]

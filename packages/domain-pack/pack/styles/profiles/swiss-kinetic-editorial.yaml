@@ -1,0 +1,53 @@
+id: swiss-kinetic-editorial
+name: Swiss Kinetic Editorial
+family: aesthetic
+aliases: [swiss, international typographic style, swiss grid motion]
+summary: Strict modular grid, huge flush-left grotesk type, red accent bars and hard-snapping horizontal wipes.
+energy: 3
+best_for: [explainer, editorial-promo, brand-manifesto, event-announcement]
+character: >-
+  Objective and rhythmic, like an International Style poster set in motion:
+  a visible 12-column grid, asymmetric flush-left type at extreme scale
+  contrast and one signal red. Motion is typographic: lines slide along grid
+  tracks and snap to columns, never float.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f2f0eb", ink: "#111111", accent: "#e30613", mute: "#8a8883", rule: "rgba(17,17,17,0.14)"}
+    rule: "Ink, paper and one red; red only for bars, numerals and one word per scene. Inverse scenes swap bg/ink, red stays."
+  typography:
+    - "Inter Tight 800 display 180-320 px, -0.045em tracking, 0.88 line-height, flush left ragged right"
+    - "Inter 400 body 34 px on the baseline grid; IBM Plex Mono 500 16 px uppercase indices (01/12)"
+    - "Scale contrast at least 6:1 between display and body; no centred text"
+  layout:
+    - "12-column grid, 96 px margins, 24 px gutters, 12 px baseline; faint column rules visible in title scenes"
+    - "Asymmetric: display type anchored to columns 1-8, numerals and captions hang in columns 10-12"
+    - "Horizontal red bar (12 px tall) marks the active section; running index top-right"
+  material: ["Flat paper, no shadows, no radius; 2 px ink rules as structure"]
+  texture: ["None; optional baked PNG paper fibre at 4% opacity"]
+  camera: ["Locked-off; lateral track of the whole grid by exactly one column width (160 px) between beats"]
+  transitions: ["column-wipe (clip-path inset from the left in 12 steps, expo.inOut 0.45 s)", "line-slide (each text line slides from x -100% inside its own mask, stagger 0.06 s)", "grid-shift (whole layout tracks one column left, power4.inOut 0.5 s)", "invert cut (bg/ink swap on a downbeat)"]
+  pacing:
+    bpm: [110, 124]
+    rhythm: "Metronomic: every reveal lands on a beat, text holds 4-8 beats, section changes on bar lines (every 4 beats)."
+  beat_response: ["Red bar extends one column per beat", "Index numeral ticks on each downbeat (snap, no ease)", "No pulse, no flash"]
+  ui_choreography: ["UI shown as flat cropped panels snapped to columns, entering by column-wipe", "Labels hang from 2 px leader rules drawn with draw() power2.inOut 0.4 s"]
+  diagrams: ["Orthogonal lines only, 2 px ink, red for the active path", "Bars and tables built from grid cells filling left to right"]
+  character_motion: ["No mascot; type is the character"]
+  captions: ["No pill; 42 px Be Vietnam Pro 600 ink flush left at the grid margin in the bottom band; current word accent red"]
+  sound: ["Minimal techno or clicky electronic 110-124 BPM", "Dry ticks and paper-slide SFX on column snaps, low density"]
+scene_types:
+  prefer: [title, hook, stats, quote, timeline, comparison, cta]
+  avoid: [product-hero, montage]
+signature_moves:
+  - "Display word slides in line by line through per-line masks"
+  - "Red bar grows one column per beat under the headline"
+  - "Whole grid tracks one column sideways between scenes"
+  - "Oversized numeral cropped by the frame edge"
+strengths: ["Clear hierarchy and legibility", "Strong rhythm without effects", "Works for text-heavy messages"]
+constraints:
+  - "Every element aligns to the 12-column grid and baseline"
+  - "Only horizontal or vertical motion; no rotation, no scale bounce"
+  - "One accent colour (red) per video"
+avoid: ["Centred compositions", "Drop shadows, gradients or glass", "Script or decorative fonts"]
+pairs_well_with: [data-editorial, kinetic-typography, bauhaus-geometry, monochrome-luxury]

@@ -30,6 +30,15 @@ export const ConfigSchema = z.object({
   DEFAULT_DIRECTOR_MODE: z.enum(["host-opus", "internal-opus", "custom"]).default("internal-opus"),
   IMPLEMENTATION_MODE: z.enum(["deterministic", "pi", "auto"]).default("auto"),
   MAX_REVISION_LOOPS: z.coerce.number().int().min(0).max(5).default(2),
+  /** Jobs (compile + render) run in-process; renders are CPU/GPU bound, so the default is one at a time. */
+  JOB_CONCURRENCY: z.coerce.number().int().min(1).max(8).default(1),
+  /** Early-access trial credits granted once to a workspace the first time it is seen. 0 disables. */
+  TRIAL_CREDITS: z.coerce.number().int().min(0).max(1_000_000).default(500),
+  /**
+   * HMAC secret for short-lived local artifact URLs. When unset it is derived from MOTION_API_KEYS; in
+   * development a fixed value is used (with a warning).
+   */
+  ARTIFACT_SIGNING_SECRET: z.string().min(16).optional(),
 
   STORAGE_DRIVER: z.enum(["local", "r2"]).default("local"),
   R2_ACCOUNT_ID: z.string().optional(),
@@ -39,6 +48,10 @@ export const ConfigSchema = z.object({
   R2_PUBLIC_BASE_URL: z.string().optional(),
 
   DATABASE_URL: z.string().optional(),
+
+  POLAR_ENVIRONMENT: z.enum(["sandbox", "production"]).default("sandbox"),
+  POLAR_ACCESS_TOKEN: z.string().optional(),
+  POLAR_WEBHOOK_SECRET: z.string().optional(),
 
   HYPERFRAMES_BIN: z.string().optional(),
   FFMPEG_PATH: z.string().default("ffmpeg"),

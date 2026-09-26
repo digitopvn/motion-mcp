@@ -53,7 +53,13 @@
       "duration": 4,
       "focalPoint": "the headline",
       "elements": [
-        { "id": "headline", "kind": "text", "role": "hero", "text": "Your logs are lying by omission.", "style": { "size": "display", "font": "display" } },
+        {
+          "id": "headline",
+          "kind": "text",
+          "role": "hero",
+          "text": "Your logs are lying by omission.",
+          "style": { "size": "display", "font": "display" }
+        },
         { "id": "rule", "kind": "shape", "role": "tertiary", "shape": "rule", "style": { "color": "accent" } }
       ]
     },
@@ -65,8 +71,21 @@
       "focalPoint": "the metric",
       "layout": "split",
       "elements": [
-        { "id": "metric", "kind": "metric", "role": "hero", "value": 47, "suffix": " services", "label": "touched by one checkout request" },
-        { "id": "caption", "kind": "text", "role": "secondary", "text": "Each with its own story.", "style": { "size": "title" } }
+        {
+          "id": "metric",
+          "kind": "metric",
+          "role": "hero",
+          "value": 47,
+          "suffix": " services",
+          "label": "touched by one checkout request"
+        },
+        {
+          "id": "caption",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Each with its own story.",
+          "style": { "size": "title" }
+        }
       ]
     },
     {
@@ -77,9 +96,27 @@
       "focalPoint": "the code line",
       "layout": "stack",
       "elements": [
-        { "id": "title", "kind": "text", "role": "hero", "text": "One trace. Read like a sentence.", "style": { "size": "headline", "font": "display" } },
-        { "id": "code", "kind": "code", "role": "secondary", "language": "ts", "code": "trace(\"checkout\").explain()" },
-        { "id": "note", "kind": "text", "role": "annotation", "text": "auto-instrumented · zero config", "style": { "size": "caption", "font": "mono", "color": "muted" } }
+        {
+          "id": "title",
+          "kind": "text",
+          "role": "hero",
+          "text": "One trace. Read like a sentence.",
+          "style": { "size": "headline", "font": "display" }
+        },
+        {
+          "id": "code",
+          "kind": "code",
+          "role": "secondary",
+          "language": "ts",
+          "code": "trace(\"checkout\").explain()"
+        },
+        {
+          "id": "note",
+          "kind": "text",
+          "role": "annotation",
+          "text": "auto-instrumented · zero config",
+          "style": { "size": "caption", "font": "mono", "color": "muted" }
+        }
       ]
     },
     {
@@ -89,8 +126,19 @@
       "duration": 5,
       "focalPoint": "the list",
       "elements": [
-        { "id": "heading", "kind": "text", "role": "secondary", "text": "Teams report", "style": { "size": "title", "color": "muted" } },
-        { "id": "outcomes", "kind": "list", "role": "hero", "items": ["73% faster root cause", "Half the on-call pages", "No new agents to deploy"] }
+        {
+          "id": "heading",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Teams report",
+          "style": { "size": "title", "color": "muted" }
+        },
+        {
+          "id": "outcomes",
+          "kind": "list",
+          "role": "hero",
+          "items": ["73% faster root cause", "Half the on-call pages", "No new agents to deploy"]
+        }
       ]
     },
     {
@@ -100,7 +148,13 @@
       "duration": 5,
       "focalPoint": "the statement",
       "elements": [
-        { "id": "statement", "kind": "text", "role": "hero", "text": "Stop digging. Start reading.", "style": { "size": "display-xl", "font": "display" } }
+        {
+          "id": "statement",
+          "kind": "text",
+          "role": "hero",
+          "text": "Stop digging. Start reading.",
+          "style": { "size": "display-xl", "font": "display" }
+        }
       ]
     },
     {
@@ -111,7 +165,13 @@
       "focalPoint": "the logo and URL",
       "elements": [
         { "id": "logo", "kind": "logo", "role": "hero", "text": "Tracewise" },
-        { "id": "url", "kind": "text", "role": "secondary", "text": "tracewise.dev", "style": { "size": "title", "font": "mono", "color": "accent" } }
+        {
+          "id": "url",
+          "kind": "text",
+          "role": "secondary",
+          "text": "tracewise.dev",
+          "style": { "size": "title", "font": "mono", "color": "accent" }
+        }
       ]
     }
   ]

@@ -1,0 +1,55 @@
+id: calm-workspace
+name: Calm Workspace
+family: brand-inspired
+aliases: [notion, notion-like, notion style, notion doc]
+summary: Quiet document workspace; off-white page, serif headings, monoline doodles, blocks that type, drag and settle.
+energy: 1
+best_for: [productivity-app, docs-tool, knowledge-base, thoughtful-explainer]
+character: >-
+  Calm and thoughtful: a clean page on warm off-white, black ink, blocks of
+  text that type themselves and slide into order, and simple monoline doodles
+  that draw alongside. It feels like organised thinking.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#fbfbfa", ink: "#191919", mute: "#7c7a73", hair: "#e8e6e1", accent: "#3a6fe0", highlight: "#fbeed0", red: "#d4553a", green: "#177e5f"}
+    rule: "Black on off-white; colour only as soft block highlights and one link blue."
+  typography:
+    - "Fraunces 600 headings 72 px (opsz 72), -0.01em"
+    - "Inter 400 body 30 px, line-height 1.5"
+    - "Headings left-aligned on the page column like a document"
+  layout:
+    - "Single page column 1100 px wide, left-aligned, generous top margin"
+    - "Doodle illustration to the right of the column"
+    - "Block handles appear in the left gutter on hover"
+  material: ["Flat page; callout blocks with highlight fill radius 4", "Cards as 1 px hair-bordered rectangles radius 4"]
+  texture: ["None"]
+  camera: ["Locked-off; page scrolls gently (translateY, sine.inOut) between sections"]
+  transitions: ["page-scroll (page scrolls up to the next section)", "block-type (new block's text types in as the scene)", "doodle-draw (monoline doodle draws, then the page settles around it)", "soft fade 0.5 s"]
+  pacing:
+    bpm: [70, 95]
+    rhythm: "Unhurried: 8-12 beat scenes; each block action gets 2 beats; long holds on key sentences."
+  beat_response: ["None"]
+  ui_choreography:
+    - "Slash menu opens under the caret (fade + 8 px drop 0.2 s), item highlighted, block converts"
+    - "Drag handle grabs a block, it lifts with a light shadow and slides to a new position (power2.inOut 0.5 s)"
+    - "Checkboxes tick with draw(); toggles unfold children with height tween"
+  diagrams: ["Hand-drawn feeling monoline sketches: 3 px ink strokes with round caps drawn with draw()", "Kanban or table views assemble card by card"]
+  character_motion: ["Monoline doodle figures with minimal poses; limbs change pose on twos"]
+  captions: ["No pill; 40 px Be Vietnam Pro 500 ink on a highlight-coloured underline band, bottom band left-aligned to the page column"]
+  sound: ["Soft lo-fi or solo piano 70-95 BPM", "Gentle key taps and paper-soft clicks, very low density"]
+scene_types:
+  prefer: [ui-demo, feature, quote, title, timeline, outro]
+  avoid: [hook, montage, stats]
+signature_moves:
+  - "Slash menu converting a block"
+  - "Block dragged by its handle and reordered"
+  - "Monoline doodle drawing beside the text"
+  - "Heading typing onto a blank page"
+strengths: ["Calm, trustworthy tone", "Great for writing, docs and planning tools"]
+constraints:
+  - "No beat-driven motion"
+  - "Max 1 colour highlight per scene"
+  - "Doodles are original monoline art, no character likenesses"
+avoid: ["Neon or dark themes", "Fast cutting", "Heavy shadows"]
+pairs_well_with: [premium-ui-demo, fluent-productivity, creative-canvas, quirky-editorial]

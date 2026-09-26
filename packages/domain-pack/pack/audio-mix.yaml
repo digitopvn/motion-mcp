@@ -1,0 +1,34 @@
+# Motion MCP domain pack: audio and mix targets. These are numbers the media tools enforce; entries exist
+# so the director and QA can reason about them. Original paraphrase informed by ak-motion-video (MIT, see NOTICE).
+kind: audio-mix
+entries:
+  - id: single-mixed-track
+    text: "The composition plays exactly one pre-mixed audio track; voice, music and SFX are mixed by the media pipeline, never played as separate page elements."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: true}
+  - id: loudness-target
+    text: "Final mix: integrated -14 LUFS, true peak at or below -1.5 dBTP, loudness range about 11, AAC 192 kbps at 48 kHz."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: true}
+  - id: stem-levels
+    text: "Normalise voice and each SFX stem to about -16 LUFS with peaks capped at -1 dBFS before summing."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: music-under-voice
+    text: "Duck music under speech so it sits about 4-6 dB below the voice while speaking and close to voice level in gaps; ducking harder makes viewers say there is no music."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: remux-after-render
+    text: "Always remux the finished mix onto the rendered video with a stream copy; the renderer's own audio encode can clip peaks."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: true}
+  - id: sfx-has-reason
+    text: "Every SFX needs a reason: a reveal, a state change or a landing. Restrained styles use about one soft cue per scene or fewer."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: sfx-anchor
+    text: "Anchor SFX cues to a spoken word or a beat rather than absolute seconds so they survive re-timing."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: music-arrangement
+    text: "Fix drop placement by rearranging whole bars of the generated track (short crossfades ending on downbeats) rather than regenerating music."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: fade-out-tail
+    text: "End with a 2-4 s music fade under the cta hold; never cut the music on the last frame."
+    tags: {role: both, scene_types: [cta], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: voice-direction
+    text: "Voice direction names pace, warmth and energy in one sentence (for example 'confident, warm, brisk, crisp diction'); the outro may be slower and softer."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}

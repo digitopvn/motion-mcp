@@ -1,0 +1,51 @@
+id: monochrome-luxury
+name: Monochrome Luxury
+family: aesthetic
+aliases: [luxury monochrome, fashion house, high fashion minimal]
+summary: Black and ivory fashion-house film; high-contrast serif type, slow reveals, light sweeps and long holds.
+energy: 1
+best_for: [luxury-brand, premium-launch, lookbook, brand-manifesto]
+character: >-
+  Hushed and expensive: ink black and ivory only, a didone serif with wide
+  letter-spaced small caps, and motion that barely moves. Reveals come from
+  light, masks and slow tracking, and silence is part of the rhythm.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0a0a0a", ink: "#f4efe6", accent: "#c8b79a", mute: "rgba(244,239,230,0.45)", hair: "rgba(244,239,230,0.18)"}
+    rule: "Monochrome; accent (champagne) only for one hairline or monogram per scene. Light variant bg #f4efe6, ink #0a0a0a."
+  typography:
+    - "Playfair Display 400 / italic display 120-200 px, -0.01em tracking, high contrast"
+    - "Cormorant Garamond 500 small caps 24 px at +0.32em tracking for labels"
+    - "Centred or axis-aligned; never more than 6 words on screen"
+  layout:
+    - "Centre axis or strict thirds; 50%+ empty frame"
+    - "Thin hairline frame inset 64 px on title and end card"
+  material: ["Matte black stage; product or image in soft top light with deep falloff; 1 px ivory hairlines"]
+  texture: ["Baked PNG fine film grain at 5% opacity, static per scene", "Soft baked vignette"]
+  camera: ["Very slow push 1.00 -> 1.03 over 6+ s", "Lateral drift under 40 px; nothing faster"]
+  transitions: ["light-sweep (diagonal soft white gradient crosses the frame, 1.2 s sine.inOut, reveals next)", "mask-rise (text revealed by clip-path from baseline, power2.out 1.0 s)", "fade-through-black (0.8 s)", "letterspace-open (tracking +0.6em -> +0.32em with fade)"]
+  pacing:
+    bpm: [60, 84]
+    rhythm: "Slow and sparse: holds of 8-16 beats, one reveal per scene, generous black between sections."
+  beat_response: ["None visually; beats only time reveals", "Optional light-sweep aligned to one downbeat per section"]
+  ui_choreography: ["UI appears as a single framed plate, fading up over 1 s; no stagger lists", "Callouts are hairline rules with small-caps labels drawn slowly (draw 1.2 s)"]
+  diagrams: ["Rarely used; if needed, 1 px ivory hairlines and small-caps labels on black"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 40 px Be Vietnam Pro 500 ink at +0.02em, centred bottom band; unread words mute"]
+  sound: ["Sparse piano, strings or dark ambient 60-84 BPM", "Almost no SFX: a single soft shimmer or fabric swish per section"]
+scene_types:
+  prefer: [cover, product-hero, quote, title, outro]
+  avoid: [terminal, code, chart, montage, stats]
+signature_moves:
+  - "Light sweep crossing the frame to reveal the product"
+  - "Tracking closes from very wide as a word fades up"
+  - "Single monogram hairline drawn around the logo lockup"
+  - "Long hold on black before the end card"
+strengths: ["Luxury perception", "Elegant pacing", "Makes a single image feel precious"]
+constraints:
+  - "Monochrome plus one champagne accent"
+  - "No motion faster than 0.6 s except cuts to black"
+  - "Max 6 words on screen at once"
+avoid: ["Stat tiles and busy UI", "Bright saturated colour", "Bouncy eases"]
+pairs_well_with: [cinematic-product-launch, swiss-kinetic-editorial, minimal-future-product, sensory-tech]

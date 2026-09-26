@@ -1,0 +1,49 @@
+# Motion MCP domain pack: shot patterns expressed with Motion IR roles, layouts, elements and primitives.
+# Original paraphrase informed by ak-motion-video style profiles (MIT, see NOTICE).
+kind: shot-patterns
+entries:
+  - id: hook-single-statement
+    text: "Hook: statement layout, one display-xl text element that mask-reveals word by word, then holds. Optional thin rule draws under it on the last word."
+    tags: {role: both, scene_types: [hook], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: hook-big-number
+    text: "Hook: one metric element at display-xl with count-up over 0.8-1.2 s and a tiny label; the number is the headline, nothing else on stage."
+    tags: {role: both, scene_types: [hook, evidence], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: title-card
+    text: "Title: center layout, display text with fade-up (decelerate, 0.6 s), a label-size kicker staggering in 0.1 s later, then a long hold."
+    tags: {role: both, scene_types: [title], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: problem-tension
+    text: "Problem: split layout with the pain point as hero text and a muted list of symptoms that stagger-in; use the muted colour token so the payoff accent feels earned."
+    tags: {role: both, scene_types: [problem], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: mechanism-diagram
+    text: "Mechanism: shapes (box, arrow, rule) draw in sequence along the flow, one highlighted path in accent; labels fade-in after their stroke finishes."
+    tags: {role: both, scene_types: [mechanism], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: mechanism-code
+    text: "Mechanism with code: one code element, type-on at a readable pace, then emphasize the single line that matters. Never more than ~12 visible lines."
+    tags: {role: both, scene_types: [mechanism], styles: [terminal-ops], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: evidence-dashboard
+    text: "Evidence as UI: surface card first, hero metric count-up about 0.25 s later, supporting cards stagger-in 0.05 s apart, chart strokes draw last."
+    tags: {role: both, scene_types: [evidence], styles: [saas-bento, data-editorial], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: evidence-quote
+    text: "Evidence as quote: statement layout, quote text at headline size fades up line by line, attribution at caption size arrives after a beat."
+    tags: {role: both, scene_types: [evidence], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: payoff-reveal
+    text: "Payoff: the hero scales in from 0.94 to 1.0 with decelerate easing, accent colour appears for the first time, then a full hold."
+    tags: {role: both, scene_types: [payoff], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: cta-end-card
+    text: "CTA: center layout, logo plus one line and a short URL; everything settles with decelerating motion and the last 1.5 s are completely still."
+    tags: {role: both, scene_types: [cta], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: lower-third-callout
+    text: "Callout: lower-third layout for a name or label over imagery; slide-in from the reading-direction edge, hold, exit before the scene cut."
+    tags: {role: worker, scene_types: [evidence, mechanism], styles: [], format: ["16:9"], energy: [], pipeline_step: compose, invariant: false}
+  - id: kinetic-type-stack
+    text: "Type-driven scene: words stack on a grid, each entering on its spoken word with mask-reveal; one word per scene gets the accent colour or italic."
+    tags: {role: both, scene_types: [hook, payoff], styles: [kinetic-typography, swiss-kinetic-editorial], format: [], energy: [3, 4, 5], pipeline_step: compose, invariant: false}
+  - id: vertical-stack
+    text: "Vertical formats: use stack layout, hero in the upper-middle third, text no wider than 80% of frame width, and keep the bottom 20% free for captions and UI chrome."
+    tags: {role: both, scene_types: [], styles: [], format: ["9:16", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: square-center
+    text: "Square format: center or statement layouts only; split layouts cramp. Reduce display-xl to display when text exceeds two lines."
+    tags: {role: worker, scene_types: [], styles: [], format: ["1:1"], energy: [], pipeline_step: compose, invariant: false}
+  - id: image-hero
+    text: "Image hero: full-bleed image with a slow push (scale 1.00 to 1.04 over the hold) and headline in a quiet area; never move the camera behind text being read."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}

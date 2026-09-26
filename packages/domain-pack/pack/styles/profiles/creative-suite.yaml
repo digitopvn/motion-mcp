@@ -1,0 +1,56 @@
+id: creative-suite
+name: Creative Suite
+family: brand-inspired
+aliases: [adobe, adobe-like, adobe style, creative cloud style]
+summary: Pro creative tooling; dark workspace panels, layer stacks, brush-mask and before/after reveals, spectral colour.
+energy: 3
+best_for: [creative-tool, ai-generation, editing-workflow, portfolio]
+character: >-
+  A professional studio in motion: dark panelled workspaces, layers that stack
+  and toggle, masks painted on with a brush, before/after sliders and bursts of
+  spectral colour when the creative result lands.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#1b1b1b", ink: "#f0f0f0", mute: "#9a9a9a", panel: "#252525", panel_edge: "#323232", accent: "#3f8cff", spec_a: "#ff4d6d", spec_b: "#ffb000", spec_c: "#2ee6a6", spec_d: "#7a5cff"}
+    rule: "Dark neutral UI with one blue accent; spectral colours only in artwork and result reveals."
+  typography:
+    - "Source Sans 3 700 headlines 72 px, 400 body 28 px"
+    - "Source Sans 3 600 13-16 px (scaled 24 px) panel labels"
+    - "Result titles may use Syne 800 for creative flair"
+  layout:
+    - "Workspace: artwork centre, layers panel right, tools strip left, simplified and generic"
+    - "Full-bleed artwork scenes between workspace scenes"
+  material: ["Panels panel fill, 1 px panel_edge, radius 6", "Artwork as full-colour images with no chrome in result scenes"]
+  texture: ["Transparency checkerboard baked PNG behind isolated subjects", "Soft spectral gradient mesh baked PNG for result backgrounds"]
+  camera:
+    - "Push into the artwork 1 -> 1.15 during edits"
+    - "Pull back to reveal the workspace around a finished piece"
+  transitions: ["brush-mask (next scene painted on through a soft round brush path, mask baked PNG strokes, 0.8 s)", "before-after (vertical divider sweeps across, power2.inOut 0.9 s)", "layer-peel (top layer slides off to reveal next scene underneath)", "spectral-burst (colour gradient flash expands from centre, 0.3 s)"]
+  pacing:
+    bpm: [100, 122]
+    rhythm: "Build-then-reveal: edit steps 2-4 beats each, then a result reveal held 6-8 beats on a downbeat."
+  beat_response: ["Spectral glow behind results brightens on kicks", "Layer thumbnails tick on beats while stacking"]
+  ui_choreography:
+    - "Layers stack in the panel with 0.05 s stagger; visibility eye toggles hide/show artwork parts"
+    - "Sliders drag and the artwork updates in sync (filter or colour shifts on baked frames)"
+    - "Prompt field types with typeIn, then variations appear in a 2x2 grid with pop"
+  diagrams: ["Node-graph style: rounded rectangles with ports, curved connectors drawn with draw()"]
+  character_motion: ["No mascot; a brush cursor circle leads mask paints"]
+  captions: ["Dark panel pill with panel_edge border, radius 8, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Cinematic electronic 100-122 BPM", "Brush swishes, soft clicks, a shimmer on reveals; moderate density"]
+scene_types:
+  prefer: [ui-demo, feature, comparison, montage, product-hero, cta]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Before/after divider sweep"
+  - "Mask painted on with a brush stroke"
+  - "Layers stacking then toggling"
+  - "Spectral burst behind the finished artwork"
+strengths: ["Shows transformation clearly", "Pro and aspirational", "Great for AI image or editing tools"]
+constraints:
+  - "Brush masks and meshes baked to PNG"
+  - "Spectral colours never used on UI chrome"
+  - "No replicas of real app icons or panel layouts"
+avoid: ["Flat corporate pastel", "Retro pixel looks", "Hard stutter cuts"]
+pairs_well_with: [creative-canvas, cinematic-product-launch, music-editorial, organic-biomorphic]

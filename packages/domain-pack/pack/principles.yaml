@@ -1,0 +1,62 @@
+# Motion MCP domain pack: core motion principles.
+# Original paraphrase informed by ak-motion-video / ak-motion-design (MIT, see NOTICE), adapted to Motion IR.
+# Empty tag lists mean "applies to all". pipeline_step: direction|compose|animate|audio|validate|render|any.
+kind: principles
+entries:
+  - id: one-idea-per-scene
+    text: "One scene carries one idea. If the scene intent needs the word 'and', split it into two scenes with their own focalPoint."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: true}
+  - id: hero-leads
+    text: "The hero element enters first and owns the focal point; secondary and tertiary elements follow from the same origin so the eye has one path."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: three-act-beat
+    text: "Shape each scene as setup (20-30%), action (30-40%) and resolution (30-40%), then leave at least 0.1-0.2 s of stillness before the transition."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: hold-after-reveal
+    text: "After the key element lands, hold it still for at least one beat. Honour motionLanguage.holdRatio: that share of the scene stays visually still once entrances settle."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: true}
+  - id: anchor-to-words
+    text: "When a voice-over exists, anchor beats to spoken words rather than fixed offsets from scene start, so re-timing the voice moves the visuals with it."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: cuts-carry-rhythm
+    text: "Scene cuts and drops carry the rhythm; beat reactions inside a scene stay subtle texture (about 1% scale pulses), never the main event."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: max-simultaneous
+    text: "Respect motionLanguage.maxSimultaneousObjects: never animate more elements at once than that limit. Stagger the rest or cut them."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: true}
+  - id: eased-spatial-motion
+    text: "Every spatial move is eased. 'linear' is only for opacity holds, count-up progress or constant-speed loops; use decelerate for entrances and accelerate for exits."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: true}
+  - id: deterministic-timeline
+    text: "Motion must be seekable: all timing comes from the IR timeline, randomness only from a seeded generator, and no wall-clock, frame callbacks or CSS animations."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: narrative-arc
+    text: "Order roles as an arc: hook earns attention, problem creates tension, mechanism explains, evidence proves, payoff releases, cta asks. Skip roles rather than pad them."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: hook-in-two-seconds
+    text: "The hook states its promise inside the first 2 seconds with one statement or one number; no logo intro before it."
+    tags: {role: director, scene_types: [hook], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: evidence-is-specific
+    text: "Evidence scenes show one concrete proof (a metric, a quote, a before/after) with its source; generic claims belong in the payoff, not the evidence."
+    tags: {role: director, scene_types: [evidence], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: cta-single-action
+    text: "The cta asks for exactly one action with one short line and the brand mark, then holds long enough to be read twice."
+    tags: {role: both, scene_types: [cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: energy-matches-tempo
+    text: "Map creative.energy to tempo: 1-2 restrained or measured with long holds, 3 measured, 4-5 lively or energetic with shorter scenes. Keep contrast: not every scene peaks."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: calm-energy-subtraction
+    text: "Low-energy pieces win by subtraction: fewer elements, larger type, longer holds, one accent colour, and camera moves under 4% scale."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [1, 2], pipeline_step: any, invariant: false}
+  - id: high-energy-contrast
+    text: "High-energy pieces still need valleys. Alternate punchy scenes with one calmer hold so peaks read as peaks; maxing everything makes nothing stand out."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [4, 5], pipeline_step: any, invariant: false}
+  - id: tokens-not-values
+    text: "Express style through Motion IR tokens (size, colour, easing, weight). Never hard-code raw CSS values or brand hex outside the brand palette."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: one-base-style
+    text: "Pick one base style for the video and borrow at most a few named traits from others for specific scenes; more than two transition languages reads as noise."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: no-brand-borrowing
+    text: "Styles describe a motion language only. Never reproduce another brand's logo, trademarked font, slogan, product imagery or exact brand colours."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: any, invariant: true}

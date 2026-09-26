@@ -120,7 +120,11 @@ export class Span {
   }
 
   /** Run `fn` inside a child span, ending it and recording failures. */
-  async run<T>(name: string, fn: (span: Span) => Promise<T>, attrs: Record<string, string | number | boolean> = {}) {
+  async run<T>(
+    name: string,
+    fn: (span: Span) => Promise<T>,
+    attrs: Record<string, string | number | boolean> = {},
+  ) {
     const span = this.child(name, attrs);
     try {
       return await fn(span);

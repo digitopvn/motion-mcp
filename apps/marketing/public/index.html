@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion MCP · Motion video your AI can direct</title>
+  <meta name="description" content="Motion MCP is an open-source (MIT) motion-video production runtime exposed as a Streamable HTTP MCP server. Send a brief, get back a rendered, web-optimized MP4.">
+  <link rel="canonical" href="https://motion.digitop.ai/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://motion.digitop.ai/">
+  <meta property="og:title" content="Motion MCP · Motion video your AI can direct">
+  <meta property="og:description" content="An open-source MCP server that turns a brief into a rendered MP4. Opus for taste, cheap models and code for everything else.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/copy.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="/" aria-label="Motion MCP home">
+        <img src="/img/mark.svg" alt="" width="28" height="28">
+        <span>Motion MCP</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#tools">Tools</a></li>
+          <li><a href="#connect">Connect</a></li>
+          <li><a href="#cost">Cost</a></li>
+          <li class="nav-gh"><a href="https://github.com/digitopvn/motion-mcp">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO: one-line definition, two actions, and a CSS-only render timeline. -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Open source · MIT · Early access</p>
+        <h1 id="hero-title" class="display reveal">
+          A motion studio your AI can <em>direct.</em>
+        </h1>
+        <div class="hero-grid">
+          <p class="lede reveal reveal-2">
+            Motion MCP is a Streamable HTTP MCP server. Your host model calls
+            <code>motion_create</code> with a brief and gets back a rendered,
+            web-optimized MP4, from Claude, ChatGPT, Pi or any other MCP client.
+          </p>
+          <div class="actions reveal reveal-3">
+            <a class="btn btn-primary" href="#connect">Connect your client</a>
+            <a class="btn btn-quiet" href="https://github.com/digitopvn/motion-mcp">Read the source <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <!-- Decorative timeline: a playhead sweeps the execution graph. Hidden from AT; the same stages are described in #how. -->
+        <figure class="timeline" aria-hidden="true">
+          <div class="ruler">
+            <span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span><span>00:25</span><span>00:30</span>
+          </div>
+          <ol class="track">
+            <li style="--i:0"><span>brief</span></li>
+            <li style="--i:1"><span>direction</span></li>
+            <li style="--i:2"><span>motion&nbsp;ir</span></li>
+            <li style="--i:3"><span>build</span></li>
+            <li style="--i:4"><span>lint · check</span></li>
+            <li style="--i:5"><span>render</span></li>
+            <li style="--i:6"><span>ffmpeg</span></li>
+          </ol>
+          <div class="playhead"></div>
+        </figure>
+        <p class="status-note">
+          <strong>Status.</strong> In active development. The design is public in the
+          repository and the hosted endpoint opens in early access.
+        </p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS: four roles, then the two director modes. -->
+    <section id="how" class="section" aria-labelledby="how-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-no">01</p>
+          <h2 id="how-title" class="h2">How it works</h2>
+          <p class="section-intro">
+            Each step goes to the cheapest thing that can do it well. Judgment goes
+            to a model; everything mechanical goes to code.
+          </p>
+        </header>
+
+        <ol class="steps">
+          <li class="step">
+            <p class="step-no">A</p>
+            <h3 class="h3">Opus directs</h3>
+            <p class="step-role">Creative director</p>
+            <p>Opus writes the creative spec, the taste packet and scene architecture, in one structured call, and critiques creative issues. It never writes HyperFrames HTML.</p>
+          </li>
+          <li class="step">
+            <p class="step-no">B</p>
+            <h3 class="h3">Jev routes</h3>
+            <p class="step-role">Decision layer</p>
+            <p>Jev answers typed questions about where work should go: a mechanical patch, a new asset, a render retry or an Opus critique. Every escalation is a traced decision. Jev never generates content.</p>
+          </li>
+          <li class="step">
+            <p class="step-no">C</p>
+            <h3 class="h3">Pi and cheap workers build</h3>
+            <p class="step-role">Scene builders</p>
+            <p>A deterministic compiler turns Motion IR into scenes. Only scenes that need bespoke code go to Pi, driving a cheap coder model (<code>deepseek/deepseek-v4-flash</code> by default).</p>
+          </li>
+          <li class="step">
+            <p class="step-no">D</p>
+            <h3 class="h3">HyperFrames renders</h3>
+            <p class="step-role">Render and finish</p>
+            <p>HyperFrames lints, checks, snapshots and renders in a pinned Linux container. FFmpeg finishes the file: faststart, yuv420p and loudness normalization when audio is present.</p>
+          </li>
+        </ol>
+
+        <div class="modes">
+          <h3 id="modes-title" class="h3 modes-title">Two director modes. You choose, per call.</h3>
+          <p class="modes-intro">The server never infers the mode from model names. Pass <code>directorMode</code> on each call, or let the workspace default apply.</p>
+          <div class="mode-grid">
+            <article class="mode">
+              <p class="mode-name"><code>host-opus</code></p>
+              <h4 class="h4">Your host is the director.</h4>
+              <p>The calling model writes the <code>CreativeSpec</code> against the JSON Schema that <code>motion_inspect</code> returns. A valid spec skips the internal director entirely; an invalid one returns validation issues with no Opus spend.</p>
+              <p class="mode-when"><span>Use when</span> your host is already a frontier model, so a second Opus call would pay twice for the same taste.</p>
+            </article>
+            <article class="mode">
+              <p class="mode-name"><code>internal-opus</code></p>
+              <h4 class="h4">Motion MCP directs.</h4>
+              <p>Send only a brief. Motion MCP calls Opus through OpenRouter for creative direction and critique, gated by Jev and bounded by your budget.</p>
+              <p class="mode-when"><span>Use when</span> the host is a small model or a script, or you want the platform’s direction.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS: the full public surface. Eight tools, no more. -->
+    <section id="tools" class="section" aria-labelledby="tools-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-no">02</p>
+          <h2 id="tools-title" class="h2">Eight tools. That’s the whole surface.</h2>
+          <p class="section-intro">
+            New capability lands as arguments on these tools, never as new tools.
+            Long work returns a <code>jobId</code> right away; poll
+            <code>motion_get_project</code> for progress.
+          </p>
+        </header>
+
+        <dl class="tools">
+          <div class="tool">
+            <dt><code>motion_create</code></dt>
+            <dd>Start a video from a brief, or from a host-written creative spec. Returns a project and a job.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_edit</code></dt>
+            <dd>Revise with a plain-language instruction or typed scene patches. Only the affected scenes are touched.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_inspect</code></dt>
+            <dd>The director handshake: schema, director modes, pricing and limits. Also inspects projects, scenes and styles.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_render</code></dt>
+            <dd>Render a draft preview, or a final once lint and check pass. MP4 or WebM.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_search</code></dt>
+            <dd>Search styles, shot patterns, recipes, registry blocks, projects and assets.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_get_project</code></dt>
+            <dd>Poll job state, stage and progress. Include versions, renders, usage or a cost trace.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_list_projects</code></dt>
+            <dd>Page through the projects in your workspace.</dd>
+          </div>
+          <div class="tool">
+            <dt><code>motion_publish</code></dt>
+            <dd>Publish a finished final render at a stable share URL, unlisted or public.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CONNECT: copyable client config. Copy button is progressive enhancement (js/copy.js). -->
+    <section id="connect" class="section section-inverse" aria-labelledby="connect-title">
+      <div class="wrap connect-grid">
+        <header class="section-head">
+          <p class="section-no">03</p>
+          <h2 id="connect-title" class="h2">Connect in one block.</h2>
+          <p class="section-intro">
+            Add the endpoint to any MCP client that speaks Streamable HTTP. Every
+            request carries a per-workspace API key as a bearer token.
+          </p>
+          <ol class="connect-steps">
+            <li>Create an API key in the <a href="https://app.motion.digitop.ai">dashboard</a>.</li>
+            <li>Paste the config and replace the placeholder.</li>
+            <li>Ask your model to call <code>motion_inspect</code>, then <code>motion_create</code>.</li>
+          </ol>
+        </header>
+
+        <div class="code-card">
+          <div class="code-bar">
+            <span class="code-file">mcp.json</span>
+            <button class="copy-btn" type="button" data-copy-target="config-snippet" hidden>Copy</button>
+          </div>
+<pre id="config-snippet" tabindex="0" aria-label="MCP client configuration"><code>{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"motion"</span>: {
+      <span class="k">"type"</span>: <span class="s">"http"</span>,
+      <span class="k">"url"</span>: <span class="s">"https://app.motion.digitop.ai/mcp"</span>,
+      <span class="k">"headers"</span>: {
+        <span class="k">"Authorization"</span>: <span class="s">"Bearer mmcp_YOUR_API_KEY"</span>
+      }
+    }
+  }
+}</code></pre>
+          <p class="code-note" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COST: the taste principle, then indicative credit values from the billing design. -->
+    <section id="cost" class="section" aria-labelledby="cost-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-no">04</p>
+          <h2 id="cost-title" class="h2">Frontier tokens only for <em>taste.</em></h2>
+          <p class="section-intro">
+            Before every model call, one question: does this step need taste? If it
+            is mechanical, code does it. If it needs judgment, the cheapest model
+            that can make that judgment does it. Opus is reserved for creative
+            direction and critique.
+          </p>
+        </header>
+
+        <div class="cost-grid">
+          <ul class="principles">
+            <li><strong>Deterministic first.</strong> Normalizing, compiling, linting, checks and FFmpeg finishing are code, not model calls.</li>
+            <li><strong>Respect a host spec.</strong> A valid <code>host-opus</code> spec skips the internal director and its cost.</li>
+            <li><strong>Scene isolation.</strong> Critique, patches and rebuilds touch only the affected scenes.</li>
+            <li><strong>Snapshot before render.</strong> Checks run on contact sheets. Previews render at draft quality; the final renders once.</li>
+            <li><strong>Bounded budgets.</strong> Set <code>budgetCredits</code> per job. A job that would overspend stops and reports the shortfall.</li>
+          </ul>
+
+          <div class="price">
+            <p class="price-unit"><span class="price-big">1 credit</span> = US$0.01</p>
+            <table class="price-table">
+              <caption>Indicative credits per operation</caption>
+              <thead>
+                <tr><th scope="col">Operation</th><th scope="col">Unit</th><th scope="col" class="num">Credits</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Job orchestration</th><td>per job</td><td class="num">10</td></tr>
+                <tr><th scope="row">Internal director</th><td>per call</td><td class="num">40</td></tr>
+                <tr><th scope="row">Opus critique</th><td>per scene</td><td class="num">20</td></tr>
+                <tr><th scope="row">Pi scene build</th><td>per attempt</td><td class="num">3</td></tr>
+                <tr><th scope="row">Preview render</th><td>per 10 s</td><td class="num">2</td></tr>
+                <tr><th scope="row">Final render, 1080p</th><td>per 10 s</td><td class="num">5</td></tr>
+              </tbody>
+            </table>
+            <p class="price-note">
+              <span class="tag">Early access</span>
+              These are design values, not a price list. Live prices come from
+              <code>motion_inspect</code>. A <code>host-opus</code> job never pays the director line.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPEN SOURCE -->
+    <section id="open-source" class="section" aria-labelledby="oss-title">
+      <div class="wrap oss">
+        <header class="section-head">
+          <p class="section-no">05</p>
+          <h2 id="oss-title" class="h2">Open source, MIT.<br>Host it yourself.</h2>
+        </header>
+        <div class="oss-body">
+          <p>
+            Run the whole stack on your own machine or VPS with your own provider
+            keys. Renders run in a pinned Linux container, and billing can be turned
+            off entirely when you self-host.
+          </p>
+          <p>
+            Motion MCP stands on HyperFrames, Pi and multix rather than
+            re-implementing them. What it adds is the taste layer: a director, a
+            renderer-neutral Motion IR and cost-aware routing where every decision
+            is traced.
+          </p>
+          <a class="btn btn-primary" href="https://github.com/digitopvn/motion-mcp">digitopvn/motion-mcp <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p class="footer-mark">Motion <em>MCP</em></p>
+      <nav aria-label="Footer">
+        <ul class="footer-links">
+          <li><a href="https://github.com/digitopvn/motion-mcp">GitHub</a></li>
+          <li><a href="https://app.motion.digitop.ai">Dashboard</a></li>
+          <li><a href="/llms.txt">llms.txt</a></li>
+          <li><a href="https://github.com/digitopvn/motion-mcp/blob/main/LICENSE">MIT License</a></li>
+        </ul>
+      </nav>
+      <p class="footer-meta">Endpoint <code>https://app.motion.digitop.ai/mcp</code><br>Built by <a href="https://github.com/digitopvn">Digitop</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

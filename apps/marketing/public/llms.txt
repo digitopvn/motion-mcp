@@ -1,0 +1,59 @@
+# Motion MCP
+
+> Motion MCP is an open-source (MIT) motion-video production runtime exposed as a Streamable HTTP MCP server. A host model (Claude, ChatGPT, Pi or any other MCP client) calls `motion_create` with a brief and gets back a rendered, web-optimized MP4. Status: in active development; the hosted endpoint is in early access.
+
+## Connect
+
+- MCP endpoint: https://app.motion.digitop.ai/mcp (stateless Streamable HTTP)
+- Auth: every request sends `Authorization: Bearer <api key>`. Keys are per workspace and are created in the dashboard: https://app.motion.digitop.ai
+- Clients must send `Accept: application/json, text/event-stream`.
+- Start with `motion_inspect({ "target": "capabilities" })`. It returns the server version, director modes, the CreativeSpec JSON Schema, prompt guidance, pricing and limits.
+
+Example client config:
+
+```json
+{
+  "mcpServers": {
+    "motion": {
+      "type": "http",
+      "url": "https://app.motion.digitop.ai/mcp",
+      "headers": { "Authorization": "Bearer mmcp_YOUR_API_KEY" }
+    }
+  }
+}
+```
+
+## Tools (the full public surface)
+
+- `motion_create`: start a video from a `brief`. Optional `directorMode`, `creativeSpec` (required for host-opus), `recipeId`, `format`, `quality` ("preview" default, or "final"), `budgetCredits`. Returns `projectId`, `jobId`, `status`, `next`.
+- `motion_edit`: revise a project with an `instruction` or `scenePatches`; also answers host critique requests via `critiqueRequestId`.
+- `motion_inspect`: `target` is "capabilities", "project", "scene" or "styles".
+- `motion_render`: render a version at "preview" or "final" quality, as mp4 or webm. Final requires lint and check to pass.
+- `motion_search`: search styles, patterns, recipes, registry blocks, projects, scenes and assets.
+- `motion_get_project`: poll job state, stage and progress; optionally include versions, renders, usage and trace.
+- `motion_list_projects`: paginated project list.
+- `motion_publish`: publish a succeeded final render at a stable share URL (unlisted or public).
+
+Long-running tools return a `jobId` immediately. Poll `motion_get_project` until the job is `succeeded`, `failed` or `cancelled`. The state `awaiting_host` means the job is waiting for a host critique.
+
+## Director modes
+
+- `host-opus`: the calling host writes the CreativeSpec using the schema from `motion_inspect`. A valid spec skips the internal director and its cost; an invalid spec returns validation issues with no Opus spend. Use when the host is already a frontier model.
+- `internal-opus`: Motion MCP calls Opus through OpenRouter for creative direction. Use when the host is a small model or a script.
+- The server never infers the mode from model names; pass `directorMode` or rely on the workspace default.
+
+## How it works
+
+Opus is the creative director (spec and critique only; it never writes HyperFrames HTML). Jev, a bounded decision model, routes work with typed, traced decisions. A deterministic compiler builds scenes from Motion IR; Pi driving a cheap coder model handles scenes that need bespoke code. HyperFrames lints, checks, snapshots and renders in a pinned Linux container, and FFmpeg finishes the MP4.
+
+## Cost
+
+- 1 credit = US$0.01. Prices are early access and indicative; live values come from `motion_inspect` capabilities.
+- Frontier tokens are spent only on taste: creative direction and critique. Everything mechanical is code.
+- `budgetCredits` caps a job. A job whose estimated cost exceeds its remaining budget stops and reports the shortfall.
+
+## Links
+
+- Source (MIT): https://github.com/digitopvn/motion-mcp
+- Website: https://motion.digitop.ai
+- Dashboard: https://app.motion.digitop.ai

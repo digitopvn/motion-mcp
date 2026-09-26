@@ -1,0 +1,43 @@
+# Motion MCP domain pack: pacing, scene length and beat response.
+# Original paraphrase informed by ak-motion-video style profiles and audio notes (MIT, see NOTICE).
+kind: pacing-patterns
+entries:
+  - id: vo-words-per-minute
+    text: "Budget about 150 voice-over words per minute; a scene with a spoken line needs its duration to cover the line plus a short tail before the cut."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: reading-time
+    text: "Without voice-over, give on-screen text about 0.3 s per word plus 1 s, and never less than 1.5 s for any readable scene."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: bpm-by-mood
+    text: "Music tempo by mood: 60-80 BPM regal or luxurious, 90-110 smooth (a good default), 115-125 driving; above that suits only hype pieces."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: scene-length-by-energy
+    text: "Typical scene length: energy 1-2 about 4-7 s, energy 3 about 3-5 s, energy 4-5 about 1.5-3 s. Hero moments may hold twice as long."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: hook-length
+    text: "Keep the hook short: 1.5-3 s. It sets the tempo the rest of the video follows."
+    tags: {role: director, scene_types: [hook], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: cta-length
+    text: "The cta scene is the longest hold in the video relative to its content: at least 2.5 s so the line can be read twice."
+    tags: {role: director, scene_types: [cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: feature-run-rhythm
+    text: "A run of feature or mechanism scenes changes every 2-4 beats; intro and payoff moments hold for 8 or more beats."
+    tags: {role: director, scene_types: [mechanism, evidence], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: cuts-on-beats
+    text: "Place scene cuts on beats when music exists; a one-beat silent stop before a drop is the strongest place for a shout line."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [3, 4, 5], pipeline_step: audio, invariant: false}
+  - id: decelerate-ending
+    text: "Decelerate into the end: the last two scenes get longer holds and softer easing so the cta lands calmly."
+    tags: {role: both, scene_types: [payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: stagger-steps
+    text: "Stagger steps of 0.04-0.1 s for groups of small items and 0.15-0.3 s for large items; above 0.5 s the group stops reading as one unit."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: entrance-durations
+    text: "Entrance durations: 0.4-0.7 s for most primitives, 0.8-1.2 s for count-up and draw, up to 1 s for large hero reveals in calm pieces."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: social-cut-pacing
+    text: "Short vertical cuts (under 20 s) front-load value: hook plus payoff within the first 5 s, then mechanism, then cta."
+    tags: {role: director, scene_types: [], styles: [], format: ["9:16"], energy: [], pipeline_step: direction, invariant: false}
+  - id: beat-reactions-subtle
+    text: "Beat reactions are texture: about 1% scale on downbeats at most, and none in calm styles where beats should only time cuts and reveals."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}

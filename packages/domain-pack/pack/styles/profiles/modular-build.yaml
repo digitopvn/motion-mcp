@@ -1,0 +1,54 @@
+id: modular-build
+name: Modular Build
+family: brand-inspired
+aliases: [lego, lego-like, lego-style, brick build]
+summary: Build-it-yourself play; plain stackable blocks snapping together step by step, stop-motion stepping and bold primaries.
+energy: 4
+best_for: [product-assembly, onboarding-steps, platform-building-blocks, kids-promo]
+character: >-
+  Everything is built from blocks: plain stackable blocks drop and snap in
+  stop-motion steps, instruction-style numbered panels show each stage, and
+  whole scenes assemble or crumble brick by brick. Creative and systematic.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#fef9e7", ink: "#1b1b1b", accent: "#d8462c", yellow: "#f2aa1a", blue: "#2a4fb8", green: "#1f8a5c", white: "#ffffff", mute: "#6d6e70"}
+    rule: "Primary brick colours only (red, yellow, blue, green, white); each brick one flat colour with a darker side face."
+  typography:
+    - "Archivo Black headlines 84 px, tight, uppercase for titles"
+    - "Archivo 600 for step labels; big step numbers in 160 px Archivo Black"
+    - "Be Vietnam Pro 700 for captions"
+  layout:
+    - "Instruction-manual panels: numbered step box top-left, build area centre"
+    - "Isometric-ish 3/4 view of assemblies (CSS transforms on flat faces)"
+  material: ["Blocks as flat SVG/CSS isometric cuboids with plain tops (no studs), 15% darker side faces, soft 0 6 0 shadow"]
+  texture: ["Clean; faint baked PNG plastic sheen on bricks", "Cream instruction-paper background"]
+  camera: ["Locked isometric view; occasional stepped rotate in 90 deg increments"]
+  transitions: ["brick build (next scene assembles from bricks dropping in rows, 0.05 s stagger, 0.6 s)", "brick crumble (scene breaks into bricks that fall with gravity-like power2.in)", "page turn to next instruction step", "tile pop (grid of square tiles pops then fills the frame)"]
+  pacing:
+    bpm: [110, 128]
+    rhythm: "Step-by-step: each step 2-4 beats, bricks snap on beats, a completed build held for 4+ beats with a celebratory spin."
+  beat_response: ["A brick snaps into place on each beat during builds (drop y -60 -> 0, snap with 3 px bounce)", "Stepped motion on twos for build sequences", "No flashes"]
+  ui_choreography:
+    - "UI panels built from rectangular bricks; components clip on in stepped increments (steps(6))"
+    - "Numbered instruction callouts with an arrow showing where the next piece goes"
+    - "Parts list tray slides up showing pieces with counts (x2, x4)"
+  diagrams: ["Architecture as stacked bricks, layers colour-coded", "Flows as arrows between assembly stages"]
+  character_motion: ["Simple blocky minifigure-free characters built from 2-3 bricks, moving on twos with stepped hops"]
+  captions: ["White box with 4 px ink border and hard 6 px shadow, 42 px Be Vietnam Pro 700 ink; current word red"]
+  sound: ["Upbeat quirky pop with claps 115-125 BPM", "SFX: plastic click snaps on every brick, tumble rattle on crumbles"]
+scene_types:
+  prefer: [feature, diagram, timeline, ui-demo, montage, cta]
+  avoid: [testimonial, quote]
+signature_moves:
+  - "Scene assembles brick by brick on the beat"
+  - "Instruction-manual numbered step panels"
+  - "Brick crumble transition"
+  - "Parts-list tray before a build"
+strengths: ["Explaining modular or composable products", "Onboarding steps", "Creative playful tone"]
+constraints:
+  - "Brick motion stepped (on twos) and snapped, never floaty"
+  - "Only primary brick colours plus white"
+  - "No real toy logos, minifigures or studded-brick shapes"
+avoid: ["Photoreal materials", "Soft gradients", "Slow cinematic pacing"]
+pairs_well_with: [isometric-systems, playful-game-system, functional-playful, soft-clay-3d]

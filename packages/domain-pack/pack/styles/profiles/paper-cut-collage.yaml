@@ -1,0 +1,49 @@
+id: paper-cut-collage
+name: Paper Cut Collage
+family: aesthetic
+aliases: [paper cutout, collage, stop-motion paper]
+summary: Handmade collage; torn paper, cut-out photos, tape and stickers, layered shadows, stop-motion jitter.
+energy: 3
+best_for: [brand-story, community-promo, explainer, creative-promo]
+character: >-
+  Tactile and human: torn paper edges, cut-out letters, masking tape and layered
+  card stock that casts real shadows. Pieces slide and flap in like stop-motion,
+  with a gentle hand-placed wobble.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f3ead8", ink: "#231f1a", accent: "#e4572e", mustard: "#f2b134", sage: "#7fa37a", sky: "#6fa8dc", kraft: "#c9a26b", tape: "rgba(250,240,200,0.8)"}
+    rule: "Muted paper stock colours; each layer is one flat colour with a real drop shadow; accent reserved for the key cut-out."
+  typography:
+    - "Archivo Black cut-out headline letters on individual paper tiles, rotated -6 to 6 deg"
+    - "Fraunces 600 for editorial subheads, 56 px"
+    - "Caveat 700 handwriting for notes and annotations"
+  layout: ["Layered collage stack: 3-5 depth layers with shadows growing by depth", "Asymmetric pinboard composition; hero slightly off-centre", "Annotations taped near the subject, above the caption band"]
+  material: ["Card stock and kraft paper with torn edges (baked PNG masks)", "Drop shadow 0 6px 12px rgba(35,31,26,0.25) per layer", "Masking tape strips on corners"]
+  texture: ["Baked paper-fibre grain and torn-edge PNGs", "Halftone-printed photo cut-outs baked in advance", "Pencil marks and doodles as SVG"]
+  camera: ["Top-down tabletop, locked-off", "Gentle parallax between layers (4-16 px by depth) during holds", "Occasional 1-2 deg frame rotation drift"]
+  transitions: ["torn-reveal (a torn paper sheet rips away along a baked edge, 0.5 s power2.in)", "slide-in stack (next layers slide in from off-frame and land with a 3-frame settle)", "paper-flip (card flips on rotationX with visible back side, 0.45 s)", "tape-on (next scene card lands and tape strips stamp in)"]
+  pacing:
+    bpm: [92, 110]
+    rhythm: "Handcrafted: build each scene piece by piece on the beat, hold 4-6 beats, then clear with one tear."
+  beat_response: ["Pieces jitter 1-2 px on beats (seeded, stop-motion 'boil' at 12 fps)", "Sticker or tape stamps land on kick beats", "No flashes or pulse"]
+  ui_choreography: ["UI screens printed on paper cards and taped down", "Callouts are cut-out arrows and handwritten notes", "Elements drop in from above (y -40 -> 0, back.out(1.4) 0.4 s) with shadow tightening on landing"]
+  diagrams: ["Paper-tile nodes connected by drawn pencil or yarn lines (draw())", "Charts as stacked paper strips cut to length"]
+  character_motion: ["Paper-puppet figures with pivot joints, animated on twos (on2)", "Boil: 3 baked outline variants cycled at 8 fps"]
+  captions: ["Torn white paper strip with slight rotation (0-1 deg), 42 px Be Vietnam Pro 700 ink; current word accent; bottom band"]
+  sound: ["Acoustic indie, ukulele or light hip-hop 92-110 BPM", "SFX: paper rustle, tear, tape pull, scissor snips; medium density, all soft"]
+scene_types:
+  prefer: [cover, title, feature, timeline, testimonial, quote, outro]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Torn-paper reveal between scenes"
+  - "Cut-out letter headline assembling piece by piece"
+  - "Stop-motion boil on held pieces"
+  - "Tape stamps landing on the beat"
+strengths: ["Warm, human and crafted", "Great for stories and communities", "Very distinct from tech-slick styles"]
+constraints:
+  - "Torn edges, grain and halftone photos baked to PNG"
+  - "Every layer casts a shadow scaled by depth"
+  - "Boil jitter uses seeded rng, never Math.random"
+avoid: ["Glass, chrome or neon", "Perfectly clean vector edges", "Fast camera moves"]
+pairs_well_with: [manga-ink, human-storytelling, quirky-editorial, organic-biomorphic]

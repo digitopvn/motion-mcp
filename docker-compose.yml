@@ -1,0 +1,35 @@
+# Production-style stack: the app plus a Cloudflare Tunnel for public ingress
+# (app.motion.digitop.ai -> http://app:8787). No host ports are required in production.
+services:
+  app:
+    image: ${MOTION_IMAGE:-ghcr.io/digitopvn/motion-mcp:latest}
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: "8787"
+      DATA_DIR: /data
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-https://app.motion.digitop.ai}
+    volumes:
+      - motion-data:/data
+    ports:
+      - "127.0.0.1:${HOST_PORT:-8787}:8787"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - app
+    profiles: ["tunnel"]
+
+volumes:
+  motion-data:

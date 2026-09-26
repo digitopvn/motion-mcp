@@ -1,0 +1,56 @@
+id: precision-hardware
+name: Precision Hardware
+family: brand-inspired
+aliases: [dji, dji-like, dji-style, drone gear]
+summary: Aerial-gear precision; sweeping fly-through camera, exploded component views and crisp spec callouts on graphite.
+energy: 3
+best_for: [gadget-launch, camera-gear, exploded-view, spec-reveal]
+character: >-
+  Engineered and airborne: the camera sweeps like a drone over the product,
+  parts fan out into exploded views with hairline callouts, and specs snap in
+  with gimbal-smooth motion. Precise, sleek and adventurous.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0d0f12", ink: "#f2f4f7", accent: "#3aa0ff", graphite: "#22262c", silver: "#c7ccd3", mute: "#7d848d", sky: "#8fd3ff"}
+    rule: "Graphite and silver carry the product; blue only for callout dots and the active spec; outdoor imagery stays natural."
+  typography:
+    - "Manrope 700 headlines 68 px, -0.02em"
+    - "Manrope 400 body 28 px; IBM Plex Mono 500 for spec values and units"
+    - "Be Vietnam Pro 600 for captions"
+  layout:
+    - "Product centre-left, callouts fan to the right on 1 px leader lines"
+    - "Spec grid 2 x 3 tiles right side; headline top-left"
+  material: ["Machined metal renders with soft studio rim light", "Graphite spec tiles radius 12, 1 px silver border at 20%"]
+  texture: ["Clean; one baked PNG studio gradient floor", "Aerial landscape stills for context shots with scale/pan (footage needs supplied clips and a verified HyperFrames video path)"]
+  camera:
+    - "Drone fly-through: combined x/y/scale move (e.g. scale 1.3 -> 1, x 200 -> 0, rotate 3 -> 0 deg) over 2.4 s power2.inOut"
+    - "Gimbal-smooth orbit (rotateY -20 -> 20 deg) on product holds"
+  transitions: ["fly-through (camera pushes past foreground edge into next scene, 0.7 s)", "exploded split (parts fly apart, next scene assembles)", "horizon tilt (frame rotates 8 deg and settles in the next)", "clean cut on beat"]
+  pacing:
+    bpm: [105, 125]
+    rhythm: "Adventure intro with sweeping holds, then brisk 2-4 beat spec scenes, closing aerial reveal."
+  beat_response: ["Callout dots ping (scale 1 -> 1.4 -> 1) on kicks", "No flashes; subtle #pulse 0.5% only on the drop"]
+  ui_choreography:
+    - "Exploded view: parts translate along their axis with 0.05 s stagger, power3.out 0.9 s, leader lines draw after parts settle"
+    - "Spec tiles flip up (rotationX 60 -> 0) with 0.08 s stagger; values odo() in"
+    - "Viewfinder overlay (thirds grid, battery and altitude readouts) for camera features"
+  diagrams: ["Hairline callouts with blue terminal dots", "Flight-path splines drawn over terrain with a travelling marker"]
+  character_motion: ["No mascot; the product moves like it flies (gentle bob 6 px sine.inOut on holds, finite repeats sized to the hold)"]
+  captions: ["Dark pill rgba(13,15,18,0.75), radius 16, 42 px Be Vietnam Pro 600 ink; current word #8fd3ff"]
+  sound: ["Uplifting electronic / cinematic pop 110-120 BPM", "SFX: air whoosh on fly-throughs, mechanical clicks on exploded parts"]
+scene_types:
+  prefer: [product-hero, spec, feature, montage, ui-demo]
+  avoid: [terminal, quote]
+signature_moves:
+  - "Drone fly-through transition past a foreground edge"
+  - "Exploded component view with leader-line callouts"
+  - "Viewfinder overlay with live readouts"
+  - "Horizon tilt settle between scenes"
+strengths: ["Hardware detail and craftsmanship", "Adventure context", "Spec communication"]
+constraints:
+  - "Leader lines only draw after parts come to rest"
+  - "Blue used only for callouts and the active spec"
+  - "Camera moves are smooth (power2/sine); no shake"
+avoid: ["Cartoon textures", "Heavy glows", "Hard flashes"]
+pairs_well_with: [product-spec-film, minimal-future-product, blueprint-engineering, cinematic-technology]

@@ -1,0 +1,58 @@
+id: premium-ui-demo
+name: Premium UI Demo
+family: brand-inspired
+aliases: [apple ui, apple interface, apple ui demo, apple app demo]
+summary: Light, spring-driven interface demo; floating rounded panels, soft depth, taps that zoom and sheets that rise.
+energy: 2
+best_for: [app-demo, feature-walkthrough, onboarding, ui-reveal]
+character: >-
+  Interface as the hero: bright neutral backgrounds, large rounded panels with
+  soft shadows and gentle spring physics, the camera leaning into the control
+  being used. Every interaction reads as touch: press, settle, reveal.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f2f1ee", ink: "#1a1b1f", mute: "#6f6e69", surface: "#ffffff", accent: "#3b74f2", green: "#34c77f", orange: "#f5821f", hair: "rgba(0,0,0,0.08)"}
+    rule: "Neutral greys plus one system accent; secondary colours only as small status dots or toggles."
+  typography:
+    - "Inter 600 headlines 64 px at -0.025em, 400 body 30 px"
+    - "Inter 500 UI labels 22-28 px inside panels; numbers tabular"
+    - "Headline above or left of the UI, never overlapping it"
+  layout:
+    - "UI panel centred or right two-thirds; text block left third"
+    - "Max two panels on stage; secondary panel offset back and smaller (scale 0.9)"
+    - "Background stays flat bg; hero panel casts all the depth"
+  material: ["White panels, radius 28-36 px, 1 px hair border, shadow 0 30px 80px rgba(0,0,0,0.12)", "Frosted overlay sheets faked with 92% white fill (no live backdrop blur)"]
+  texture: ["None"]
+  camera:
+    - "Zoom into the control being used (scale 1 -> 1.6 around its centre, power3.inOut 0.9 s), then pull back"
+    - "Subtle 3D tilt of the panel (rotationY 8 -> 0) on entry, perspective 2000"
+  transitions: ["spring-rise (y 80 -> 0 with back.out(1.2) 0.7 s)", "zoom-into-ui (camera scales into a button that becomes the next scene)", "sheet (next scene slides up from the bottom as a card, power3.out 0.6 s)", "cross-fade with 8 px blur for calm resets"]
+  pacing:
+    bpm: [90, 110]
+    rhythm: "Interaction beats: each tap, toggle or swipe lands on a beat and gets 2-3 beats of settle before the next action."
+  beat_response: ["None globally; individual taps land on beats"]
+  ui_choreography:
+    - "Tap = 0.94 press scale for 0.1 s then back.out release, with a soft accent ripple ring (scale 0 -> 1.6, fade)"
+    - "Lists fill with 0.05 s staggered rise; toggles slide with back.out(1.4)"
+    - "Sheets and popovers spring up from their anchor; dismiss with power2.in 0.3 s"
+    - "Values change with odo; progress rings drawn with draw()"
+  diagrams: ["Rare; if needed, rounded cards linked by 2 px mute lines, drawn with draw()"]
+  character_motion: ["No mascot; a simple 36 px translucent touch dot may lead taps"]
+  captions: ["White pill rgba(255,255,255,0.9) with hair border, radius 18, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Light acoustic or minimal pop 90-110 BPM", "Tiny tap ticks and soft swooshes on sheets, vol 0.2-0.3"]
+scene_types:
+  prefer: [ui-demo, feature, product-hero, title, cta]
+  avoid: [terminal, montage, chart]
+signature_moves:
+  - "Camera zooms into a tapped control that becomes the next screen"
+  - "Spring press and release with ripple ring"
+  - "Sheet rising from the bottom to open the next scene"
+  - "Panel tilt-in from a slight 3D angle"
+strengths: ["Makes interfaces feel tactile and premium", "Clear step-by-step demos"]
+constraints:
+  - "No live backdrop-filter blur; fake frosting with alpha fills"
+  - "One interaction on screen at a time"
+  - "All springs use back.out at 1.0-1.4 overshoot, never elastic"
+avoid: ["Dark neon looks", "Cursor arrows on touch UI", "Busy backgrounds"]
+pairs_well_with: [cinematic-product-launch, keynote-stage, calm-workspace, friendly-system-motion]

@@ -1,0 +1,56 @@
+id: character-comedy
+name: Character Comedy
+family: brand-inspired
+aliases: [duolingo, duolingo-like, duolingo-style, mascot comedy]
+summary: Mascot-led comedy; a chunky rounded character with big expressions, streak counters, bouncy UI and deadpan gags.
+energy: 5
+best_for: [app-promo, habit-product, social-cut, gamified-feature]
+character: >-
+  A character carries the show: a chunky rounded mascot with huge eyes reacts,
+  pleads, celebrates and stares deadpan, while bright green UI bounces and
+  streak counters flame up. Chaotic-friendly social humour with game rewards.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#ffffff", ink: "#3a3a40", accent: "#45c21f", leaf: "#a6dd2a", sky: "#3a8ff0", flame: "#ff7f24", red: "#f0506a", gold: "#f4b93a", mute: "#b2b0ab"}
+    rule: "Green is the hero colour; flame orange for streaks, gold for rewards, red only for mistakes; flat fills, no gradients."
+  typography:
+    - "Nunito 900 headlines 84 px, rounded, sentence case"
+    - "Nunito 700 UI labels 30 px uppercase for buttons"
+    - "Be Vietnam Pro 800 for captions"
+  layout:
+    - "Mascot fills 40-60% of frame, reacting beside a UI card"
+    - "Phone-frame UI centred for lesson demos"
+  material: ["Chunky rounded buttons radius 16 with 0 5 0 darker bottom edge", "Flat vector character with no outline, 2-tone shading"]
+  texture: ["None; flat colour"]
+  camera:
+    - "Comedic snap zoom onto the mascot's face (scale 1 -> 2.2, power4.out 0.2 s) and hold"
+    - "Dutch tilt 6 deg for 'suspicious' beats"
+  transitions: ["mascot wipe (character runs or slides across and reveals next scene)", "snap zoom cut (zoom to face, cut, zoom out on new scene)", "bouncy pop-swap (back.out 2)", "green panel slam"]
+  pacing:
+    bpm: [120, 140]
+    rhythm: "Sketch-comedy timing: fast 1-2 beat setups, a full beat of dead silence before punchlines, celebratory reward bursts."
+  beat_response: ["Mascot bounces with squash 1.2/0.8 on beats during upbeat sections", "Reward bursts (stars, gems) on kicks", "Deliberate stillness on punchline beats"]
+  ui_choreography:
+    - "Answer buttons press down 5 px and spring back; correct = green fill + ding, wrong = red shake 8 px x3"
+    - "Streak counter flames up (scale 1 -> 1.3 -> 1, flame sprite) and odo() increments"
+    - "XP and progress bars fill with an overshoot then settle"
+  diagrams: ["Rare; progress paths as a winding road of round lesson nodes that light up in sequence"]
+  character_motion: ["Original chunky blob character, not a bird (egg-shaped body, huge eyes) with poses held on twos", "Expressions swapped per beat: happy, pleading, deadpan stare; eyes via .m-pupils, mouth via envKeys"]
+  captions: ["White pill with 3 px #e6e4df border and 0 4 0 bottom edge, 44 px Be Vietnam Pro 800 ink; current word green"]
+  sound: ["Bouncy upbeat pop with marimba 125-135 BPM", "Frequent game SFX: dings, boops, fanfare stings, record-scratch before punchlines"]
+scene_types:
+  prefer: [hook, ui-demo, feature, stats, cta, outro]
+  avoid: [spec, terminal, code]
+signature_moves:
+  - "Snap zoom onto the mascot's deadpan face"
+  - "Beat of silence before the punchline"
+  - "Streak counter flaming up"
+  - "Correct/wrong button feedback with ding or shake"
+strengths: ["Personality-driven social content", "Gamified feature demos", "Memorable humour"]
+constraints:
+  - "Mascot is original; no owl or look-alike character"
+  - "Poses held on twos; expressions change on beats"
+  - "Flat colours only"
+avoid: ["Serious corporate tone", "Dark palettes", "Long holds without the character"]
+pairs_well_with: [playful-game-system, joyful-pop, community-chaos, playful-productivity]

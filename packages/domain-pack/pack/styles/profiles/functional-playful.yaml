@@ -1,0 +1,56 @@
+id: functional-playful
+name: Functional Playful
+family: brand-inspired
+aliases: [ikea, ikea-like, ikea-style, flat-pack explainer]
+summary: Practical home-design wit; flat-pack diagrams, room sets that rearrange, blue and yellow blocks and dry humour.
+energy: 3
+best_for: [how-it-works, home-product, value-promo, onboarding]
+character: >-
+  Practical with a wink: pictogram-style assembly diagrams, rooms that
+  rearrange themselves in quick top-down moves, price-tag style labels and
+  a deadpan sense of humour. Democratic design explained without fuss.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#ffffff", ink: "#111111", accent: "#1f4fb0", yellow: "#f5b416", birch: "#e8d5b5", sage: "#b7c9a8", mute: "#767676"}
+    rule: "Blue and yellow as solid blocks and tags; birch and sage for room surfaces; no gradients."
+  typography:
+    - "Be Vietnam Pro 800 headlines 76 px, tight -0.02em, plain and functional"
+    - "Be Vietnam Pro 400 body; product-name labels in 40 px 800 uppercase with price-tag style"
+    - "Be Vietnam Pro 700 for captions"
+  layout:
+    - "Room set centre as a 3/4 flat illustration; labels on yellow tags pinned to objects"
+    - "Instruction panels in a 2 x 2 grid with pictogram figures"
+  material: ["Flat vector furniture with birch/sage fills and 2 px ink outline", "Yellow price-tag labels with a punched hole"]
+  texture: ["None; flat colour", "Optional baked PNG cardboard grain for flat-pack scenes"]
+  camera:
+    - "Top-down room plan that tilts into 3/4 view (rotateX 60 -> 20 deg, power2.inOut 1 s)"
+    - "Quick snap zoom to a detail (scale 1 -> 1.6, power3.out 0.4 s)"
+  transitions: ["flat-pack fold (scene folds into a box, box slides out, next unfolds)", "room rearrange (objects slide to new positions to become the next scene)", "blue block wipe (solid blue panel sweeps left to right)", "tag flip (yellow tag flips to reveal next title)"]
+  pacing:
+    bpm: [100, 118]
+    rhythm: "Brisk and tidy: 3-4 beat explainer steps, short comedic pauses (1 beat of stillness) before punchlines."
+  beat_response: ["Objects slide one grid cell on beats during rearranges", "Tag sway (rotate 4 -> -2 -> 0 deg) on kicks", "No flashes"]
+  ui_choreography:
+    - "Steps appear as numbered pictogram panels: panel draws in, figure performs a single action"
+    - "Price or value tags drop in and swing to rest (rotate -12 -> 0, elastic.out 1, 0.5)"
+    - "Checklist items tick with a small yellow stamp"
+  diagrams: ["Assembly-instruction pictograms with dashed arrows and a neutral figure", "Floor plans with measurement lines drawn via draw()"]
+  character_motion: ["Neutral pictogram figure (round head, simple body) performing single actions; a small shrug for humour"]
+  captions: ["Yellow block rgba(245,180,22,0.95), radius 4, 42 px Be Vietnam Pro 700 ink; current word blue"]
+  sound: ["Light Scandinavian indie pop or whistling tune 100-115 BPM", "SFX: wooden knocks, allen-key clicks, box-tape rip on folds"]
+scene_types:
+  prefer: [hook, feature, diagram, comparison, timeline, cta]
+  avoid: [terminal, montage]
+signature_moves:
+  - "Room rearranges itself into the next scene"
+  - "Flat-pack fold transition"
+  - "Assembly-pictogram steps with a neutral figure"
+  - "Swinging price-tag labels"
+strengths: ["How-it-works clarity", "Value and practicality", "Light humour"]
+constraints:
+  - "Flat vector only, 2 px ink outlines"
+  - "Blue and yellow used as solid blocks, never tints"
+  - "No real product names, catalogue pages or logos"
+avoid: ["Luxury moodiness", "Glossy 3D", "Neon"]
+pairs_well_with: [modular-build, isometric-systems, friendly-system-motion, quirky-editorial]

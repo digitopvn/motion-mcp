@@ -1,0 +1,54 @@
+id: playful-productivity
+name: Playful Productivity
+family: brand-inspired
+aliases: [slack, slack-like, slack style, slack ad]
+summary: Cheerful team chat; plum and bright accents, bouncy message pops, emoji bursts, threads that unfold.
+energy: 4
+best_for: [team-app, collaboration, integrations, workplace-culture]
+character: >-
+  Upbeat and human at work: messages bounce into channels, emoji reactions
+  burst and count up, threads unfold and colourful integration tiles snap
+  together. Friendly rounded type and a playful bounce everywhere.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#ffffff", ink: "#1e1d22", mute: "#63626a", plum: "#3a2358", plum_light: "#f4ede4", accent: "#2458b0", teal: "#26a69a", yellow: "#f29544", red: "#e2445a", sky: "#5aa9ec"}
+    rule: "White chat surfaces with a plum sidebar; four brights rotate on reactions, tiles and confetti."
+  typography:
+    - "Nunito 800 headlines 76 px, 600 body 30 px"
+    - "Lato 400 26 px for message text; Lato 700 for names"
+    - "Headlines may wobble per letter on entry"
+  layout:
+    - "Chat window: plum sidebar left 280 px, messages column right"
+    - "Hero scenes: big headline centred with floating emoji and tiles around"
+  material: ["Rounded white panels radius 16, shadow 0 12px 32px rgba(30,29,34,0.12)", "Reaction pills radius 12 with 1 px border"]
+  texture: ["None; flat colours"]
+  camera: ["Locked-off; slight bounce zoom 1 -> 1.04 -> 1 on big moments"]
+  transitions: ["bounce-in (y 100 -> 0 with back.out(1.8) 0.5 s)", "confetti-burst (seeded rng confetti from centre, next scene pops in behind)", "channel-switch (sidebar item selects and message column slides left)", "tile-snap (colour tiles fly in and snap into a grid forming the next scene)"]
+  pacing:
+    bpm: [110, 128]
+    rhythm: "Chatty: messages every 1-2 beats in conversation scenes, hero moments hold 4-6 beats."
+  beat_response: ["Emoji reactions pop on beats", "Floating emoji bob 10 px on kicks", "#pulse 1% on kick downbeats in hero scenes"]
+  ui_choreography:
+    - "Typing indicator (three dots bouncing in sequence), then message pops with back.out(1.6)"
+    - "Reactions pop under messages and count up with odo; burst of 6-10 mini emoji sprites via seeded rng"
+    - "Threads expand to the right with a slide; app integration cards slot in"
+  diagrams: ["Integration hub: colourful rounded tiles connected by thick rounded lines to a centre, drawn with draw()"]
+  character_motion: ["Emoji sprites squash on landing; avatars nod (y 4 px) when speaking"]
+  captions: ["Plum pill radius 16, 40 px Be Vietnam Pro 700 white; current word yellow"]
+  sound: ["Bouncy indie pop or funk 110-128 BPM", "Knock-brush message pings, pops on reactions, confetti swish; medium density"]
+scene_types:
+  prefer: [ui-demo, feature, testimonial, hook, montage, cta]
+  avoid: [spec, terminal, code]
+signature_moves:
+  - "Typing dots then a bouncy message pop"
+  - "Emoji reaction burst with counter"
+  - "Colour tiles snapping into a grid"
+  - "Confetti transition into the next scene"
+strengths: ["Human, warm, fun", "Great for collaboration features"]
+constraints:
+  - "Confetti and bursts use seeded rng only"
+  - "No brand hashtag logo or its colour pinwheel arrangement"
+  - "Max 2 bursts per scene"
+avoid: ["Cold enterprise greys", "Slow held reveals", "Dark hacker looks"]
+pairs_well_with: [friendly-system-motion, community-chaos, creative-canvas, joyful-pop]

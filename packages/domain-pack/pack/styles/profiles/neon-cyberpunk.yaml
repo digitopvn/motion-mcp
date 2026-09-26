@@ -1,0 +1,52 @@
+id: neon-cyberpunk
+name: Neon Cyberpunk
+family: aesthetic
+aliases: [cyberpunk, neon noir, synth city]
+summary: Rain-slick neon night; magenta and cyan glow signs, chromatic glitch cuts and bass-driven pulses.
+energy: 5
+best_for: [gaming-launch, hype-promo, web3-launch, music-promo]
+character: >-
+  Loud and nocturnal: glowing magenta and cyan signage over near-black, wet
+  reflections, and type that buzzes on like neon tubes. Cuts tear with
+  chromatic aberration and slice glitches, and the whole frame thumps with
+  the bass.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#07040f", ink: "#f2eaff", accent: "#ff2bd6", cyan: "#00f0ff", yellow: "#fcee0a", purple: "#3a0ca3", mute: "#7d6b9e"}
+    rule: "Magenta + cyan as the neon pair; yellow for warning tags only; everything glows except bg."
+  typography:
+    - "Orbitron 800 uppercase headlines 120-170 px, +0.04em, neon glow (layered text-shadow 0 0 4/12/28px)"
+    - "Chakra Petch 500 body 30 px; Share Tech Mono for tags and codes"
+    - "Tube flicker-on for display words; skewed -8 deg tag labels"
+  layout:
+    - "Strong diagonals and perspective; headlines on signage planes tilted in 3D (rotateY 12-20 deg)"
+    - "Tag labels and katakana-free code strings as set dressing"
+  material: ["Neon tubes (glowing strokes), dark glossy panels with 1 px cyan edge, wet floor reflection (flipped copy with gradient mask)"]
+  texture: ["Baked PNG rain streaks, grain and scanlines", "Baked city skyline silhouette with window lights"]
+  camera: ["Fast push-ins 1.0 -> 1.2 on drops", "Dutch tilt 4-6 deg on hero shots", "Shake 1.2 on drops only"]
+  transitions: ["chroma-glitch (RGB split feOffset + horizontal slice displacement, 0.25 s)", "neon-flicker (stepped blackout/on over 5 frames)", "slice-wipe (diagonal slices slide in opposite directions, expo.inOut 0.4 s)", "zoom-punch (scale 1.4 -> 1 expo.out with flash)"]
+  pacing:
+    bpm: [128, 150]
+    rhythm: "Aggressive: cuts every 2-4 beats, drops every 16-32 beats with glitch bursts; short breakdown before the CTA."
+  beat_response: ["Neon glow intensity pumps with the kick (glow radius 12 -> 28 px)", "#pulse 1.5% on kick downbeats", "Chroma offset kick 0 -> 6 px on snares", "Flash + shake on drops"]
+  ui_choreography: ["UI panels glitch in (slice displacement then settle)", "Values scramble through random glyphs (seeded rng) before resolving", "Hot-edge highlight sweeps across panels"]
+  diagrams: ["Glowing circuit traces with packets racing along paths", "Bar charts as neon tubes filling upward"]
+  character_motion: ["Optional masked figure silhouette with neon rim light, moving on twos"]
+  captions: ["Dark panel rgba(7,4,15,0.82) with 1 px cyan edge, 42 px Be Vietnam Pro 700 ink; current word magenta with glow"]
+  sound: ["Darksynth, midtempo bass or cyberpunk electronic 128-150 BPM", "Dense SFX: glitch zaps, neon buzz, bass hits on drops"]
+scene_types:
+  prefer: [hook, cover, montage, feature, product-hero, cta]
+  avoid: [quote, chart, testimonial]
+signature_moves:
+  - "Neon headline buzzes on with stepped flicker"
+  - "Chromatic slice-glitch cut on the drop"
+  - "Glow pumping with the kick drum"
+  - "Scrambled glyphs resolving into the key number"
+strengths: ["Maximum hype and atmosphere", "Gaming and nightlife appeal", "Distinctive colour identity"]
+constraints:
+  - "SVG filters attached only while a glitch runs"
+  - "Rain, grain and skyline baked to PNG"
+  - "Magenta/cyan pair dominant; no warm palette"
+avoid: ["Pastel or daylight scenes", "Flat corporate UI", "Long static holds"]
+pairs_well_with: [holographic-hud, retro-crt-broadcast, vaporwave-memphis, extreme-energy]

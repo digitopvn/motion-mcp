@@ -1,0 +1,49 @@
+id: pixel-arcade
+name: Pixel Arcade
+family: aesthetic
+aliases: [pixel art, 8-bit, arcade game]
+summary: 8/16-bit game screens; chunky pixels, stepped motion, score counters, level-clear irises and power-up pops.
+energy: 4
+best_for: [game-launch, gamified-feature, dev-community, social-cut]
+character: >-
+  A product told as a video game: limited palette, hard pixel edges, sprites that
+  move in whole-pixel steps, HUD score and lives, and each section framed as a
+  level. Motion snaps rather than eases.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#1a1c2c", ink: "#f4f4f4", accent: "#ffcd75", red: "#b13e53", orange: "#ef7d57", green: "#38b764", teal: "#41a6f6", purple: "#5d275d", mute: "#94b0c2"}
+    rule: "16-colour fixed palette only, no gradients or alpha blends; shading by dithered PNG tiles."
+  typography:
+    - "Press Start 2P for headlines, 48-64 px, multiples of 8 px only"
+    - "VT323 for body and dialogue boxes, 44 px"
+    - "Silkscreen for HUD labels (SCORE, LV, HP)"
+  layout: ["Integer pixel grid: 1 art pixel = 8 screen px, everything snapped", "HUD bar across the top 80 px (score, level, lives)", "Dialogue box above the caption band for spoken lines"]
+  material: ["Flat pixel sprites and tiles; 8 px black outline; image-rendering pixelated on all art"]
+  texture: ["Baked dither patterns", "Optional 4 px scanline PNG at 10% for an arcade cabinet feel", "Parallax tile layers (sky, hills, ground)"]
+  camera: ["Side-scrolling pan in whole 8 px steps (steps ease)", "Screen shake 8 px for 4 frames on hits", "No zoom except the level-clear iris"]
+  transitions: ["pixel-dissolve (mosaic block size 8 -> 64 -> 8 px via stepped baked frames, 0.4 s)", "level-clear iris (square or circle closes on the hero, steps(6), opens on next)", "scroll-push (whole screen scrolls one screen-width in 8 px steps)", "blink (3x on/off flicker then cut)"]
+  pacing:
+    bpm: [120, 140]
+    rhythm: "Chiptune tempo; each feature is a level (6-8 beats) opened by a LEVEL N card for 2 beats; boss/drop scene doubles energy."
+  beat_response: ["HUD score digits tick up on every beat", "Coins or stars bounce one tile on kick beats", "Background tiles shift one art pixel on kick downbeats"]
+  ui_choreography: ["UI redrawn as pixel panels with 8 px borders", "Menu cursor arrow jumps between items on spoken words", "Items appear with a power-up pop (scale 0 -> 1.25 -> 1, steps(3))", "Numbers count through odo in pixel digits"]
+  diagrams: ["Flows as tile maps: nodes are blocks, paths drawn tile by tile", "Bar charts as stacked 8 px blocks filling in steps"]
+  character_motion: ["Sprite hero with 2-4 frame walk cycle on twos (on2 at 8 fps)", "Jump arcs quantised to whole pixels", "Enemies/bugs pop into a puff of 4 frames when defeated"]
+  captions: ["Black dialogue strip with 4 px white pixel border, 40 px Be Vietnam Pro 700 ink; current word accent; bottom band, no radius"]
+  sound: ["Chiptune / 8-bit 120-140 BPM (square and triangle waves)", "SFX: coin blips, jump boing, power-up arpeggio, level-clear jingle; dense but short"]
+scene_types:
+  prefer: [cover, hook, feature, stats, timeline, cta, outro]
+  avoid: [testimonial, quote, product-hero]
+signature_moves:
+  - "LEVEL N title card before each feature"
+  - "Pixel-dissolve mosaic transition"
+  - "Score counter racing up as features land"
+  - "Level-clear iris into the CTA"
+strengths: ["Instantly readable gamification", "Great for developer and gaming audiences", "Low render cost"]
+constraints:
+  - "All positions and sizes snap to the 8 px grid"
+  - "Motion uses steps eases; no smooth tweens except audio-free opacity holds"
+  - "Fixed 16-colour palette; no gradients or blur"
+avoid: ["Smooth eased camera moves", "Photographic assets", "Thin hairline typography"]
+pairs_well_with: [retro-crt-broadcast, comic-multiverse, playful-game-system, vaporwave-memphis]

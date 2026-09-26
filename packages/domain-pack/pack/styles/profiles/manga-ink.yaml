@@ -1,0 +1,50 @@
+id: manga-ink
+name: Manga Ink
+family: aesthetic
+aliases: [manga, anime ink, shonen]
+summary: Black-and-white manga pages; brush ink, screentone, speed lines, diagonal panels and impact frames.
+energy: 5
+best_for: [hype-launch, story-promo, youth-brand, social-cut]
+character: >-
+  Monochrome drama from a printed manga page: heavy brush ink, grey screentone,
+  radial speed lines and diagonal panel cuts, with one spot colour for emphasis.
+  Tension builds in still frames, then releases in a single impact.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f7f4ec", ink: "#0a0a0a", accent: "#e8132b", tone: "#9a9a9a", paper2: "#e9e4d6"}
+    rule: "Black, white and screentone greys only; the red accent appears at most once per scene (impact word or highlight)."
+  typography:
+    - "Dela Gothic One for impact headlines, 120-200 px, slight rotation -4 to 4 deg"
+    - "M PLUS 1p 800 for speech bubbles and labels, 44 px"
+    - "Hand-lettered SFX words as pre-drawn SVG/PNG, not a font"
+  layout: ["Diagonal panel grid with 12 px white gutters and 6 px ink borders", "Speech bubbles with tails pointing at the subject, above the caption band", "Impact frame fills the whole screen at climaxes"]
+  material: ["Paper page with printed ink; panels are flat with hard borders, no shadows"]
+  texture: ["Baked screentone dot PNGs at 3 densities", "Baked brush-stroke and ink-splatter PNGs", "Paper fibre grain at 8% alpha"]
+  camera: ["Held stills with a slow 1.00 -> 1.05 push to build tension", "Snap zoom 1.0 -> 1.35 in 0.12 s (expo.out) on impacts", "Shake 10 px x 6 frames on the impact frame"]
+  transitions: ["speed-line burst (radial speed-line PNG slams in 0.1 s, cut under it)", "panel-slice (diagonal clip-path cut splits the frame, halves slide apart 0.35 s power4.inOut)", "ink-splash wipe (baked ink-splat PNG sequence covers then reveals)", "page-turn (rotationY -90 from the right edge, 0.5 s)"]
+  pacing:
+    bpm: [128, 150]
+    rhythm: "Build and release: 2-4 beat tense holds with slow pushes, then an impact frame on the kick; one chapter break per section."
+  beat_response: ["Speed-line layer flickers (opacity 0.6 -> 1) on kick beats", "Screentone background shifts 3 px on every beat", "Impact frames only on TIMING.drops"]
+  ui_choreography: ["UI drawn as inked panels with screentone fills", "Elements slam in (scale 1.4 -> 1, power4.out 0.18 s) with a brush underline", "Callouts as speech bubbles pointing at UI"]
+  diagrams: ["Brush-stroke arrows and nodes drawn with draw() in 0.3 s strokes", "Emphasis lines radiate from the key node"]
+  character_motion: ["Pose-to-pose holds on twos (on2), no in-betweens between key poses", "Figures as ink line art with speed-line smears on fast moves"]
+  captions: ["White box with 4 px ink border and 6 px hard ink shadow, 42 px Be Vietnam Pro 800 ink; current word accent; bottom band"]
+  sound: ["J-rock or anime-opening style rock/EDM 128-150 BPM", "SFX: whoosh-slash on panel slices, impact boom with sub drop, ink splat; dense at climaxes"]
+scene_types:
+  prefer: [cover, hook, title, feature, quote, comparison, cta]
+  avoid: [spec, chart, code]
+signature_moves:
+  - "Radial speed-line impact frame with snap zoom"
+  - "Diagonal panel slice transition"
+  - "Single red spot-colour impact word"
+  - "Tense slow push then hard release"
+strengths: ["Dramatic tension and release", "Iconic monochrome look", "Strong storytelling panels"]
+constraints:
+  - "Red accent max once per scene"
+  - "Screentone, brush and splatter baked to PNG"
+  - "Characters step on twos; camera moves stay smooth"
+  - "No franchise characters, logos or copied panels"
+avoid: ["Full-colour gradients", "Glossy or glass materials", "Dense data tables"]
+pairs_well_with: [comic-multiverse, kinetic-typography, neo-brutalist-web, paper-cut-collage]

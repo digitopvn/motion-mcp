@@ -1,5 +1,13 @@
 import { z } from "zod";
-import { AssetNeed, Beat, Brand, LayoutTemplate, SceneElement, SceneRole, TransitionKind } from "./motion-ir.ts";
+import {
+  AssetNeed,
+  Beat,
+  Brand,
+  LayoutTemplate,
+  SceneElement,
+  SceneRole,
+  TransitionKind,
+} from "./motion-ir.ts";
 import { EasingToken, HexColor, Tempo } from "./tokens.ts";
 
 /**

@@ -1,0 +1,43 @@
+# Motion MCP domain pack: visual and technical anti-patterns to avoid.
+# Original paraphrase informed by ak-motion-video / ak-motion-design (MIT, see NOTICE).
+kind: visual-antipatterns
+entries:
+  - id: heavy-effects-black-frames
+    text: "Avoid dozens of live blur, radial-gradient or clip-path layers on screen: the headless renderer drops to black frames. Bake heavy textures into images instead."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: true}
+  - id: infinite-loops
+    text: "No infinite repeats. Idle loops get a finite repeat count sized to the hold, otherwise the seeked timeline length breaks."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: true}
+  - id: runtime-dom-creation
+    text: "Build all elements before the first tween; creating nodes during playback breaks frame-accurate seeking."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: busy-background-text
+    text: "No moving or busy background behind text that is being read; freeze or dim the background while the headline is on screen."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: corner-chrome
+    text: "Premium restrained looks avoid corner text, HUD chrome and kicker labels; keep text on the centre axis."
+    tags: {role: both, scene_types: [], styles: [cinematic-product-launch, monochrome-luxury, glass-keynote], format: [], energy: [1, 2], pipeline_step: compose, invariant: false}
+  - id: opacity-only-state
+    text: "Do not signal an important state change with opacity alone; pair it with position, scale, colour or a drawn shape."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: everything-moves
+    text: "Avoid animating every element at once or constantly; stillness is what lets the viewer read. If everything moves, nothing is the hero."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: dense-feature-lists
+    text: "No dense feature lists in one shot: a list element holds at most six short items, and more than three should become separate beats or scenes."
+    tags: {role: both, scene_types: [mechanism, evidence, problem], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: stock-cliche
+    text: "Avoid generic clichés: glowing particles, lens flares, spinning globes and gradient blobs that carry no meaning for the brief."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: wall-of-text
+    text: "No wall of text: if the viewer must read more than about 12 words in one scene, cut words or split the scene."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: brand-assets
+    text: "Never draw third-party logos, marks, mascots or product imagery; use the workspace brand assets or neutral shapes."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: text-outside-safe-area
+    text: "No text or hero element outside the safe area; platform UI in vertical formats covers the top 10% and bottom 20%."
+    tags: {role: worker, scene_types: [], styles: [], format: ["9:16"], energy: [], pipeline_step: compose, invariant: false}
+  - id: mismatched-energy
+    text: "Avoid flashes, shakes and speed lines in calm or premium pieces; they belong to energetic styles and only on drops."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [1, 2], pipeline_step: animate, invariant: false}

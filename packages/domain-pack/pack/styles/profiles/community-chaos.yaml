@@ -1,0 +1,56 @@
+id: community-chaos
+name: Community Chaos
+family: brand-inspired
+aliases: [discord, discord-like, discord style, gamer community]
+summary: Loud online community; dark UI, electric blurple, voice rings, sticker slaps, meme zooms and chat floods.
+energy: 5
+best_for: [community-launch, gaming, social-feature, youth-promo]
+character: >-
+  Chaotic, funny and alive: chat floods scroll too fast to read, stickers slap
+  onto the screen, speaking avatars glow with voice rings, and meme-style zoom
+  punches land on the jokes. Loud but friendly, like a group call at 2 a.m.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#1c1d24", ink: "#f1f1ee", mute: "#9a9aa6", surface: "#2a2b33", surface_hi: "#32333d", accent: "#7358ee", voice: "#2bb38a", pink: "#f0508a", yellow: "#e8ec5a", red: "#e8533a"}
+    rule: "Dark greys with electric blurple lead; voice green only for speaking rings; pink and yellow for stickers and chaos."
+  typography:
+    - "Unbounded 800 headlines 90-140 px, tight -0.02em, may tilt -4 to 4 deg"
+    - "Rubik 500 body 28 px; Rubik 700 usernames coloured"
+    - "Meme captions: Anton uppercase white with 6 px black stroke"
+  layout:
+    - "Server rail left (circles), channel list, chat column; or voice grid of avatar tiles"
+    - "Chaos scenes: overlapping stickers, tilted cards, headline over everything"
+  material: ["Rounded surfaces radius 8-16, flat", "Stickers: cut-out shapes with 6 px white outline and drop shadow"]
+  texture: ["Subtle noise 3% baked PNG", "Sparkle and star sprites baked PNG"]
+  camera:
+    - "Zoom punch 1 -> 1.35 on a face or word in 0.12 s power4.out, hold, snap back"
+    - "Shake 1.0-1.3 on slaps; small tilt wobble on chaos scenes"
+  transitions: ["sticker-slap (big sticker slaps on with rotation and shake, covers, scene swaps behind)", "zoom-punch (punch into an element that becomes the next scene)", "chat-flood (messages scroll so fast they fill the frame, then clear to next)", "glitch-lite pixel shift 0.1 s"]
+  pacing:
+    bpm: [120, 150]
+    rhythm: "Hyper: 1-2 beat cuts in chaos sections, 4-beat breathers for feature explanation, drops on memes."
+  beat_response: ["Voice rings pulse on beats", "Stickers wobble on kicks", "#pulse 2% on kick downbeats"]
+  ui_choreography:
+    - "Chat messages stream with 0.06 s stagger; mentions highlight yellow at 15%"
+    - "Voice tiles: speaking avatar gets 3 px voice ring pulsing via envKeys"
+    - "Reactions and stickers pile up with pop and random rotation from seeded rng"
+  diagrams: ["Rarely; server/role trees as rounded nodes with neon accent lines"]
+  character_motion: ["Blob avatars and stickers squash and bounce; faces (dots) blink"]
+  captions: ["Surface pill radius 12 with 2 px accent border, 42 px Be Vietnam Pro 800 ink; current word yellow"]
+  sound: ["Hyperpop, phonk or chiptune-EDM 120-150 BPM", "Dense: pings, join sounds (generic), slaps, deep boom hits; meme drops"]
+scene_types:
+  prefer: [hook, montage, feature, ui-demo, testimonial, cta]
+  avoid: [spec, chart, diagram]
+signature_moves:
+  - "Sticker slap transition"
+  - "Zoom punch onto a reaction"
+  - "Chat flood that wipes the frame"
+  - "Voice rings pulsing with speech"
+strengths: ["Youthful and memetic", "Great for community and gaming"]
+constraints:
+  - "Chaos uses seeded rng only; same render every time"
+  - "Keep captions legible above chaos (captions layer on top, band clear)"
+  - "No brand mascot, logo or proprietary sounds"
+avoid: ["Premium restraint", "Long static holds", "Corporate greys"]
+pairs_well_with: [comic-multiverse, playful-productivity, pixel-arcade, neon-cyberpunk]

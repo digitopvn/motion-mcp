@@ -1,0 +1,56 @@
+id: expressive-material
+name: Expressive Material
+family: brand-inspired
+aliases: [material you, material 3, material design expressive, android material]
+summary: Tonal, personal UI motion; seed-colour tonal palettes, morphing rounded shapes, container transforms, bold springs.
+energy: 3
+best_for: [mobile-app, personalization, feature-tour, consumer-launch]
+character: >-
+  Soft, bold and personal: every scene is tinted from one seed colour into
+  tonal surfaces, big rounded shapes morph between squircle, pill and scalloped
+  forms, and containers expand into full screens. Playful springs with
+  emphasized easing.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#fcf7fc", ink: "#201c22", mute: "#4c4650", accent: "#7a4fa8", primary_container: "#f0dcfa", secondary_container: "#eedff5", tertiary: "#8a5058", tertiary_container: "#ffdad8", dark_bg: "#16131a"}
+    rule: "Tonal system from one seed: bg, containers and accents are tones of the scene seed; reseed per chapter (e.g. teal #006a6a, orange #8b5000) with a smooth tone cross-fade."
+  typography:
+    - "Roboto Flex: display 96-140 px weight 700 width 125, headline 56 px weight 600"
+    - "Animate font-variation weight 400 -> 800 on the hero word"
+    - "Body 30 px weight 400; labels 22 px weight 500"
+  layout:
+    - "Large rounded containers filling 60-80% of the frame"
+    - "Phone-less UI: screens as tall rounded rectangles radius 48"
+    - "Decorative shapes (scallop, flower, pill) behind headlines"
+  material: ["Flat tonal surfaces, no borders; elevation by tone step not shadow", "Radius 28-48 px; shapes as SVG paths for morphing"]
+  texture: ["None; tonal flat fills only"]
+  camera: ["Locked-off; containers themselves grow toward the camera"]
+  transitions: ["container-transform (a card expands to fill the frame and becomes the next scene, power3.inOut 0.6 s approximating emphasized easing)", "shape-morph (hero shape path morphs scallop -> pill -> circle, then wipes)", "tone-shift (background cross-fades to next seed tone 0.5 s)", "shared-axis z (scale 0.92 -> 1 with fade)"]
+  pacing:
+    bpm: [100, 124]
+    rhythm: "Bouncy but readable: 4-6 beat scenes, transforms take 1-2 beats, chapter reseed on bar starts."
+  beat_response: ["Decorative shape rotates 15 deg and scales 1.04 on kicks", "Hero word weight bumps +100 on downbeats"]
+  ui_choreography:
+    - "FAB-style button expands into a sheet (container transform)"
+    - "List rows enter with 0.04 s stagger, y 24 -> 0, back.out(1.3)"
+    - "Toggles and sliders use spring overshoot; selected chips fill with primary_container and accent text"
+  diagrams: ["Rounded nodes as tonal pills linked by thick 6 px rounded lines, drawn with draw()"]
+  character_motion: ["Morphing blob shapes with squash on landing; no faces"]
+  captions: ["Pill in primary_container, radius 28, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Warm electronic pop 100-124 BPM", "Soft plucks on morphs and bubbly taps, medium-low density"]
+scene_types:
+  prefer: [ui-demo, feature, title, product-hero, cta]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Card expands into the next full scene"
+  - "Shape morph through scallop, pill and circle"
+  - "Variable font weight swelling on the hero word"
+  - "Chapter reseed that retints the whole scene"
+strengths: ["Warm and personal", "Great for mobile UI", "Colour system stays coherent"]
+constraints:
+  - "All colours derived from the scene seed tones"
+  - "No hard shadows; elevation by tone"
+  - "Morphs need matching SVG point counts (pre-authored paths)"
+avoid: ["Neon glows", "Sharp corners", "Grainy textures"]
+pairs_well_with: [friendly-system-motion, premium-ui-demo, soft-clay-3d, joyful-pop]

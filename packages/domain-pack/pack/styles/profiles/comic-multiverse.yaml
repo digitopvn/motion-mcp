@@ -1,0 +1,50 @@
+id: comic-multiverse
+name: Comic Multiverse
+family: house
+aliases: [comic, spider-verse, spiderverse, comic book, multiverse]
+summary: Loud hand-made comic energy; halftone, ink outlines, CMY misregistration, glitch cuts, motion on twos.
+energy: 5
+best_for: [hype-launch, social-cut, youth-brand, playful-promo]
+character: >-
+  Loud, young and hand-made: halftone Ben-Day dots, thick ink outlines,
+  cyan/magenta misregistration, RGB glitch cuts and poses held "on twos".
+  Inspired by the look only; no franchise names, logos or characters.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#1a0b3d", ink: "#0d0a1a", paper: "#fff6e5", cyan: "#19d3ff", accent: "#ff2e9a", red: "#ff2b3a", yellow: "#ffd21f", purple: "#5b1fd1", orange: "#ff7a1a", green: "#2ee59d"}
+    rule: "Five full-frame 'universe' gradients cross-faded per scene; --rx misregistration offset animated on beats."
+  typography:
+    - "Anton uppercase headlines, yellow fill, 3 px ink stroke, cyan/magenta offset shadow, distress mask"
+    - "Bangers for labels, kickers and SFX words; Permanent Marker for signature and graffiti"
+    - "JetBrains Mono for code and logs"
+  layout: ["Comic panels with tilted edges", "Tilted comic-corner HUD box with issue counter", "Headline words flip up individually"]
+  material: ["Paper panels: 6 px ink border, triple offset shadow (-6/-4 cyan, 6/4 magenta, 16/16 ink), halftone corner, optional cross-hatching; dark variant with pink dots"]
+  texture: ["Baked PNG halftone dots, grain, graffiti tags, distress (live gradients blacked out frames)", "Rotating conic sunburst rays", "Exaggerated-perspective skyline"]
+  camera: ["Shake on slams and drops (1.1-1.4)", "Smooth background drift and universe fades while characters step on twos"]
+  transitions: ["glitch (RGB split feOffset + slice bars, 0.28 s)", "dots (halftone swell to cover then shrink)", "flip (page turn from the left edge)", "slam (scale 1.3 -> 1, power4.in + shake)", "fade (outro only)", "every cut adds flash + speed lines"]
+  pacing:
+    bpm: [105, 115]
+    rhythm: "High energy with three drops (flash 0.8, full speed lines); outro drops the energy into a slow night scene."
+  beat_response: ["--rx misregistration kick on every other beat", "Halftone #tone scale/opacity pulse", "#pulse 1.2% on kick downbeats"]
+  ui_choreography: ["UI drawn as comic panels", "Stamped allow/deny rows", "Kick label slides in, then headline words flip up (rotationX -70 -> 0) with stagger"]
+  diagrams: ["Terminal logs and force-graph snapshots from seeded rng inside panels", "Bug sprites squashed on spoken words"]
+  character_motion: ["on2(duration, ease) quantises to 12 steps/s for character and UI", "Purple blob mascot with cyan/magenta ghost copies and halftone shading"]
+  captions: ["Yellow narration box, 5 px ink border, hard ink + cyan shadow, 40 px Be Vietnam Pro 800 ink; current word #a3005a; width stops at 1660 px"]
+  sound: ["Punchy hip-hop / breakbeat ~110 BPM", "Dense comic SFX: whooshes, slams, glitch zaps on cuts"]
+scene_types:
+  prefer: [cover, hook, feature, terminal, diagram, montage, outro]
+  avoid: [testimonial, spec]
+signature_moves:
+  - "RGB glitch cut with slice bars"
+  - "Halftone dot wipe"
+  - "Headline words flipping up on twos"
+  - "Stepped handwritten signature reveal with magenta underline"
+strengths: ["Maximum energy and personality", "Social-native", "Proven on a finished 151 s edition"]
+constraints:
+  - "SVG filters attached only while an effect runs"
+  - "Heavy textures baked to PNG"
+  - "Camera-ish moves stay smooth; only characters/UI step on twos"
+avoid: ["Franchise names, logos or characters", "Subtle premium restraint"]
+pairs_well_with: [manga-ink, pixel-arcade, community-chaos, neo-brutalist-web]
+detail: references/style-comic-spiderverse.md

@@ -1,0 +1,81 @@
+# Authored by Motion MCP. Flags applied on top of the vendored styles/ files, which stay unmodified.
+# brand_inspired styles carry brand names in their aliases and are excluded from director retrieval by default.
+styles:
+  accelerated-compute:
+    brand_inspired: true
+  ambient-intelligence:
+    brand_inspired: true
+  athletic-impact:
+    brand_inspired: true
+  calm-workspace:
+    brand_inspired: true
+  character-comedy:
+    brand_inspired: true
+  cinematic-product-launch:
+    brand_inspired: true
+  cinematic-streaming:
+    brand_inspired: true
+  cinematic-technology:
+    brand_inspired: true
+  community-chaos:
+    brand_inspired: true
+  creative-canvas:
+    brand_inspired: true
+  creative-suite:
+    brand_inspired: true
+  developer-workflow:
+    brand_inspired: true
+  documentary-purpose:
+    brand_inspired: true
+  editorial-intelligence:
+    brand_inspired: true
+  expressive-material:
+    brand_inspired: true
+  extreme-energy:
+    brand_inspired: true
+  fluent-productivity:
+    brand_inspired: true
+  friendly-system-motion:
+    brand_inspired: true
+  functional-playful:
+    brand_inspired: true
+  gradient-fintech:
+    brand_inspired: true
+  human-storytelling:
+    brand_inspired: true
+  immersive-console:
+    brand_inspired: true
+  joyful-pop:
+    brand_inspired: true
+  keynote-stage:
+    brand_inspired: true
+  minimal-future-product:
+    brand_inspired: true
+  mission-control:
+    brand_inspired: true
+  modular-build:
+    brand_inspired: true
+  monochrome-developer:
+    brand_inspired: true
+  music-editorial:
+    brand_inspired: true
+  playful-game-system:
+    brand_inspired: true
+  playful-productivity:
+    brand_inspired: true
+  precision-dark-product:
+    brand_inspired: true
+  precision-hardware:
+    brand_inspired: true
+  premium-ui-demo:
+    brand_inspired: true
+  product-spec-film:
+    brand_inspired: true
+  quirky-editorial:
+    brand_inspired: true
+  sensory-tech:
+    brand_inspired: true
+  sport-editorial:
+    brand_inspired: true
+  systematic-enterprise:
+    brand_inspired: true

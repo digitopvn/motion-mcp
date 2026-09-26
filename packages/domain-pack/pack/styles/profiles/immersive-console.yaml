@@ -1,0 +1,56 @@
+id: immersive-console
+name: Immersive Console
+family: brand-inspired
+aliases: [playstation, playstation-like, playstation-style, console reveal]
+summary: Console reveal drama; deep blue void, floating light particles, UI tiles gliding in 3D and a heavy bass reveal.
+energy: 4
+best_for: [game-launch, console-ui, entertainment-hub, immersive-reveal]
+character: >-
+  Immersive and weighty: a deep blue void full of drifting light particles,
+  interface tiles that glide in perspective, and a slow light-edge reveal of
+  the hardware on a bass swell. Epic but controlled.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#00091a", ink: "#ffffff", accent: "#2a62e0", glow: "#4fb3ff", navy: "#001f4d", mute: "rgba(255,255,255,0.55)"}
+    rule: "Blue-only world: navy to near-black gradients, glow blue for rims and focus; white for type; no warm colours."
+  typography:
+    - "Outfit 300 headlines 70 px, +0.02em, light and airy"
+    - "Outfit 600 for tile titles 30 px"
+    - "Be Vietnam Pro 500 for captions"
+  layout:
+    - "Hero centred in a deep void; UI tiles in a horizontal row in perspective (rotateY -12 deg)"
+    - "Headline top-centre, small; lots of vertical space"
+  material: ["Glossy black and white shell with glowing blue rim light", "UI tiles radius 14 with focus ring 3 px white + blue glow"]
+  texture: ["Seeded light particles (max 80) drifting upward", "Baked PNG volumetric light rays"]
+  camera:
+    - "Slow crane up around the hero (y 80 -> 0, rotateX 8 -> 0 deg over 3 s power2.inOut)"
+    - "Parallax on particle layers (3 depths)"
+  transitions: ["light-edge reveal (a bright rim traces the silhouette, then scene fills in, 0.8 s)", "particle dissolve (scene breaks into seeded particles and reforms)", "perspective glide (row of tiles slides in z, camera passes through)", "fade through navy"]
+  pacing:
+    bpm: [90, 120]
+    rhythm: "Epic arc: slow atmospheric opening, mid-section 2-4 beat UI and game shots, a long bass swell into the hero reveal."
+  beat_response: ["Particles brighten and lift on kick beats", "Hero reveal = blue glow bloom (one blurred layer) plus 0.6 shake", "#pulse 0.6% on kick downbeats"]
+  ui_choreography:
+    - "Tile row glides in with 0.07 s stagger (x 300 -> 0, power3.out 0.7 s)"
+    - "Focus ring moves tile to tile on spoken words; focused tile scales 1.08 and background art swaps with a crossfade"
+    - "Haptic-style ripple circles expand from button presses"
+  diagrams: ["Rarely; glowing blue node lines on navy when needed"]
+  character_motion: ["No mascot; game characters only from licensed user assets"]
+  captions: ["Navy pill rgba(0,9,26,0.72), radius 20, 42 px Be Vietnam Pro 500 ink; current word #4fb3ff"]
+  sound: ["Epic hybrid orchestral / electronic with deep bass swells", "SFX: UI focus ticks, whoosh on glides, sub boom on the reveal"]
+scene_types:
+  prefer: [hook, product-hero, ui-demo, montage, title, cta]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Light-edge silhouette reveal on a bass swell"
+  - "Focus ring travelling across a perspective tile row"
+  - "Particle dissolve between scenes"
+  - "Haptic ripple circles on button presses"
+strengths: ["Game and entertainment reveals", "Epic mood", "Interface browsing demos"]
+constraints:
+  - "Blue-only palette, no warm hues"
+  - "Particles from seeded rng, max 80 on screen"
+  - "No third-party game art unless supplied by the user"
+avoid: ["Flat bright illustration", "Paper or clay textures", "Fast jittery cuts"]
+pairs_well_with: [cinematic-streaming, holographic-hud, cinematic-technology, neon-cyberpunk]

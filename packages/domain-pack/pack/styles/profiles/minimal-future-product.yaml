@@ -1,0 +1,57 @@
+id: minimal-future-product
+name: Minimal Future Product
+family: brand-inspired
+aliases: [tesla, tesla-like, tesla-style, ev launch]
+summary: Stark futurist product film; white or graphite void, wide-tracked caps, slow orbit reveals and silent spec reads.
+energy: 2
+best_for: [hardware-launch, vehicle-reveal, spec-sheet, future-product]
+character: >-
+  Engineered minimalism: the product floats in an empty void, a slow orbit
+  reveals its silhouette, and wide-tracked uppercase labels read out specs in
+  silence. Less cinematic warmth than a premium launch, more cold precision.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#1b1d24", ink: "#ffffff", paper: "#f4f4f4", graphite: "#3a3d45", accent: "#e5502e", mute: "rgba(255,255,255,0.5)"}
+    rule: "Alternate graphite void and paper-white void by act; red only as a 2 px tick or single indicator, never a fill."
+  typography:
+    - "Outfit 500 uppercase, 0.25em tracking, 56 px titles"
+    - "Outfit 300 spec values at 120 px with 24 px uppercase unit labels"
+    - "Be Vietnam Pro 500 for captions"
+  layout:
+    - "Product centred low (60% height), horizon line at 68%"
+    - "Specs in a 3-column row under the hero, separated by 1 px hairlines"
+    - "Nothing in the top 30% except one title"
+  material: ["Flat void with a single floor reflection (mirrored product at 12% opacity, gradient mask)"]
+  texture: ["None; a soft horizon glow gradient baked to PNG"]
+  camera:
+    - "Slow orbit simulated by a 36-frame image sequence or rotateY on a flat render, 6-8 s per quarter turn"
+    - "Long lateral track (x 0 -> -180 px) with ease none on opacity-held shots"
+  transitions: ["light-up (scene fades in from pure bg as a horizon line draws across)", "wipe along horizon (1 px line sweeps, reveals next void)", "invert (graphite <-> white void crossfade 0.8 s)", "fade to void"]
+  pacing:
+    bpm: [70, 95]
+    rhythm: "Very long holds (8-16 beats) on reveals; spec rows count in on single beats; almost no mid-scene motion."
+  beat_response: ["None visible; beats only time spec counters and line draws"]
+  ui_choreography:
+    - "Touch-screen UI shown as one flat panel, elements fade in 0.4 s with 0.12 s stagger, no bounce"
+    - "Spec values count up with odo() in 1.2 s power2.out"
+    - "Hairline dividers draw left to right before values appear"
+  diagrams: ["Single-weight 1 px outlines of the product with dimension callouts drawn with draw()", "Energy flow as one thin accent line"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 40 px Be Vietnam Pro 500 ink in sentence case, bottom band; current word ink, unread mute"]
+  sound: ["Ambient electronic pads, sub pulses, near-silence under specs", "SFX: electric whine rising on reveals, soft clicks on spec counts"]
+scene_types:
+  prefer: [product-hero, spec, title, feature, cta]
+  avoid: [montage, testimonial, terminal]
+signature_moves:
+  - "Horizon line that draws across before the product lights up"
+  - "Slow orbit silhouette reveal"
+  - "Silent spec row counting up in thin numerals"
+  - "Graphite-to-white void inversion between acts"
+strengths: ["Futurist credibility", "Spec clarity", "Cold, engineered premium feel"]
+constraints:
+  - "Uppercase wide-tracked labels only; no decorative type"
+  - "Red never used as a fill"
+  - "No bounce, back or elastic eases"
+avoid: ["Warm lifestyle photography", "Busy textures", "Playful motion"]
+pairs_well_with: [product-spec-film, precision-hardware, cinematic-product-launch, monochrome-luxury]

@@ -1,0 +1,22 @@
+Motion MCP domain pack - third-party notice
+
+The files under styles/ (styles/index.yaml and styles/profiles/*.yaml) are
+vendored unmodified from the ak-motion-video skill, version 1.2.0, which is
+itself vendored from github.com/bestagentkits/motion-video-skill at commit
+a73702b893a3a5462804b5b844c6080e76f69275.
+
+Copyright (c) 2026 BestAgentKits. Licensed under the MIT License; the full
+license text is in LICENSE-ak-motion-video.txt next to this file.
+
+The normalized knowledge files in this directory (principles.yaml,
+quality-rubric.yaml, shot-patterns.yaml, typography.yaml,
+transition-patterns.yaml, visual-antipatterns.yaml, pacing-patterns.yaml,
+audio-mix.yaml) are original Motion MCP paraphrases informed by the same
+skill and adapted to the Motion IR vocabulary. overrides.yaml is authored by
+Motion MCP and flags brand-inspired profiles without editing the vendored
+files.
+
+Brand and product names that appear in vendored style aliases are used only
+to describe a motion language. Motion MCP is not affiliated with or endorsed
+by any of those brands, and brand-inspired styles are excluded from
+retrieval by default.

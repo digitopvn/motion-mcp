@@ -5,8 +5,8 @@ import {
   MotionIR,
   type MotionPrimitive,
   type MotionScene,
-  type SceneElement,
   round3,
+  type SceneElement,
   totalDuration,
 } from "./motion-ir.ts";
 import type { EasingToken, Tempo } from "./tokens.ts";
@@ -62,7 +62,9 @@ function primitiveFor(el: SceneElement, tempo: Tempo): MotionPrimitive {
 }
 
 function pickEasing(preferred: EasingToken[], avoid: EasingToken[]): EasingToken {
-  return preferred.find((e) => !avoid.includes(e)) ?? (avoid.includes("decelerate") ? "standard" : "decelerate");
+  return (
+    preferred.find((e) => !avoid.includes(e)) ?? (avoid.includes("decelerate") ? "standard" : "decelerate")
+  );
 }
 
 /**

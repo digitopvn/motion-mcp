@@ -57,7 +57,8 @@ export function redact(input: string): string {
   return out;
 }
 
-const SECRET_FIELD = /^(api[_-]?key|secret|password|token|access[_-]?token|authorization|cookie|set-cookie|x-api-key|client[_-]?secret|headers?)$/i;
+const SECRET_FIELD =
+  /^(api[_-]?key|secret|password|token|access[_-]?token|authorization|cookie|set-cookie|x-api-key|client[_-]?secret|headers?)$/i;
 
 /** Deep-redact a structured value (objects, arrays, strings). Returns a new value. */
 export function redactDeep<T>(value: T): T {

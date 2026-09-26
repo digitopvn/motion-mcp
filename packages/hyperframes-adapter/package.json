@@ -4,6 +4,26 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "exports": { ".": "./src/index.ts" },
-  "dependencies": {}
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "5.3.0",
+    "@fontsource/fraunces": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@fontsource/instrument-serif": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@fontsource/playfair-display": "5.3.0",
+    "@fontsource/space-grotesk": "5.3.0",
+    "@hyperframes/core": "0.8.78",
+    "@hyperframes/lint": "0.8.78",
+    "@hyperframes/producer": "0.8.78",
+    "@motion-mcp/media": "workspace:*",
+    "@motion-mcp/motion-ir": "workspace:*",
+    "@motion-mcp/shared": "workspace:*",
+    "gsap": "3.14.2",
+    "hyperframes": "0.8.78"
+  }
 }

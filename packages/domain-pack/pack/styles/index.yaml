@@ -1,0 +1,491 @@
+# Generated from profiles/*.yaml by `python scripts/resolve-style.py index --write`; do not edit by hand.
+# depth: reference = has a detailed style-*.md, profile = profile only.
+styles:
+  - id: bauhaus-geometry
+    name: Bauhaus Geometry
+    family: aesthetic
+    aliases: [bauhaus, primary geometry, constructivist shapes]
+    energy: 3
+    best_for: [explainer, brand-promo, concept-intro, education]
+    depth: profile
+    summary: Primary-colour circles, squares and triangles that roll, rotate and assemble into type and diagrams.
+  - id: blueprint-engineering
+    name: Blueprint Engineering
+    family: aesthetic
+    aliases: [blueprint, technical drawing, engineering schematic]
+    energy: 2
+    best_for: [architecture-explainer, hardware-spec, technical-deep-dive, how-it-works]
+    depth: profile
+    summary: Cyanotype blueprint sheet; white linework drawn stroke by stroke, dimension lines, callouts and exploded views.
+  - id: data-editorial
+    name: Data Editorial
+    family: aesthetic
+    aliases: [data journalism, infographic editorial, chart story]
+    energy: 2
+    best_for: [data-story, report-launch, research-explainer, benchmarks]
+    depth: profile
+    summary: Newsroom data story; charts build on narration, annotations point at the story and numbers carry the headline.
+  - id: holographic-hud
+    name: Holographic HUD
+    family: aesthetic
+    aliases: [hud, heads-up display, sci-fi interface]
+    energy: 3
+    best_for: [ai-product, security-tool, tech-launch, analytics-promo]
+    depth: profile
+    summary: Translucent cyan heads-up display; targeting rings, scanning sweeps, data readouts locking onto the subject.
+  - id: isometric-systems
+    name: Isometric Systems
+    family: aesthetic
+    aliases: [isometric, iso 3d, isometric illustration]
+    energy: 2
+    best_for: [architecture-explainer, platform-overview, infra-product, onboarding]
+    depth: profile
+    summary: Clean isometric world; systems as blocks and tiles, data flowing along iso paths, calm builds and axis pans.
+  - id: kinetic-typography
+    name: Kinetic Typography
+    family: aesthetic
+    aliases: [kinetic type, lyric video, type-driven motion]
+    energy: 4
+    best_for: [manifesto, announcement, social-cut, launch-teaser]
+    depth: profile
+    summary: Words are the visuals; giant type synced to every spoken word, masks, fills, stacks and rhythmic cuts.
+  - id: manga-ink
+    name: Manga Ink
+    family: aesthetic
+    aliases: [manga, anime ink, shonen]
+    energy: 5
+    best_for: [hype-launch, story-promo, youth-brand, social-cut]
+    depth: profile
+    summary: Black-and-white manga pages; brush ink, screentone, speed lines, diagonal panels and impact frames.
+  - id: monochrome-luxury
+    name: Monochrome Luxury
+    family: aesthetic
+    aliases: [luxury monochrome, fashion house, high fashion minimal]
+    energy: 1
+    best_for: [luxury-brand, premium-launch, lookbook, brand-manifesto]
+    depth: profile
+    summary: Black and ivory fashion-house film; high-contrast serif type, slow reveals, light sweeps and long holds.
+  - id: neo-brutalist-web
+    name: Neo Brutalist Web
+    family: aesthetic
+    aliases: [neo brutalism, neubrutalism, brutalist web]
+    energy: 4
+    best_for: [indie-launch, startup-promo, social-cut, changelog]
+    depth: profile
+    summary: Loud flat blocks, thick black borders, hard offset shadows, raw system type and snappy stamp-in motion.
+  - id: neon-cyberpunk
+    name: Neon Cyberpunk
+    family: aesthetic
+    aliases: [cyberpunk, neon noir, synth city]
+    energy: 5
+    best_for: [gaming-launch, hype-promo, web3-launch, music-promo]
+    depth: profile
+    summary: Rain-slick neon night; magenta and cyan glow signs, chromatic glitch cuts and bass-driven pulses.
+  - id: organic-biomorphic
+    name: Organic Biomorphic
+    family: aesthetic
+    aliases: [biomorphic, organic shapes, fluid blobs]
+    energy: 2
+    best_for: [wellness-brand, sustainability, ai-assistant, brand-story]
+    depth: profile
+    summary: Living fluid forms; morphing blobs, soft gradients, growing tendrils, breathing motion and natural calm.
+  - id: paper-cut-collage
+    name: Paper Cut Collage
+    family: aesthetic
+    aliases: [paper cutout, collage, stop-motion paper]
+    energy: 3
+    best_for: [brand-story, community-promo, explainer, creative-promo]
+    depth: profile
+    summary: Handmade collage; torn paper, cut-out photos, tape and stickers, layered shadows, stop-motion jitter.
+  - id: pixel-arcade
+    name: Pixel Arcade
+    family: aesthetic
+    aliases: [pixel art, 8-bit, arcade game]
+    energy: 4
+    best_for: [game-launch, gamified-feature, dev-community, social-cut]
+    depth: profile
+    summary: 8/16-bit game screens; chunky pixels, stepped motion, score counters, level-clear irises and power-up pops.
+  - id: retro-crt-broadcast
+    name: Retro CRT Broadcast
+    family: aesthetic
+    aliases: [crt, vhs broadcast, retro tv]
+    energy: 3
+    best_for: [retro-promo, nostalgia-campaign, announcement, explainer]
+    depth: profile
+    summary: Late-night analogue TV; scanlines, phosphor glow, channel-change static, lower thirds and test cards.
+  - id: saas-bento
+    name: SaaS Bento
+    family: aesthetic
+    aliases: [bento grid, bento box, feature bento]
+    energy: 3
+    best_for: [feature-tour, saas-launch, changelog, product-overview]
+    depth: profile
+    summary: Rounded bento-grid feature tiles that expand, reflow and swap content; clean SaaS landing-page motion.
+  - id: soft-clay-3d
+    name: Soft Clay 3D
+    family: aesthetic
+    aliases: [claymorphism, clay 3d, soft 3d]
+    energy: 3
+    best_for: [app-onboarding, friendly-feature, kids-edu, explainer]
+    depth: profile
+    summary: Squishy pastel 3D; rounded clay objects, soft shadows, bouncy squash-and-stretch, friendly toy-like scenes.
+  - id: swiss-kinetic-editorial
+    name: Swiss Kinetic Editorial
+    family: aesthetic
+    aliases: [swiss, international typographic style, swiss grid motion]
+    energy: 3
+    best_for: [explainer, editorial-promo, brand-manifesto, event-announcement]
+    depth: profile
+    summary: Strict modular grid, huge flush-left grotesk type, red accent bars and hard-snapping horizontal wipes.
+  - id: terminal-ops
+    name: Terminal Ops
+    family: aesthetic
+    aliases: [terminal, command line, cli aesthetic]
+    energy: 3
+    best_for: [cli-launch, developer-tool, devops-explainer, changelog]
+    depth: profile
+    summary: Full-frame terminal session; typed commands, streaming logs, status glyphs and cursor-driven cuts.
+  - id: vaporwave-memphis
+    name: Vaporwave Memphis
+    family: aesthetic
+    aliases: [vaporwave, memphis design, synthwave pastel]
+    energy: 3
+    best_for: [creative-promo, music-promo, brand-promo, social-cut]
+    depth: profile
+    summary: Pastel dreamscape; neon grid horizon, sliced sun, retro OS windows, Memphis squiggles and floating shapes.
+  - id: y2k-liquid-chrome
+    name: Y2K Liquid Chrome
+    family: aesthetic
+    aliases: [y2k, liquid chrome, millennium chrome]
+    energy: 4
+    best_for: [fashion-drop, music-promo, youth-brand, social-cut]
+    depth: profile
+    summary: Turn-of-millennium chrome; liquid metal type, iridescent bubbles, lens flares, glossy swooshes on bright skies.
+  - id: accelerated-compute
+    name: Accelerated Compute
+    family: brand-inspired
+    aliases: [nvidia, nvidia-like, nvidia-style, gpu keynote]
+    energy: 4
+    best_for: [ai-infrastructure, benchmark-reveal, chip-launch, developer-platform]
+    depth: profile
+    summary: GPU-keynote energy; black stage, acid-green circuitry, particle data streams and benchmark bars that surge.
+  - id: ambient-intelligence
+    name: Ambient Intelligence
+    family: brand-inspired
+    aliases: [openai, openai-like, openai-style, ai lab minimal]
+    energy: 2
+    best_for: [ai-model-launch, research-announcement, assistant-demo, product-explainer]
+    depth: profile
+    summary: Calm AI-lab minimalism; soft blurred colour fields, streaming text, generous white space and slow breathing motion.
+  - id: athletic-impact
+    name: Athletic Impact
+    family: brand-inspired
+    aliases: [nike, nike-like, nike style, nike ad]
+    energy: 5
+    best_for: [hype-launch, finale, sports-promo, motivational]
+    depth: profile
+    summary: Raw athletic hype; frame-filling condensed type, hard beat cuts, stutter frames, speed ramps and a high-vis accent.
+  - id: calm-workspace
+    name: Calm Workspace
+    family: brand-inspired
+    aliases: [notion, notion-like, notion style, notion doc]
+    energy: 1
+    best_for: [productivity-app, docs-tool, knowledge-base, thoughtful-explainer]
+    depth: profile
+    summary: Quiet document workspace; off-white page, serif headings, monoline doodles, blocks that type, drag and settle.
+  - id: character-comedy
+    name: Character Comedy
+    family: brand-inspired
+    aliases: [duolingo, duolingo-like, duolingo-style, mascot comedy]
+    energy: 5
+    best_for: [app-promo, habit-product, social-cut, gamified-feature]
+    depth: profile
+    summary: Mascot-led comedy; a chunky rounded character with big expressions, streak counters, bouncy UI and deadpan gags.
+  - id: cinematic-product-launch
+    name: Cinematic Product Launch
+    family: brand-inspired
+    aliases: [apple, apple-like, apple premium, apple-style, apple launch film]
+    energy: 2
+    best_for: [flagship-launch, premium-feature, brand-promo, product-reveal]
+    depth: reference
+    summary: Restrained premium product film; one centred hero, lots of air, continuous eased motion, quiet music.
+  - id: cinematic-streaming
+    name: Cinematic Streaming
+    family: brand-inspired
+    aliases: [netflix, netflix-like, netflix-style, streaming trailer]
+    energy: 4
+    best_for: [content-trailer, series-launch, catalogue-promo, teaser]
+    depth: profile
+    summary: Dark trailer grammar; letterboxed hero frames, red light sweeps, poster rows sliding in, a booming title hit.
+  - id: cinematic-technology
+    name: Cinematic Technology
+    family: brand-inspired
+    aliases: [sony, sony-like, sony-style, imaging tech film]
+    energy: 3
+    best_for: [imaging-product, audio-product, creator-tools, premium-brand-film]
+    depth: profile
+    summary: Filmmaker-grade tech film; anamorphic light, rack-focus reveals, deep blacks and elegant thin type over imagery.
+  - id: community-chaos
+    name: Community Chaos
+    family: brand-inspired
+    aliases: [discord, discord-like, discord style, gamer community]
+    energy: 5
+    best_for: [community-launch, gaming, social-feature, youth-promo]
+    depth: profile
+    summary: Loud online community; dark UI, electric blurple, voice rings, sticker slaps, meme zooms and chat floods.
+  - id: creative-canvas
+    name: Creative Canvas
+    family: brand-inspired
+    aliases: [figma, figma-like, figma style, figjam style]
+    energy: 3
+    best_for: [design-tool, collaboration, product-process, creative-workflow]
+    depth: profile
+    summary: Collaborative design canvas; infinite board, labelled multiplayer cursors, selection handles, frames that zoom and snap.
+  - id: creative-suite
+    name: Creative Suite
+    family: brand-inspired
+    aliases: [adobe, adobe-like, adobe style, creative cloud style]
+    energy: 3
+    best_for: [creative-tool, ai-generation, editing-workflow, portfolio]
+    depth: profile
+    summary: Pro creative tooling; dark workspace panels, layer stacks, brush-mask and before/after reveals, spectral colour.
+  - id: developer-workflow
+    name: Developer Workflow
+    family: brand-inspired
+    aliases: [github, github-like, github style, github universe]
+    energy: 3
+    best_for: [dev-tool, open-source, ci-cd, collaboration]
+    depth: profile
+    summary: Code-collaboration story; dark editor, diffs, branching commit graphs, checks turning green and activity grids.
+  - id: documentary-purpose
+    name: Documentary Purpose
+    family: brand-inspired
+    aliases: [patagonia, patagonia-like, patagonia-style, outdoor documentary]
+    energy: 2
+    best_for: [mission-film, impact-report, sustainability-story, founder-story]
+    depth: profile
+    summary: Purpose-led outdoor documentary; natural imagery, earthy palette, typewriter facts and patient handheld pacing.
+  - id: editorial-intelligence
+    name: Editorial Intelligence
+    family: brand-inspired
+    aliases: [anthropic, anthropic-like, anthropic-style, thoughtful ai editorial]
+    energy: 2
+    best_for: [ai-research, safety-explainer, thought-leadership, product-announcement]
+    depth: profile
+    summary: Thoughtful AI editorial; warm paper tones, serif headlines, hand-drawn line illustrations and measured reveals.
+  - id: expressive-material
+    name: Expressive Material
+    family: brand-inspired
+    aliases: [material you, material 3, material design expressive, android material]
+    energy: 3
+    best_for: [mobile-app, personalization, feature-tour, consumer-launch]
+    depth: profile
+    summary: Tonal, personal UI motion; seed-colour tonal palettes, morphing rounded shapes, container transforms, bold springs.
+  - id: extreme-energy
+    name: Extreme Energy
+    family: brand-inspired
+    aliases: [red bull, redbull, red-bull-like, extreme sports edit]
+    energy: 5
+    best_for: [event-hype, action-edit, sponsorship-reel, social-cut]
+    depth: profile
+    summary: Adrenaline action edit; speed ramps, whip pans, impact freeze-frames and huge condensed type slamming on drops.
+  - id: fluent-productivity
+    name: Fluent Productivity
+    family: brand-inspired
+    aliases: [microsoft fluent, fluent design, microsoft, microsoft 365 style]
+    energy: 2
+    best_for: [productivity-app, enterprise-feature, workflow-demo, ai-assistant]
+    depth: profile
+    summary: Calm layered productivity UI; soft translucent layers, depth shadows, connected element moves and decelerated entrances.
+  - id: friendly-system-motion
+    name: Friendly System Motion
+    family: brand-inspired
+    aliases: [google, google-like, google style, google product video]
+    energy: 3
+    best_for: [explainer, product-feature, how-it-works, consumer-app]
+    depth: profile
+    summary: Bright, helpful and simple; white space, cheerful primaries, bouncing dots that form shapes, rounded cards.
+  - id: functional-playful
+    name: Functional Playful
+    family: brand-inspired
+    aliases: [ikea, ikea-like, ikea-style, flat-pack explainer]
+    energy: 3
+    best_for: [how-it-works, home-product, value-promo, onboarding]
+    depth: profile
+    summary: Practical home-design wit; flat-pack diagrams, room sets that rearrange, blue and yellow blocks and dry humour.
+  - id: gradient-fintech
+    name: Gradient Fintech
+    family: brand-inspired
+    aliases: [stripe, stripe-like, stripe style, stripe gradient]
+    energy: 3
+    best_for: [fintech, api-product, developer-platform, growth-story]
+    depth: profile
+    summary: Polished developer fintech; flowing mesh gradients, slanted section edges, crisp floating cards and code.
+  - id: human-storytelling
+    name: Human Storytelling
+    family: brand-inspired
+    aliases: [airbnb, airbnb-like, airbnb-style, hospitality story]
+    energy: 2
+    best_for: [community-story, marketplace-promo, testimonial-film, brand-story]
+    depth: profile
+    summary: Warm, human travel story; rounded photo cards, soft coral accent, gentle parallax and handwritten-feeling pacing.
+  - id: immersive-console
+    name: Immersive Console
+    family: brand-inspired
+    aliases: [playstation, playstation-like, playstation-style, console reveal]
+    energy: 4
+    best_for: [game-launch, console-ui, entertainment-hub, immersive-reveal]
+    depth: profile
+    summary: Console reveal drama; deep blue void, floating light particles, UI tiles gliding in 3D and a heavy bass reveal.
+  - id: joyful-pop
+    name: Joyful Pop
+    family: brand-inspired
+    aliases: [coca-cola, coca cola, coke, coca-cola-like]
+    energy: 4
+    best_for: [seasonal-campaign, celebration-promo, community-moment, brand-anthem]
+    depth: profile
+    summary: Joyful red-and-white celebration; fizzy bubbles, bubble-burst transitions, confetti and warm shared moments.
+  - id: keynote-stage
+    name: Keynote Stage
+    family: brand-inspired
+    aliases: [apple keynote, apple event, apple keynote-like, apple presentation]
+    energy: 2
+    best_for: [product-launch, announcement, stats-reveal, event-recap]
+    depth: profile
+    summary: Live-stage presentation feel; black stage, one giant word or number per slide, builds and shared-element morphs.
+  - id: minimal-future-product
+    name: Minimal Future Product
+    family: brand-inspired
+    aliases: [tesla, tesla-like, tesla-style, ev launch]
+    energy: 2
+    best_for: [hardware-launch, vehicle-reveal, spec-sheet, future-product]
+    depth: profile
+    summary: Stark futurist product film; white or graphite void, wide-tracked caps, slow orbit reveals and silent spec reads.
+  - id: mission-control
+    name: Mission Control
+    family: brand-inspired
+    aliases: [spacex, spacex-like, spacex-style, launch broadcast]
+    energy: 4
+    best_for: [launch-event, milestone-reveal, deep-tech, roadmap-story]
+    depth: profile
+    summary: Live launch-broadcast feel; telemetry readouts, T-minus countdowns, trajectory arcs and stark white-on-black type.
+  - id: modular-build
+    name: Modular Build
+    family: brand-inspired
+    aliases: [lego, lego-like, lego-style, brick build]
+    energy: 4
+    best_for: [product-assembly, onboarding-steps, platform-building-blocks, kids-promo]
+    depth: profile
+    summary: Build-it-yourself play; plain stackable blocks snapping together step by step, stop-motion stepping and bold primaries.
+  - id: monochrome-developer
+    name: Monochrome Developer
+    family: brand-inspired
+    aliases: [vercel, vercel-like, vercel style, nextjs style]
+    energy: 3
+    best_for: [developer-platform, deploy-flow, infrastructure, launch-week]
+    depth: profile
+    summary: Stark black-and-white developer platform; plus-marked grid lines, deploy logs, spotlight beams and edge-network globes.
+  - id: music-editorial
+    name: Music Editorial
+    family: brand-inspired
+    aliases: [spotify, spotify-like, spotify style, spotify campaign]
+    energy: 4
+    best_for: [year-in-review, music-app, personalized-stats, culture-campaign]
+    depth: profile
+    summary: Bold music culture; duotone portraits, saturated colour blocks, huge type, stat cards and beat-locked cuts.
+  - id: playful-game-system
+    name: Playful Game System
+    family: brand-inspired
+    aliases: [nintendo, nintendo-like, nintendo-style, family game promo]
+    energy: 4
+    best_for: [game-promo, family-product, playful-feature, social-cut]
+    depth: profile
+    summary: Bright family-game joy; white stage, primary colour pops, bouncy springy UI, click sounds and characters that hop.
+  - id: playful-productivity
+    name: Playful Productivity
+    family: brand-inspired
+    aliases: [slack, slack-like, slack style, slack ad]
+    energy: 4
+    best_for: [team-app, collaboration, integrations, workplace-culture]
+    depth: profile
+    summary: Cheerful team chat; plum and bright accents, bouncy message pops, emoji bursts, threads that unfold.
+  - id: precision-dark-product
+    name: Precision Dark Product
+    family: brand-inspired
+    aliases: [linear, linear-like, linear style, linear app style]
+    energy: 3
+    best_for: [saas-product, dev-tool, feature-launch, changelog]
+    depth: profile
+    summary: Crisp dark product UI; near-black, hairline borders, soft top glows, snappy keyboard-driven list and command moves.
+  - id: precision-hardware
+    name: Precision Hardware
+    family: brand-inspired
+    aliases: [dji, dji-like, dji-style, drone gear]
+    energy: 3
+    best_for: [gadget-launch, camera-gear, exploded-view, spec-reveal]
+    depth: profile
+    summary: Aerial-gear precision; sweeping fly-through camera, exploded component views and crisp spec callouts on graphite.
+  - id: premium-ui-demo
+    name: Premium UI Demo
+    family: brand-inspired
+    aliases: [apple ui, apple interface, apple ui demo, apple app demo]
+    energy: 2
+    best_for: [app-demo, feature-walkthrough, onboarding, ui-reveal]
+    depth: profile
+    summary: Light, spring-driven interface demo; floating rounded panels, soft depth, taps that zoom and sheets that rise.
+  - id: product-spec-film
+    name: Product Spec Film
+    family: brand-inspired
+    aliases: [apple technical film, apple engineering film, apple spec film, apple exploded view]
+    energy: 2
+    best_for: [hardware-spec, architecture-reveal, engineering-story, feature-deep-dive]
+    depth: profile
+    summary: Engineering showcase; exploded layers, x-ray linework, leader-line callouts and precise spec numbers on graphite.
+  - id: quirky-editorial
+    name: Quirky Editorial
+    family: brand-inspired
+    aliases: [mailchimp, mailchimp-like, mailchimp-style, quirky illustration]
+    energy: 3
+    best_for: [small-business-promo, marketing-tool, brand-refresh, explainer]
+    depth: profile
+    summary: Offbeat editorial illustration; mustard fields, loose ink drawings, surreal cut-outs and witty serif headlines.
+  - id: sensory-tech
+    name: Sensory Tech
+    family: brand-inspired
+    aliases: [samsung, samsung-like, samsung-style]
+    energy: 3
+    best_for: [device-launch, feature-showcase, display-tech, consumer-promo]
+    depth: profile
+    summary: Vivid consumer-tech showcase; fluid colour gradients, device morphs, sensory close-ups and bright rhythmic UI.
+  - id: sport-editorial
+    name: Sport Editorial
+    family: brand-inspired
+    aliases: [adidas, adidas-like, adidas style, adidas campaign]
+    energy: 4
+    best_for: [campaign, lifestyle-launch, collection-drop, culture-story]
+    depth: profile
+    summary: Street-sport magazine; off-white editorial grid, split panels, cut-out collage, bold grotesk and rhythmic panel wipes.
+  - id: systematic-enterprise
+    name: Systematic Enterprise
+    family: brand-inspired
+    aliases: [ibm, ibm-like, ibm style, ibm carbon]
+    energy: 2
+    best_for: [enterprise-solution, data-platform, b2b-explainer, research-story]
+    depth: profile
+    summary: Rigorous design-system motion; strict 2x grid, square corners, blue on grey, productive curves and column mask reveals.
+  - id: comic-multiverse
+    name: Comic Multiverse
+    family: house
+    aliases: [comic, spider-verse, spiderverse, comic book, multiverse]
+    energy: 5
+    best_for: [hype-launch, social-cut, youth-brand, playful-promo]
+    depth: reference
+    summary: Loud hand-made comic energy; halftone, ink outlines, CMY misregistration, glitch cuts, motion on twos.
+  - id: glass-keynote
+    name: Glass Keynote
+    family: house
+    aliases: [glass, keynote glass, dewee keynote]
+    energy: 3
+    best_for: [product-launch, changelog, explainer, feature-tour]
+    depth: reference
+    summary: Calm premium tech keynote; indigo space, drifting colour orbs, frosted glass cards, gradient type.

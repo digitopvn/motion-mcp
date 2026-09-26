@@ -1,0 +1,52 @@
+id: neo-brutalist-web
+name: Neo Brutalist Web
+family: aesthetic
+aliases: [neo brutalism, neubrutalism, brutalist web]
+summary: Loud flat blocks, thick black borders, hard offset shadows, raw system type and snappy stamp-in motion.
+energy: 4
+best_for: [indie-launch, startup-promo, social-cut, changelog]
+character: >-
+  Raw and cheeky web UI blown up to full frame: saturated flat blocks, 4 px
+  black outlines and hard offset shadows that never blur. Elements stamp in,
+  overshoot and knock each other aside, like buttons being pressed.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#fffdf5", ink: "#000000", accent: "#ff5c00", yellow: "#ffe600", blue: "#3d7bff", pink: "#ff8fd8", green: "#00d18f"}
+    rule: "Flat fills only, no gradients; every block outlined in ink; max 3 fills on screen plus bg and ink."
+  typography:
+    - "Archivo Black uppercase headlines 120-180 px, -0.02em tracking"
+    - "Space Grotesk 500 body 36 px; Space Mono 700 for labels, prices and tags"
+    - "Highlighter effect: headline words sit on rotated (-2 deg) coloured blocks"
+  layout:
+    - "Chunky cards on a loose 8-column grid with deliberate overlap and 1-3 deg tilts"
+    - "Sticker labels and arrow callouts pinned to corners"
+    - "Dense but blocky; one dominant card per scene"
+  material: ["Flat cards: 4 px #000 border, radius 0 or 14, hard shadow 10px 10px 0 #000; pressed state shadow 2px 2px"]
+  texture: ["None or baked PNG dot grid at 8% opacity on bg"]
+  camera: ["Locked-off; quick 1.04 punch-in on stamps"]
+  transitions: ["stamp (card drops from scale 1.25, back.out(2.2) 0.32 s, shadow grows 0 -> 10 px)", "shove (new card pushes old out sideways, power4.out 0.35 s)", "block-wipe (solid colour slab slides across then off, 0.4 s)", "hard cut on kicks"]
+  pacing:
+    bpm: [120, 140]
+    rhythm: "Quick: new card or sticker every 1-2 beats in feature runs, 4-beat holds only on headlines and CTA."
+  beat_response: ["Hard shadow snaps 10 -> 2 -> 10 px on kicks (button press)", "Sticker tags wobble 3 deg on downbeats", "Block-wipe cuts on drops"]
+  ui_choreography: ["UI rebuilt as flat outlined panels; buttons physically press on click words", "List rows stamp in with 0.05 s stagger and slight random tilt from rng", "Cursor is a chunky black arrow with hard shadow"]
+  diagrams: ["Boxes with 4 px outlines joined by thick black arrows with square heads", "Bar charts as outlined flat bars that stamp up"]
+  character_motion: ["Optional sticker-style emoji or flat shape mascot that bounces with back.out"]
+  captions: ["Yellow block with 3 px ink border and 6px 6px 0 ink shadow, 42 px Be Vietnam Pro 800 ink; current word on accent orange highlight"]
+  sound: ["Upbeat indie electro or punchy pop 120-140 BPM", "Dense clicky SFX: button clicks, stamps, pops on every card"]
+scene_types:
+  prefer: [hook, feature, ui-demo, comparison, stats, cta]
+  avoid: [quote, testimonial]
+signature_moves:
+  - "Button press: hard shadow collapses on the spoken word"
+  - "Stamp-in card with back.out overshoot"
+  - "New card shoves the previous one off frame"
+  - "Rotated highlighter block behind headline words"
+strengths: ["Instant attention", "Personality for small brands", "Very legible UI callouts"]
+constraints:
+  - "Shadows always hard offset, never blurred"
+  - "Every filled shape has an ink border"
+  - "No gradients, glass or soft glows"
+avoid: ["Premium restraint", "Thin hairline type", "Photoreal product renders"]
+pairs_well_with: [comic-multiverse, joyful-pop, saas-bento, playful-productivity]

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Motion MCP">
+  <style>
+    .base { fill: #111111; }
+    .rule { fill: #f4f1ea; }
+    @media (prefers-color-scheme: dark) {
+      .base { fill: #f4f1ea; }
+      .rule { fill: #111111; }
+    }
+  </style>
+  <rect class="base" width="32" height="32" rx="6"/>
+  <rect class="rule" x="6" y="19" width="20" height="2" opacity=".45"/>
+  <rect class="rule" x="6" y="19" width="12" height="2"/>
+  <rect x="17" y="8" width="2.5" height="17" fill="#e4572e"/>
+  <path d="M14.5 6h7.5l-3.75 4z" fill="#e4572e"/>
+</svg>

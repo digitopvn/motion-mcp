@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Static marketing site for Motion MCP, served from Workers static assets.
+  "name": "motion-mcp-marketing",
+  "compatibility_date": "2026-09-25",
+  "assets": { "directory": "./public" },
+  "routes": [{ "pattern": "motion.digitop.ai", "custom_domain": true }]
+}

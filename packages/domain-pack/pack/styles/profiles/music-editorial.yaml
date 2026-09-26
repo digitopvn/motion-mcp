@@ -1,0 +1,54 @@
+id: music-editorial
+name: Music Editorial
+family: brand-inspired
+aliases: [spotify, spotify-like, spotify style, spotify campaign]
+summary: Bold music culture; duotone portraits, saturated colour blocks, huge type, stat cards and beat-locked cuts.
+energy: 4
+best_for: [year-in-review, music-app, personalized-stats, culture-campaign]
+character: >-
+  Loud colour and music-first rhythm: duotone portraits on saturated blocks,
+  huge tight type, personal stats revealed like story cards and cuts locked to
+  the beat. Playful editorial with a pop-culture pulse.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#141416", ink: "#ffffff", mute: "#b5b3ae", accent: "#2ad19a", pink: "#ff4fa3", orange: "#ff8340", lilac: "#a99bd0", yellow: "#f7e14b", blue: "#4238b5"}
+    rule: "Each scene is one saturated block plus a contrasting duotone pair (e.g. pink on blue, yellow on orange); green accent as a thread across the video."
+  typography:
+    - "Archivo 900 headlines 160-260 px, -0.04em, line-height 0.9"
+    - "Archivo 700 stat labels 40 px; numbers 200+ px"
+    - "Words can break across lines and stack in alternating colours"
+  layout:
+    - "Story-card framing: centred stack of big number, label, small context"
+    - "Album-art style square grids (3x3) for montage scenes"
+    - "Duotone portrait cut-out overlapping a colour block"
+  material: ["Flat colour blocks, no radius or radius 24 for cards", "Square cover-art tiles with no shadow"]
+  texture: ["Duotone gradient-mapped images pre-baked to PNG", "Paper grain 6% baked PNG optional"]
+  camera:
+    - "Beat-synced scale hits 1 -> 1.06 on kicks for images"
+    - "Grid pans across cover tiles (x 300-600 px, power2.inOut over the scene)"
+  transitions: ["colour-block-wipe (full-frame block slides in on the beat, next scene revealed on it)", "cut on beat", "tile-grid (squares flip in grid order)", "shape-mask (blob or circle mask expands from a stat)"]
+  pacing:
+    bpm: [110, 130]
+    rhythm: "Beat-locked: stat cards 4 beats, montage 1-beat cuts, big reveals hold 8 beats; builds with the chorus."
+  beat_response: ["Images scale-hit on kicks", "Background block colour swaps on bar starts in montage", "Waveform bars follow envKeys on the music"]
+  ui_choreography: ["Player-style UI minimal: progress bar fill, play button morph play -> pause, track rows sliding in", "Stats cards stack like stories with swipe-left transitions"]
+  diagrams: ["Charts as chunky colour bars and big numbers; genre mixes as stacked coloured bands"]
+  character_motion: ["No mascot; cut-out portraits bounce on kicks (y 12 px)"]
+  captions: ["Solid black box radius 8, 42 px Be Vietnam Pro 800 white; current word accent"]
+  sound: ["Pop, dance or indie with a strong chorus, 110-130 BPM", "Few SFX: vinyl scratch-lite on reveals, whoosh on block wipes; music forward (still under speech)"]
+scene_types:
+  prefer: [stats, montage, hook, cover, quote, outro]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Full-frame colour block wipe on the beat"
+  - "Giant personal stat revealed like a story card"
+  - "Duotone portrait over a saturated block"
+  - "Cover-art tile grid flipping in order"
+strengths: ["Culturally fresh and bold", "Makes numbers personal and shareable"]
+constraints:
+  - "Duotones baked to PNG, not live filters"
+  - "Max 3 saturated colours per scene"
+  - "No brand logo, wordmark or real album covers"
+avoid: ["Muted corporate palettes", "Thin light type", "Slow eased dissolves"]
+pairs_well_with: [sport-editorial, kinetic-typography, joyful-pop, data-editorial]

@@ -1,0 +1,56 @@
+id: precision-dark-product
+name: Precision Dark Product
+family: brand-inspired
+aliases: [linear, linear-like, linear style, linear app style]
+summary: Crisp dark product UI; near-black, hairline borders, soft top glows, snappy keyboard-driven list and command moves.
+energy: 3
+best_for: [saas-product, dev-tool, feature-launch, changelog]
+character: >-
+  Fast, exact and quiet: a near-black stage with faint top light, hairline
+  borders, fading gradient headlines and interfaces that respond instantly to
+  keyboard commands. Motion is short and snappy, never floaty.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0a0a0d", ink: "#f5f5f3", mute: "#8e9099", surface: "#111216", hair: "rgba(255,255,255,0.08)", accent: "#6d5fd0", green: "#3fb39c", amber: "#eeaf4a", red: "#e25d6f"}
+    rule: "Near-black with one desaturated indigo accent; status colours only on 8 px dots and small badges."
+  typography:
+    - "Inter 500 headlines 64-80 px at -0.035em, gradient fill ink -> mute top to bottom"
+    - "Inter 400 body 26 px mute; Inter 500 14-16 px (scaled 24 px) UI"
+    - "JetBrains Mono 20 px for shortcut keys in keycap chips"
+  layout:
+    - "Headline centred high; product window below, cropped by frame bottom"
+    - "Or window full-frame with a single floating label"
+  material: ["Surface panels with 1 px hair border, radius 8-12, inner top highlight rgba(255,255,255,0.04)", "Soft accent top glow: large ellipse baked PNG at 15% above the window"]
+  texture: ["Faint noise 2% baked PNG", "Top light glow baked PNG"]
+  camera:
+    - "Slow tilt-in of the window (rotateX 18 -> 0, perspective 1800, power3.out 1.2 s)"
+    - "Crops glide to the active area (translate 80-200 px, power3.inOut 0.6 s)"
+  transitions: ["glow-rise (next scene rises 24 px from under the top glow, 0.35 s power3.out)", "command-cut (command palette opens, selection made, scene switches on enter)", "tilt-settle (window tilts in from rotateX 18)", "fast fade 0.2 s"]
+  pacing:
+    bpm: [110, 128]
+    rhythm: "Snappy: UI actions every 1-2 beats, 0.15-0.25 s tweens; hero headlines hold 6 beats."
+  beat_response: ["Top glow breathes 5% on kicks", "Keycap chips depress on beats when shortcuts are shown"]
+  ui_choreography:
+    - "Command palette drops (scale 0.98 -> 1, fade, 0.15 s), filter text types, highlighted row moves down with each keystroke"
+    - "Issue rows reorder with FLIP-style y moves 0.25 s power3.out; status dot colour-changes"
+    - "Keyboard shortcut keycaps appear bottom-centre as the action happens"
+  diagrams: ["Hairline 1 px connectors between surface nodes; progress as thin accent bars filling"]
+  character_motion: ["No mascot"]
+  captions: ["Surface pill with hair border, radius 10, 40 px Be Vietnam Pro 500 ink; unread words mute"]
+  sound: ["Minimal deep house or ambient electronic 110-128 BPM", "Crisp key taps on shortcuts, very low density otherwise"]
+scene_types:
+  prefer: [ui-demo, feature, title, cta, timeline]
+  avoid: [montage, testimonial, hook]
+signature_moves:
+  - "Command palette driving a scene change"
+  - "Rows reordering instantly with FLIP moves"
+  - "Window tilting in under a soft top glow"
+  - "Keycap chips pressed in sync with actions"
+strengths: ["Feels fast and high-craft", "Ideal for dev and SaaS tools"]
+constraints:
+  - "UI tweens 0.15-0.3 s; no bouncy springs"
+  - "1 px hair borders only"
+  - "Glows baked PNG, max 2 on screen"
+avoid: ["Bright light themes", "Chunky shadows", "Playful mascots"]
+pairs_well_with: [monochrome-developer, gradient-fintech, cinematic-product-launch, saas-bento]

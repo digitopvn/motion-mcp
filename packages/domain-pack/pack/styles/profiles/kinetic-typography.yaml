@@ -1,0 +1,49 @@
+id: kinetic-typography
+name: Kinetic Typography
+family: aesthetic
+aliases: [kinetic type, lyric video, type-driven motion]
+summary: Words are the visuals; giant type synced to every spoken word, masks, fills, stacks and rhythmic cuts.
+energy: 4
+best_for: [manifesto, announcement, social-cut, launch-teaser]
+character: >-
+  The voice-over becomes the picture: huge words land exactly on their spoken
+  onsets, stack, scale and fill the frame, and cut on the rhythm. Minimal
+  imagery; hierarchy and timing carry the story.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#0e0e0e", ink: "#f4f1ea", accent: "#ff4d00", alt: "#f4f1ea", altInk: "#0e0e0e", mute: "rgba(244,241,234,0.35)"}
+    rule: "Two-tone: scenes invert between dark (bg/ink) and light (alt/altInk); accent fills only the one stressed word per line."
+  typography:
+    - "Anton uppercase for impact words, 180-420 px, tracking -0.01em, line-height 0.86"
+    - "Inter Tight 800 for connecting words, 90-140 px"
+    - "Instrument Serif Italic for one emotional word per scene"
+  layout: ["Words fill 70-90% of frame width; stacked lines on a centred or left-aligned axis", "Layout reflows per line: sizes set by word stress, not by a fixed grid", "Caption band kept clear; the big type sits above y 820"]
+  material: ["Flat type only; optional outline-only (1.5 px stroke) duplicates for echoes"]
+  texture: ["None by default; optional baked grain PNG at 6%"]
+  camera: ["Continuous slow zoom-through words (scale 1.0 -> 1.12 per line)", "Snap rotate 90 deg to change reading direction at section turns", "No shake"]
+  transitions: ["type-fill cut (last word scales past the camera until its fill becomes the next bg, 0.3 s expo.in)", "mask-slide (next line revealed by a clip-path bar sliding through the letters, 0.25 s power3.out)", "invert-cut (hard cut that swaps dark/light on a kick)", "word-push (new word pushes the old one off-axis, 0.2 s)"]
+  pacing:
+    bpm: [100, 128]
+    rhythm: "Word-locked: every word enters at W(word); lines change every 1-2 beats in verses, big words hold a full bar at climaxes."
+  beat_response: ["Invert-cut allowed only on kick downbeats", "Outline echoes of the current word scale out 1.0 -> 1.2 and fade on kicks", "Stressed word nudges 1.03 on its beat"]
+  ui_choreography: ["UI appears only as a small inset between type lines, or as type (labels, values) itself", "Numbers slam in digit by digit via odo in Anton"]
+  diagrams: ["Diagrams made of words: arrows are typographic (→, /, +) and connecting lines drawn with draw()", "Stats as one huge number with a tiny label"]
+  character_motion: ["No mascot; letters themselves squash, stretch or rotate per character"]
+  captions: ["Minimal: 40 px Be Vietnam Pro 600 in mute with current word ink, no box; bottom band; drop captions only if the big type already shows the same words and the brief allows"]
+  sound: ["Punchy hip-hop, electronic or percussive score 100-128 BPM", "SFX: tight whooshes and clicks on word entrances, sub hits on invert cuts; medium density"]
+scene_types:
+  prefer: [hook, title, quote, stats, cta, outro]
+  avoid: [ui-demo, diagram, terminal]
+signature_moves:
+  - "Every word lands on its spoken onset"
+  - "Type-fill cut: a letter becomes the next background"
+  - "Dark/light invert cut on the kick"
+  - "Mask bar sliding through a stacked line"
+strengths: ["Maximum message retention", "Needs almost no assets", "Social-native and fast to produce"]
+constraints:
+  - "Every word entrance anchored with W(); no fixed offsets"
+  - "Max one accent-filled word per line"
+  - "Big type never enters the caption band"
+avoid: ["Busy backgrounds or imagery behind type", "More than three typefaces", "Slow crossfades"]
+pairs_well_with: [swiss-kinetic-editorial, athletic-impact, manga-ink, retro-crt-broadcast]

@@ -1,0 +1,55 @@
+id: joyful-pop
+name: Joyful Pop
+family: brand-inspired
+aliases: [coca-cola, coca cola, coke, coca-cola-like]
+summary: Joyful red-and-white celebration; fizzy bubbles, bubble-burst transitions, confetti and warm shared moments.
+energy: 4
+best_for: [seasonal-campaign, celebration-promo, community-moment, brand-anthem]
+character: >-
+  Effervescent optimism: a bold red field, rising bubble fizz that carries
+  one scene into the next, bubble bursts and confetti on the happiest
+  words. It celebrates togetherness with warmth and nostalgia.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#e8503a", ink: "#ffffff", accent: "#ffffff", deep: "#a8321f", cream: "#fff4e0", gold: "#f5c242", dark: "#1a0b0b"}
+    rule: "Red field with white as the hero colour; cream for photo borders; gold only for sparkles and confetti."
+  typography:
+    - "DM Serif Display 400 headlines 88 px, warm and classic"
+    - "Nunito 700 for supporting lines 32 px"
+    - "Be Vietnam Pro 700 for captions"
+  layout:
+    - "Centred headline over a soft cluster of rising bubbles"
+    - "Polaroid-style photo clusters of people sharing moments"
+  material: ["Cream-bordered photo prints with slight rotation and soft shadow", "Glossy white bubbles and speech-bubble shapes with a soft gradient highlight"]
+  texture: ["Seeded rising bubbles (max 60 small circles)", "Baked PNG sparkle sprites", "Subtle vignette on red"]
+  camera: ["Gentle float (y 10 px, sine.inOut, finite repeats sized to the hold) on holds", "Lateral pan following the rising bubbles"]
+  transitions: ["bubble burst (one large bubble swells from centre and pops to reveal the next scene, 0.6 s power2.inOut)", "fizz rise (bubbles swell upward and cover, then clear)", "confetti burst cut (seeded confetti on the downbeat)", "photo toss (print slides away, next drops in)"]
+  pacing:
+    bpm: [105, 125]
+    rhythm: "Anthemic: warm 4-beat scenes building to a chorus-like montage of shared moments, joyful end card hold."
+  beat_response: ["Bubbles accelerate on kick beats", "Confetti bursts on chorus downbeats", "Headline bump 1.03 on kicks"]
+  ui_choreography:
+    - "Cards and photos drop in with a slight rotation and settle (back.out 1.4, 0.6 s)"
+    - "Numbers and messages appear inside speech-bubble shapes that pop"
+    - "A straight white underline bar grows under key words as they are spoken (scaleX 0 -> 1)"
+  diagrams: ["Rarely; rounded red/white infographics with straight rounded connectors"]
+  character_motion: ["Real people moments; optional simple hand-drawn doodles (hearts, stars) drawn on"]
+  captions: ["White pill radius 26, 44 px Be Vietnam Pro 700 in #a8321f; current word #e8503a"]
+  sound: ["Uplifting pop anthem with claps and choir 110-120 BPM", "SFX: fizz and pop on bubbles, sparkle chimes on confetti"]
+scene_types:
+  prefer: [hook, montage, testimonial, quote, title, cta, outro]
+  avoid: [terminal, code, spec, chart]
+signature_moves:
+  - "Bubble burst that pops into the next scene"
+  - "Rising bubble fizz transition"
+  - "Confetti burst on the happiest word"
+  - "Polaroid clusters of shared moments"
+strengths: ["Celebration and warmth", "Seasonal and community campaigns", "Emotional brand anthems"]
+constraints:
+  - "No script-lettered logo imitation, bottle shapes or slogans"
+  - "No ribbon, wave or swoosh device sweeping across the frame"
+  - "Confetti and bubbles from seeded rng with fixed caps"
+  - "Red field or red accents in every scene"
+avoid: ["Cold tech palettes", "Dense UI", "Grungy textures"]
+pairs_well_with: [human-storytelling, music-editorial, character-comedy, paper-cut-collage]

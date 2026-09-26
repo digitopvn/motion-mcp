@@ -1,0 +1,49 @@
+id: vaporwave-memphis
+name: Vaporwave Memphis
+family: aesthetic
+aliases: [vaporwave, memphis design, synthwave pastel]
+summary: Pastel dreamscape; neon grid horizon, sliced sun, retro OS windows, Memphis squiggles and floating shapes.
+energy: 3
+best_for: [creative-promo, music-promo, brand-promo, social-cut]
+character: >-
+  Ironic, dreamy and decorative: a pink-to-teal sunset over a scrolling neon
+  grid, old desktop windows popping open, and bold Memphis shapes floating in
+  slow motion. Relaxed tempo, lots of pattern, never sharp or corporate.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#2b1055", ink: "#fff4fb", accent: "#ff71ce", teal: "#01cdfe", mint: "#05ffa1", lilac: "#b967ff", sun: "#fffb96", window: "#c0c0c0"}
+    rule: "Sky gradient #2b1055 -> #ff71ce -> #fffb96; Memphis shapes use flat teal, mint, sun, lilac with 4 px #1a1a2e outlines."
+  typography:
+    - "Monoton for one display word per scene, 160 px, neon glow"
+    - "Rubik 800 italic for headlines, 80 px, pink/teal stacked offset shadow"
+    - "Space Mono for window titles and faux file names"
+  layout: ["Horizon line at 58% height; grid floor below, sun and hero above", "Retro OS windows stacked at slight offsets, title bar #000080", "Memphis confetti in the outer thirds, clear of the caption band"]
+  material: ["Flat pastel shapes with hard outlines", "Bevelled grey windows (2 px white top-left, 2 px #404040 bottom-right)"]
+  texture: ["Baked grid-floor PNG scrolled on backgroundPositionY", "Baked Memphis squiggle and dot pattern tiles", "Light VHS chroma bleed PNG at 10% alpha"]
+  camera: ["Slow dolly forward over the grid (backgroundPositionY scroll, linear during holds)", "Floating shapes rotate 20-40 deg over a scene", "No shake"]
+  transitions: ["window-pop (retro window opens scale 0.2 -> 1, steps(4) 0.24 s, next scene inside it goes full-frame)", "sun-slice (horizontal bars slide in alternating directions, 0.5 s power2.inOut)", "shape-confetti wipe (Memphis shapes cover then clear the frame, seeded stagger)", "grid-dive (camera drops into the grid floor, scale 1 -> 1.8)"]
+  pacing:
+    bpm: [80, 100]
+    rhythm: "Laid back: scenes hold 8 beats, windows open on 2-beat grid; outro slows into the sunset."
+  beat_response: ["Sun bars shift 4 px on kick beats", "Floating shapes bob and rotate 5 deg on kicks", "Neon glow on the display word breathes on downbeats"]
+  ui_choreography: ["UI lives in retro OS windows with fake close buttons", "Windows cascade open with 0.12 s offsets; dialog boxes pop on the spoken word", "Progress bars fill in chunky segments"]
+  diagrams: ["Nodes as Memphis shapes joined by squiggle connectors drawn with draw()", "Charts as pastel bars on the grid floor in perspective"]
+  character_motion: ["Classical bust or palm cut-outs drift slowly", "Optional pastel blob mascot with gentle float, no hard squash"]
+  captions: ["Retro window strip: #c0c0c0 bevel box, 42 px Be Vietnam Pro 700 #1a1a2e; current word #ff71ce; bottom band"]
+  sound: ["Vaporwave, future funk or chillwave 80-100 BPM, slowed and reverby", "SFX: old OS dings on window pops, tape wobble on transitions; light density"]
+scene_types:
+  prefer: [cover, title, feature, montage, quote, outro]
+  avoid: [code, spec, terminal]
+signature_moves:
+  - "Neon grid horizon with a sliced sun"
+  - "Retro window pops open and becomes the next scene"
+  - "Memphis confetti wipe"
+  - "Sun-slice bars transition"
+strengths: ["Strong mood and colour", "Playful irony", "Easy to layer over other content"]
+constraints:
+  - "Grid, patterns and chroma bleed baked to PNG"
+  - "Max ~16 floating shapes per scene"
+  - "One Monoton word per scene maximum"
+avoid: ["Corporate blues and greys", "Fast aggressive cuts", "Photoreal product renders"]
+pairs_well_with: [retro-crt-broadcast, y2k-liquid-chrome, pixel-arcade, joyful-pop]

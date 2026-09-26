@@ -1,0 +1,223 @@
+{
+  "version": "0.1",
+  "title": "How vector search finds meaning",
+  "format": { "aspect": "16:9", "fps": 30 },
+  "styleRefs": ["technical-explainer"],
+  "tastePacket": {
+    "creativeIntent": {
+      "feeling": "curious, then quietly impressed",
+      "concept": "Words become points in space; meaning is just distance."
+    },
+    "mood": ["technical", "clear", "confident"],
+    "energy": 3,
+    "visualDensity": 3,
+    "visualLanguage": ["dark IDE palette", "monospace annotations", "diagrammatic arrows"],
+    "avoid": ["stock neural-network imagery", "glowing brains", "buzzword overlays"],
+    "visualHierarchy": { "hero": "the idea in one line", "secondary": "code", "tertiary": "labels" },
+    "motionLanguage": {
+      "tempo": "measured",
+      "camera": "none",
+      "transitions": "wipes that follow the reading direction",
+      "holdRatio": 0.4,
+      "easing": ["decelerate", "standard"],
+      "avoidEasing": ["spring-soft"],
+      "principles": ["show the mechanism before the claim", "type code at reading speed"]
+    },
+    "typography": {
+      "display": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "mono": "IBM Plex Mono",
+      "direction": "engineering documentation, set large"
+    },
+    "color": {
+      "background": "#0f1419",
+      "foreground": "#e6edf3",
+      "accent": "#58a6ff",
+      "muted": "#8b949e",
+      "surface": "#161b22",
+      "direction": "editor dark mode with one blue signal"
+    },
+    "emotionalArc": "question → mechanism → proof",
+    "sceneRhythm": "even, one idea per scene"
+  },
+  "scenes": [
+    {
+      "id": "s01-title",
+      "role": "title",
+      "intent": "Pose the question.",
+      "duration": 4,
+      "focalPoint": "the headline",
+      "layout": "statement",
+      "elements": [
+        {
+          "id": "kicker",
+          "kind": "text",
+          "role": "annotation",
+          "text": "Explainer · 01",
+          "style": { "font": "mono", "size": "label", "color": "accent", "uppercase": true }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "role": "hero",
+          "text": "How does vector search find meaning?",
+          "style": { "size": "display", "weight": "semibold", "align": "start" }
+        }
+      ],
+      "choreography": [
+        {
+          "target": "headline",
+          "primitive": "mask-reveal",
+          "at": 0.3,
+          "duration": 0.9,
+          "easing": "decelerate"
+        },
+        {
+          "target": "kicker",
+          "primitive": "fade-in",
+          "at": { "with": "headline", "offset": 0.4 },
+          "duration": 0.5
+        }
+      ],
+      "transitionOut": "wipe"
+    },
+    {
+      "id": "s02-embed",
+      "role": "mechanism",
+      "intent": "Text becomes a vector.",
+      "duration": 6,
+      "focalPoint": "the code line",
+      "layout": "split",
+      "elements": [
+        {
+          "id": "code",
+          "kind": "code",
+          "role": "hero",
+          "language": "ts",
+          "code": "const v = embed(\"red running shoes\");\n// → [0.12, -0.48, 0.91, …]",
+          "region": "left"
+        },
+        {
+          "id": "arrow",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "arrow",
+          "style": { "color": "accent" }
+        },
+        {
+          "id": "claim",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Every sentence becomes a point in 1,536 dimensions.",
+          "style": { "size": "title", "align": "start" }
+        }
+      ],
+      "choreography": [
+        { "target": "code", "primitive": "type-on", "at": 0.3, "duration": 1.6 },
+        {
+          "target": "arrow",
+          "primitive": "draw",
+          "at": { "after": "code", "offset": 0.1 },
+          "duration": 0.5,
+          "easing": "standard"
+        },
+        {
+          "target": "claim",
+          "primitive": "fade-up",
+          "at": { "after": "arrow", "offset": 0 },
+          "duration": 0.6
+        }
+      ],
+      "transitionOut": "slide-left"
+    },
+    {
+      "id": "s03-compare",
+      "role": "mechanism",
+      "intent": "Similar ideas sit close together.",
+      "duration": 6,
+      "focalPoint": "the list",
+      "layout": "stack",
+      "elements": [
+        {
+          "id": "title",
+          "kind": "text",
+          "role": "hero",
+          "text": "Nearby points mean similar ideas.",
+          "style": { "size": "headline" }
+        },
+        {
+          "id": "ring",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "circle",
+          "style": { "color": "accent" }
+        },
+        {
+          "id": "steps",
+          "kind": "list",
+          "role": "secondary",
+          "items": ["Cosine similarity", "Approximate nearest neighbours", "Millisecond lookups"]
+        }
+      ],
+      "choreography": [
+        { "target": "title", "primitive": "fade-up", "at": 0.2, "duration": 0.6 },
+        {
+          "target": "ring",
+          "primitive": "draw",
+          "at": { "with": "title", "offset": 0.3 },
+          "duration": 0.8,
+          "easing": "standard"
+        },
+        {
+          "target": "steps",
+          "primitive": "stagger-in",
+          "at": { "after": "title", "offset": 0.2 },
+          "duration": 0.9,
+          "stagger": 0.12
+        }
+      ],
+      "transitionOut": "fade"
+    },
+    {
+      "id": "s04-result",
+      "role": "payoff",
+      "intent": "Prove it is fast.",
+      "duration": 5,
+      "focalPoint": "the metric",
+      "elements": [
+        {
+          "id": "latency",
+          "kind": "metric",
+          "role": "hero",
+          "value": 12,
+          "suffix": " ms",
+          "label": "p95 query latency on 10M vectors",
+          "style": { "color": "accent" }
+        },
+        {
+          "id": "note",
+          "kind": "text",
+          "role": "annotation",
+          "text": "fast enough to feel instant",
+          "style": { "font": "mono", "size": "caption" }
+        }
+      ],
+      "choreography": [
+        { "target": "latency", "primitive": "count-up", "at": 0.3, "duration": 1.2, "easing": "decelerate" },
+        {
+          "target": "note",
+          "primitive": "fade-in",
+          "at": { "after": "latency", "offset": 0.1 },
+          "duration": 0.5
+        },
+        {
+          "target": "latency",
+          "primitive": "emphasize",
+          "at": { "after": "note", "offset": 0.1 },
+          "duration": 0.6
+        }
+      ],
+      "transitionOut": "fade"
+    }
+  ]
+}

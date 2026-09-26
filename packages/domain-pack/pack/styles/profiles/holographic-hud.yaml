@@ -1,0 +1,51 @@
+id: holographic-hud
+name: Holographic HUD
+family: aesthetic
+aliases: [hud, heads-up display, sci-fi interface]
+summary: Translucent cyan heads-up display; targeting rings, scanning sweeps, data readouts locking onto the subject.
+energy: 3
+best_for: [ai-product, security-tool, tech-launch, analytics-promo]
+character: >-
+  Analytical and futuristic: thin cyan linework floating over deep navy, as
+  if seen through a visor. Rings spin up, brackets lock onto the subject,
+  scan lines sweep and readouts populate with numbers as the system analyses.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#030b17", ink: "#d9f6ff", accent: "#35e0ff", mute: "rgba(53,224,255,0.35)", alert: "#ff9f1c", line: "rgba(53,224,255,0.6)"}
+    rule: "Monochrome cyan HUD with alpha steps; amber only for alerts and locked targets."
+  typography:
+    - "Rajdhani 600 uppercase headlines 90 px, +0.08em tracking"
+    - "Share Tech Mono 400 readouts 20-28 px; numerals tabular"
+    - "Labels prefixed with bracket codes like [SYS-04]"
+  layout:
+    - "Subject centred inside concentric rings; readout panels in the four corners (clear of caption band)"
+    - "Thin frame brackets at 64 px inset; crosshair on the focal point"
+  material: ["Linework 1-2 px with additive glow (text-shadow / drop-shadow 0 0 6px accent); panels at 6% cyan fill with 1 px line border, chamfered corners via clip-path"]
+  texture: ["Baked PNG hex grid at 5% and fine horizontal scanlines at 6%", "Soft radial glow behind the subject (baked)"]
+  camera: ["Slow orbit illusion via rings rotating in opposite directions", "Push 1.0 -> 1.15 on lock-on"]
+  transitions: ["scan-sweep (horizontal bright line sweeps down revealing next scene, 0.5 s power1.inOut)", "ring-iris (rings contract to a point, next scene expands from it)", "bracket-lock (corner brackets fly in and lock around the new subject, back.out(1.6) 0.4 s)", "flicker-on (stepped opacity 0,1,0.4,1 over 4 frames)"]
+  pacing:
+    bpm: [100, 122]
+    rhythm: "Steady analytical build: each scene boots, scans, locks and reads out over 6-10 beats."
+  beat_response: ["Rings step 15 deg on each beat", "Readout digits refresh on downbeats", "Faint grid brightness pulse on kicks (+4%)"]
+  ui_choreography: ["Panels boot with flicker-on then content typeIn", "Numbers odo-roll to values; bars fill with stepped segments", "Target brackets track moving elements"]
+  diagrams: ["Node graphs as glowing dots with thin connectors, packets travelling along paths", "Radial charts and arc gauges drawn with draw()"]
+  character_motion: ["No mascot; optional wireframe object slowly rotating (rotationY via SVG/CSS 3D)"]
+  captions: ["Chamfered panel rgba(3,11,23,0.8) with 1 px line border, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Cinematic electronic, pulsing synth 100-122 BPM", "Soft UI bleeps, scan sweeps and lock-on chirps; medium density"]
+scene_types:
+  prefer: [hook, feature, diagram, stats, product-hero, ui-demo]
+  avoid: [quote, testimonial]
+signature_moves:
+  - "Brackets lock onto the subject with an amber confirm"
+  - "Scan-sweep reveal line"
+  - "Counter-rotating ring stack around the hero"
+  - "Panels flicker on then type their readouts"
+strengths: ["Conveys analysis and intelligence", "High-tech without chaos", "Great for AI and security"]
+constraints:
+  - "Line-based; no solid opaque panels"
+  - "Glow kept to 6-10 px; bake anything heavier"
+  - "Cyan family plus amber only"
+avoid: ["Warm organic palettes", "Hand-drawn textures", "Cluttering all corners at once"]
+pairs_well_with: [neon-cyberpunk, mission-control, ambient-intelligence, blueprint-engineering]

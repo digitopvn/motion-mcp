@@ -1,0 +1,61 @@
+id: cinematic-product-launch
+name: Cinematic Product Launch
+family: brand-inspired
+aliases: [apple, apple-like, apple premium, apple-style, apple launch film]
+summary: Restrained premium product film; one centred hero, lots of air, continuous eased motion, quiet music.
+energy: 2
+best_for: [flagship-launch, premium-feature, brand-promo, product-reveal]
+character: >-
+  Subtractive and exclusive: every shot carries one idea, the hero sits on the
+  centre axis, and motion flows across scene boundaries instead of cutting.
+  Choose it when the viewer should feel the product is special rather than
+  just learn its features.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#000000", ink: "#f2f1ee", accent: "#4a86ff", mute: "rgba(242,241,238,0.56)", hair: "rgba(242,241,238,0.12)"}
+    rule: "3 colours max (bg, ink, accent); greys only as ink alpha steps. Light variant bg #f2f1ee, ink #1a1b1f, accent #1f5fd6."
+  typography:
+    - "Inter variable: 600-700 headlines at -0.03em tracking, 400 body"
+    - "Centred text only, one text block on stage with the hero"
+    - "Be Vietnam Pro 600 for captions"
+  layout:
+    - "Hero on the centre axis; text centred above or below, never in corners"
+    - "At least ~40% of the frame empty"
+    - "Kickers and HUD chrome off by default"
+  material: ["Flat stage or one soft vignette; product rendered clean with soft contact shadow; no glass cards"]
+  texture: ["None; one background treatment for every scene, no orbs, grids or patterns"]
+  camera:
+    - "Slow push-ins (scale 1.00 -> 1.04 over the hold)"
+    - "Small travel 40-120 px, scale changes 0.92-1.08"
+    - "No motion behind a headline being read"
+  transitions: ["match-move (hero moves/shrinks into next scene's slot)", "push along one axis", "scale-through (current grows past camera, next settles from 1.04)", "soft cross-dissolve with slight blur", "hard cut only at story turns, max 2 per video"]
+  pacing:
+    bpm: [90, 110]
+    rhythm: "Adaptive: intro and brand moments hold 8+ beats, feature run changes every 2-4 beats, outro decelerates into a held end card. Bands: 60-80 regal, 90-110 smooth (default), 115-123 elite."
+  beat_response: ["Minimal: no flashes, no pulse wrapper; beats only time scene changes and reveals"]
+  ui_choreography:
+    - "One UI surface at a time, centred, entering with a short rise + fade (power3.out 0.6 s)"
+    - "Position leads, opacity/blur follow ~0.1 s later; children stagger 0.04-0.08 s with overlap"
+    - "Hold still at least one beat or until WE(word) after each reveal"
+  diagrams: ["Thin hairline strokes in ink alpha, drawn with draw() on eased timing; one highlighted path in accent"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 44 px Be Vietnam Pro 600 ink with soft text shadow, centred bottom band; unread words at mute, current word ink"]
+  sound: ["One music family per series in the chosen BPM band; minimal SFX, about one soft cue (vol 0.25-0.4) per scene or fewer, with an SFX subtraction audit"]
+scene_types:
+  prefer: [product-hero, feature, ui-demo, spec, title, outro]
+  avoid: [terminal, montage]
+signature_moves:
+  - "Match-move: the hero shrinks into its slot in the next scene"
+  - "Scale-through transition into a product close-up"
+  - "Held reveal: key element lands, then one full beat of stillness"
+  - "Decelerating end card on a single word"
+strengths: ["Premium perception", "Clarity of a single message", "Timeless look"]
+constraints:
+  - "Max 3 palette colours plus ink alpha steps"
+  - "Max 2 hard cuts per video"
+  - "No wipe bands, kick flashes, screen pulse or mascot"
+  - "Every tween eased; no linear motion except opacity holds"
+avoid: ["Busy backgrounds", "Corner-placed text", "Dense feature lists in one shot"]
+pairs_well_with: [premium-ui-demo, product-spec-film, precision-dark-product, keynote-stage]
+detail: references/style-cinematic-product-launch.md

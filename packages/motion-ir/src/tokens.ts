@@ -18,7 +18,15 @@ export type EasingToken = z.infer<typeof EasingToken>;
 export const SizeToken = z.enum(["display-xl", "display", "headline", "title", "body", "caption", "label"]);
 export type SizeToken = z.infer<typeof SizeToken>;
 
-export const ColorToken = z.enum(["background", "surface", "foreground", "muted", "accent", "accent-2", "line"]);
+export const ColorToken = z.enum([
+  "background",
+  "surface",
+  "foreground",
+  "muted",
+  "accent",
+  "accent-2",
+  "line",
+]);
 export type ColorToken = z.infer<typeof ColorToken>;
 
 export const FontRole = z.enum(["display", "body", "mono"]);
@@ -30,4 +38,6 @@ export type WeightToken = z.infer<typeof WeightToken>;
 export const Tempo = z.enum(["still", "restrained", "measured", "lively", "energetic"]);
 export type Tempo = z.infer<typeof Tempo>;
 
-export const HexColor = z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/, "expected #rgb or #rrggbb");
+export const HexColor = z
+  .string()
+  .regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/, "expected #rgb or #rrggbb");

@@ -1,0 +1,55 @@
+id: sport-editorial
+name: Sport Editorial
+family: brand-inspired
+aliases: [adidas, adidas-like, adidas style, adidas campaign]
+summary: Street-sport magazine; off-white editorial grid, split panels, cut-out collage, bold grotesk and rhythmic panel wipes.
+energy: 4
+best_for: [campaign, lifestyle-launch, collection-drop, culture-story]
+character: >-
+  Part sports magazine, part street poster: a visible column grid on paper
+  white, images dropped into panels that slide and split, bold grotesk
+  headlines with small index numbers. Rhythmic and cultured rather than
+  purely aggressive.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#efece6", ink: "#111111", mute: "#7a766f", accent: "#0047ff", signal: "#ff5a1f", panel: "#1a1a1a"}
+    rule: "Paper and ink dominate; one accent per scene; dark panels invert type to paper."
+  typography:
+    - "Archivo 800 condensed-width (wdth 75) uppercase headlines 140-200 px, tracking -0.02em"
+    - "Space Mono 400 18 px index numbers and credits (e.g. 01/06, place, year)"
+    - "Headlines break across grid columns with deliberate ragged line lengths"
+  layout:
+    - "12-column editorial grid with 1 px ink rules visible at 15% alpha"
+    - "Split-screen panels: 1/3 + 2/3 or 4 equal verticals"
+    - "Index numbers and captions in corners of panels"
+  material: ["Flat paper; photos as hard-edged rectangles and cut-out figures with 8 px paper outline", "Tape strips and sticker labels as flat shapes"]
+  texture: ["Paper grain baked PNG 0.12", "Halftone on cut-outs baked PNG, sparing"]
+  camera:
+    - "Locked-off grid; content moves inside panels (image drift 30-60 px)"
+    - "Occasional whole-grid slide of one column width"
+  transitions: ["panel-wipe (vertical panels slide in sequence, 0.06 s stagger, power3.inOut 0.5 s)", "split (frame divides along a grid line and halves slide apart)", "column-shift (grid slides one column to reveal next scene)", "hard cut on downbeats"]
+  pacing:
+    bpm: [100, 125]
+    rhythm: "Steady 2-bar phrases: panels change every 2-4 beats, headline scenes hold 8 beats; build faster in the last quarter."
+  beat_response: ["Panels and index numbers tick on each beat", "Accent rule flashes across the grid on bar starts", "No pulse wrapper"]
+  ui_choreography: ["UI placed inside a grid panel like a magazine photo; swaps with panel-wipe", "Labels stamp in with Space Mono index"]
+  diagrams: ["Editorial infographics: ink rules, big numbers, arrows drawn with draw(); no rounded cards"]
+  character_motion: ["No mascot; cut-out figures slide and scale inside panels with a 2-frame hold on arrival"]
+  captions: ["Ink block on paper with no radius, 40 px Be Vietnam Pro 700 paper-coloured; current word accent"]
+  sound: ["UK garage, house or hip-hop 100-125 BPM", "Paper swipes and shutter clicks on panel moves, moderate density"]
+scene_types:
+  prefer: [cover, title, montage, feature, quote, testimonial, cta]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Sequential vertical panel wipe"
+  - "Frame splits along a grid line"
+  - "Cut-out figure with paper outline over a grid"
+  - "Index numbers ticking on the beat"
+strengths: ["Stylish and cultural", "Handles lots of imagery", "Strong rhythm without chaos"]
+constraints:
+  - "All moves snap to grid columns"
+  - "No rounded corners anywhere"
+  - "No parallel diagonal stripe motifs"
+avoid: ["Glassy UI", "Gradients", "Logo-like stripe patterns"]
+pairs_well_with: [athletic-impact, swiss-kinetic-editorial, paper-cut-collage, music-editorial]

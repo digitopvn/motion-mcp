@@ -1,0 +1,40 @@
+# Motion MCP domain pack: typography guidance mapped to Motion IR size, weight and font-role tokens.
+# Original paraphrase informed by ak-motion-video style profiles (MIT, see NOTICE).
+kind: typography
+entries:
+  - id: max-three-families
+    text: "Use at most three families: display, body and mono font roles. Everything else is weight, size token and case."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: licensed-fonts-only
+    text: "Only freely licensed fonts (Google Fonts or OFL) loaded locally and blocking until painted; platform or trademarked fonts are unavailable in headless rendering."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: size-hierarchy
+    text: "One element per scene uses display-xl or display; supporting text drops at least two size steps (headline or title) so hierarchy is obvious at thumbnail size."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: tight-display-tracking
+    text: "Display sizes read better with slightly negative tracking and tight line height (about 0.9-1.0); body text keeps default tracking and 1.3-1.5 line height."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: line-length
+    text: "Keep headlines to two lines and about 32 characters per line; if the copy is longer, split the scene or shorten the text rather than shrinking type."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: premium-sans
+    text: "Restrained premium looks: a neutral grotesk at semibold or bold for display, regular for body, centred, one text block on stage with the hero."
+    tags: {role: both, scene_types: [], styles: [cinematic-product-launch, glass-keynote, monochrome-luxury], format: [], energy: [1, 2], pipeline_step: compose, invariant: false}
+  - id: kinetic-condensed
+    text: "Kinetic type looks: a condensed display face in uppercase at display-xl, stacked tight, with one serif-italic emotional word per scene for contrast."
+    tags: {role: both, scene_types: [hook, payoff], styles: [kinetic-typography, swiss-kinetic-editorial], format: [], energy: [3, 4, 5], pipeline_step: compose, invariant: false}
+  - id: metric-typography
+    text: "Metrics: tabular figures in the display font at display-xl, unit or suffix one size smaller, label at label size in the muted colour token."
+    tags: {role: worker, scene_types: [evidence, hook], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: code-typography
+    text: "Code: mono font role at body size or larger, syntax limited to foreground, muted and accent tokens; never shrink code below caption size to fit."
+    tags: {role: worker, scene_types: [mechanism], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: captions-band
+    text: "Captions sit in a bottom band inside the safe area, 2 lines max, a font with full diacritic coverage, and nothing else may overlap that band."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: vertical-type-scale
+    text: "Vertical formats: scale type from frame width, not height; display text should still fit in 80% of the width without hyphenation."
+    tags: {role: worker, scene_types: [], styles: [], format: ["9:16", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: contrast-legibility
+    text: "Text needs strong contrast against its background token; if an image or texture sits behind text, add a surface or scrim token rather than lowering text weight."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}

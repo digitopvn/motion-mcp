@@ -1,0 +1,58 @@
+id: extreme-energy
+name: Extreme Energy
+family: brand-inspired
+aliases: [red bull, redbull, red-bull-like, extreme sports edit]
+summary: Adrenaline action edit; speed ramps, whip pans, impact freeze-frames and huge condensed type slamming on drops.
+energy: 5
+best_for: [event-hype, action-edit, sponsorship-reel, social-cut]
+character: >-
+  Pure adrenaline: speed ramps into slow-motion peaks, whip pans between
+  shots, freeze-frames at the apex with stats stamped over them and condensed
+  type that slams on every drop. Built for moments that defy gravity.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0a0c1f", ink: "#ffffff", accent: "#e22a36", gold: "#f5a623", navy: "#2a2352", mute: "rgba(255,255,255,0.6)"}
+    rule: "Navy-black base; red for impact bars and stamps, gold for records and stats; imagery stays vivid."
+  typography:
+    - "Anton uppercase 200-280 px, tight -0.01em, often cropped by frame edges"
+    - "Archivo 700 italic for athlete/event labels"
+    - "Be Vietnam Pro 800 for captions"
+  layout:
+    - "Full-bleed action; giant type behind or in front of the subject (masked depth)"
+    - "Stat stamps anchored near the apex point of the action"
+  material: ["Action imagery first (footage needs supplied clips and a verified HyperFrames video path; otherwise stills with scale/pan)", "Solid red and gold bars with 8 deg skew"]
+  texture: ["Baked PNG grain 6%", "Motion-blur streak sprites baked to PNG for whip pans"]
+  camera:
+    - "Speed ramp faked on stills: fast push (scale 1 -> 1.12, power4.in), near-hold at the apex, snap out (expo.out)"
+    - "Whip pan: x offset 0 -> -1920 px in 0.18 s expo.in with streak overlay"
+    - "Impact shake 1.4 decaying over 0.4 s"
+  transitions: ["whip pan (0.18 s with streak sprite)", "freeze-frame punch (frame freezes, white flash 0.5, zoom 1.1)", "skewed red bar wipe (8 deg, 0.25 s)", "hard cut on every kick"]
+  pacing:
+    bpm: [130, 160]
+    rhythm: "Relentless: 1-2 beat cuts, slow-motion apex holds of 4 beats, repeated build-drop cycles, abrupt end on a final hit."
+  beat_response: ["Hard cut on every kick in action runs", "Drops = flash 0.8 + shake 1.4 + type slam (scale 1.6 -> 1, power4.in)", "#pulse 1.5% on kick downbeats"]
+  ui_choreography:
+    - "Stats stamp in (scale 2 -> 1, power4.in 0.15 s) with a red bar underneath"
+    - "Speed/height readouts count up rapidly during the ramp"
+    - "Minimal UI; any product screen appears as a quick 2-beat insert"
+  diagrams: ["Trajectory lines traced over the action (draw() 0.4 s) with apex marker"]
+  character_motion: ["Real athletes only; freeze-frame cut-outs with white outline stroke"]
+  captions: ["Red skewed bar behind text, 44 px Be Vietnam Pro 800 ink in sentence case; current word gold"]
+  sound: ["Hard electronic / drum and bass / trap 140-160 BPM", "Dense impact SFX: whooshes, bass hits, rewinds on speed ramps"]
+scene_types:
+  prefer: [hook, montage, stats, title, cta]
+  avoid: [spec, code, terminal, testimonial]
+signature_moves:
+  - "Speed ramp into a slow-motion apex"
+  - "Freeze-frame punch with a stamped stat"
+  - "Whip pan with baked streaks"
+  - "Giant cropped type with the subject masked in front"
+strengths: ["Hype and adrenaline", "Event and action reels", "Social attention grabs"]
+constraints:
+  - "Shake and flash only on kicks and drops"
+  - "Streaks and grain baked to PNG"
+  - "Footage must be supplied or licensed and needs a verified HyperFrames video path; otherwise use stills with scale/pan"
+  - "No brand cans, logos or events"
+avoid: ["Slow explainers", "Pastel palettes", "Dense UI demos"]
+pairs_well_with: [athletic-impact, sport-editorial, kinetic-typography, comic-multiverse]

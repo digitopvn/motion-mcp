@@ -1,0 +1,57 @@
+id: creative-canvas
+name: Creative Canvas
+family: brand-inspired
+aliases: [figma, figma-like, figma style, figjam style]
+summary: Collaborative design canvas; infinite board, labelled multiplayer cursors, selection handles, frames that zoom and snap.
+energy: 3
+best_for: [design-tool, collaboration, product-process, creative-workflow]
+character: >-
+  The story happens on a shared canvas: coloured cursors with name tags move
+  in, selection boxes grab elements, frames snap to layouts and the camera
+  zooms between artboards. It feels collaborative, crafted and a little playful.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f5f5f5", ink: "#1e1e1e", mute: "#8c8c8c", frame: "#ffffff", accent: "#2f7df6", c1: "#d6457a", c2: "#e39b2d", c3: "#2a9d8f", c4: "#5b5fc7"}
+    rule: "Neutral canvas, white frames, selection accent blue; cursor colours c1-c4 one per collaborator."
+  typography:
+    - "Inter 700 headlines 72 px inside frames, 400 body 28 px"
+    - "Inter 500 11-14 px (scaled 2x = 24 px) for frame labels and cursor tags"
+    - "Headlines may be edited live: caret blinks, text retyped with typeIn"
+  layout:
+    - "Canvas with several frames (artboards) at different positions; camera frames one at a time"
+    - "Frame names small above top-left of each frame"
+    - "Side panel strips optional at left/right edges, simplified"
+  material: ["White frames with 1 px #e6e6e6 border, no radius", "Selection: 1.5 px accent outline + 8 px white square handles with accent stroke", "Sticky notes: flat c2 squares with slight shadow"]
+  texture: ["Canvas dot grid 24 px at 8% baked PNG, visible when zoomed out"]
+  camera:
+    - "Canvas pans and zooms between frames (power3.inOut 0.8 s), zoom range 0.4-2.0"
+    - "Zoom-out reveal of the whole board as a finale"
+  transitions: ["canvas-pan (camera slides across board to the next frame)", "zoom-to-frame (zoom out to board then into next frame)", "frame-snap (elements snap into an auto-layout, back.out(1.2) 0.4 s)", "selection-marquee (drag box grows over scene, then scene is replaced)"]
+  pacing:
+    bpm: [100, 120]
+    rhythm: "Working rhythm: cursor actions on beats, 4-8 beats per frame, faster multi-cursor montage in the middle."
+  beat_response: ["Cursors nudge 6 px on beats while idle", "Sticky notes drop on kicks in the montage"]
+  ui_choreography:
+    - "Cursors move on eased curved paths (power2.inOut), click = 0.9 scale dip"
+    - "Selection box draws, handles pop, element drags then snaps with a guide line flash in c1"
+    - "Components swap variants with a quick cross-fade; layers reorder in auto-layout"
+  diagrams: ["Flow arrows as connectors between frames, drawn with draw(); whiteboard stickies and shapes"]
+  character_motion: ["Collaborator cursors act as characters: arrow + name-tag pill in their colour, playful chases"]
+  captions: ["White pill with 1 px border, radius 8, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Upbeat indie-electronic 100-120 BPM", "Soft clicks, snaps and plops; moderate density"]
+scene_types:
+  prefer: [ui-demo, feature, diagram, montage, cover, outro]
+  avoid: [terminal, spec]
+signature_moves:
+  - "Multiple named cursors arriving together"
+  - "Marquee select, drag and snap with guide flash"
+  - "Pan across the board between frames"
+  - "Zoom-out reveal of the whole canvas"
+strengths: ["Shows process and collaboration", "Playful but crafted", "Great for design and product tools"]
+constraints:
+  - "Camera moves only as canvas pan/zoom, never rotates"
+  - "Cursor names are fictional first names"
+  - "No replicas of real app toolbars or icons"
+avoid: ["Dark neon looks", "Heavy textures", "Hard beat cuts"]
+pairs_well_with: [creative-suite, saas-bento, calm-workspace, playful-productivity]

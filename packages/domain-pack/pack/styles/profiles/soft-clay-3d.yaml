@@ -1,0 +1,49 @@
+id: soft-clay-3d
+name: Soft Clay 3D
+family: aesthetic
+aliases: [claymorphism, clay 3d, soft 3d]
+summary: Squishy pastel 3D; rounded clay objects, soft shadows, bouncy squash-and-stretch, friendly toy-like scenes.
+energy: 3
+best_for: [app-onboarding, friendly-feature, kids-edu, explainer]
+character: >-
+  Soft, tactile and friendly: pastel objects that look like modelled clay or
+  vinyl toys, with puffy rounded forms and gentle shadows. Everything squashes
+  on landing and wobbles back, so even technical ideas feel approachable.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#fdf1e7", ink: "#3a2e39", accent: "#ff8a5b", peach: "#ffc2a1", mint: "#9ee6c7", lavender: "#c6b8ff", butter: "#ffe38a", sky: "#9ad0ff"}
+    rule: "Pastel fills with a darker same-hue shade for depth; background is one warm tint; ink is warm plum, never pure black."
+  typography:
+    - "Nunito 900 for headlines, 96 px, rounded, tracking -0.01em"
+    - "Nunito 600 body, 40 px"
+    - "Fredoka 600 for numbers and badges"
+  layout: ["One clay object cluster centred on a soft floor plane", "Text above the object, rounded pill labels beside it", "Generous rounded margins, nothing sharp-cornered"]
+  material: ["Clay/vinyl: pre-rendered PNG objects or SVG with inner highlight and inner shade gradients", "Cards radius 32 with double shadow (0 12px 24px shade at 25%, inset 0 -6px 0 darker tint)"]
+  texture: ["Subtle baked clay fingerprint noise PNG at 5% on objects", "Soft contact shadow ellipses under every object"]
+  camera: ["Gentle orbit illusion via parallax of object layers (+-20 px)", "Slow push 1.00 -> 1.04", "No shake; bumps are carried by objects, not the camera"]
+  transitions: ["squash-pop (next scene objects drop in, squash scaleY 0.7 / scaleX 1.2 then settle, elastic.out(1,0.5) 0.6 s)", "roll-through (a clay ball rolls across and pushes the scene out)", "press-in (current scene presses down scale 0.9 then pops up as next)", "blob-merge (two clay blobs merge to fill the frame, then part)"]
+  pacing:
+    bpm: [96, 116]
+    rhythm: "Bouncy and friendly: object entrances every 2 beats with overlap, holds 4 beats, soft settle at the outro."
+  beat_response: ["Objects do a small squash (scaleY 0.96) on kick beats", "Contact shadows breathe with the squash", "No flashes or screen pulse"]
+  ui_choreography: ["UI as puffy clay panels with rounded buttons", "Buttons press (scale 0.92 + inset shadow) on the spoken word", "List items plop in one by one with back.out(2) and 0.08 s stagger", "Toggles slide with a squishy stretch"]
+  diagrams: ["Nodes as clay pebbles connected by chunky rounded tubes drawn with draw()", "Charts as clay columns that grow and wobble to rest"]
+  character_motion: ["Rounded clay mascot with strong squash-and-stretch from the feet", "Anticipation before every jump; overshoot and wobble on landing (elastic.out)"]
+  captions: ["Cream pill #fffaf4, radius 999, soft shadow, 44 px Be Vietnam Pro 700 ink; current word accent; bottom band"]
+  sound: ["Light playful pop, marimba or lo-fi 96-116 BPM", "SFX: soft boings, squishes, pops on landings; medium density, low volume"]
+scene_types:
+  prefer: [cover, hook, feature, ui-demo, diagram, stats, cta]
+  avoid: [terminal, code, quote]
+signature_moves:
+  - "Squash-pop landing of every hero object"
+  - "Clay ball rolls through to push the next scene"
+  - "Button press-in synced to the spoken word"
+  - "Blob merge transition"
+strengths: ["Warm and approachable", "Makes abstract features tangible", "Strong mascot support"]
+constraints:
+  - "Every landing squashes; no rigid hard stops"
+  - "No sharp corners below 16 px radius"
+  - "3D look via pre-rendered assets or gradients; no live WebGL"
+avoid: ["Harsh neon or pure black", "Glitch or grain effects", "Hard-edged brutalist type"]
+pairs_well_with: [friendly-system-motion, joyful-pop, isometric-systems, playful-productivity]

@@ -1,0 +1,49 @@
+id: isometric-systems
+name: Isometric Systems
+family: aesthetic
+aliases: [isometric, iso 3d, isometric illustration]
+summary: Clean isometric world; systems as blocks and tiles, data flowing along iso paths, calm builds and axis pans.
+energy: 2
+best_for: [architecture-explainer, platform-overview, infra-product, onboarding]
+character: >-
+  A tidy miniature world seen at 30 degrees: servers, apps and people as
+  isometric blocks on a tile grid, with data packets gliding along paths.
+  Calm, orderly and explanatory; systems assemble block by block.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#eef2f8", ink: "#1e2a3b", accent: "#3b6cff", top: "#ffffff", left: "#d5deeb", right: "#b7c4d8", green: "#2fbf8f", amber: "#f5a524"}
+    rule: "Each block uses three face tones (top/left/right) of one hue; accent marks the active path or block only."
+  typography:
+    - "Space Grotesk 600 for headlines, 64 px, flat (never on the iso plane)"
+    - "IBM Plex Mono 500 for block labels and metrics, 28-32 px"
+    - "Labels on leader lines, always screen-aligned for legibility"
+  layout: ["Isometric grid (30 deg) with 64 px tile module", "System cluster centred; headline top-left, labels on leader lines", "Negative space around the cluster, caption band clear"]
+  material: ["Flat-shaded blocks with three face tones, 1 px ink edge at 20% alpha, soft ground shadow"]
+  texture: ["Faint iso grid lines at 8% alpha", "No grain; optional baked ambient-occlusion PNG under clusters"]
+  camera: ["Pans only along iso axes (dx:dy = 2:1), power2.inOut", "Zoom 1.0 -> 1.4 to focus a sub-system", "Never rotates the projection"]
+  transitions: ["axis-pan (camera glides along an iso axis to the next cluster, 0.8 s power2.inOut)", "tile-build (next scene blocks rise from the floor, y +40 -> 0 staggered 0.05 s)", "layer-lift (current layer lifts up and away revealing the layer below)", "tile-collapse (blocks drop out tile by tile for the outro)"]
+  pacing:
+    bpm: [88, 104]
+    rhythm: "Explanatory: builds take 2-4 beats, hold until WE(word) of the explanation, pans between clusters on bar lines."
+  beat_response: ["Data packets launch on beats along active paths", "Active block top face brightens on kick beats", "No shake or flash"]
+  ui_choreography: ["UI shown as screens standing on iso blocks or as flat overlays beside the cluster", "Panels rise out of their block (y +24 -> 0, power3.out 0.5 s)", "Metrics tick via odo next to their block"]
+  diagrams: ["Paths as iso-aligned lines drawn with draw(); packets as small cubes moving along them", "Stacks and layers exploded vertically to show architecture", "Highlighted route in accent, rest in right-face tone"]
+  character_motion: ["Tiny iso people walk along paths in 2-frame steps", "Objects slide, never squash"]
+  captions: ["White bar rgba(255,255,255,0.9), radius 12, 42 px Be Vietnam Pro 600 ink; current word accent; bottom band"]
+  sound: ["Minimal electronic or ambient tech 88-104 BPM", "SFX: soft ticks on block placement, light whoosh on pans; low density"]
+scene_types:
+  prefer: [diagram, feature, timeline, comparison, stats, product-hero]
+  avoid: [quote, testimonial, montage]
+signature_moves:
+  - "System assembles block by block from the floor"
+  - "Axis-aligned camera glide between clusters"
+  - "Data cubes flowing along the highlighted route"
+  - "Exploded vertical stack to reveal layers"
+strengths: ["Explains architecture clearly", "Calm and trustworthy", "Scales from one block to a whole platform"]
+constraints:
+  - "Strict 30 deg projection; no mixed perspectives"
+  - "Text stays screen-aligned, never skewed onto faces"
+  - "Camera moves only along iso axes"
+avoid: ["Handheld shake or glitch", "Heavy textures", "More than ~40 blocks on screen"]
+pairs_well_with: [blueprint-engineering, soft-clay-3d, saas-bento, data-editorial]

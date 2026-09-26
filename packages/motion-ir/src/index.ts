@@ -3,12 +3,12 @@ import { CreativeSpec, TastePacket } from "./creative-spec.ts";
 import { MotionIR } from "./motion-ir.ts";
 import { ScenePatch } from "./patch-and-qa.ts";
 
-export * from "./tokens.ts";
-export * from "./motion-ir.ts";
-export * from "./creative-spec.ts";
-export * from "./patch-and-qa.ts";
-export * from "./compile-spec.ts";
 export * from "./apply-patch.ts";
+export * from "./compile-spec.ts";
+export * from "./creative-spec.ts";
+export * from "./motion-ir.ts";
+export * from "./patch-and-qa.ts";
+export * from "./tokens.ts";
 
 /** JSON Schemas for host models and external tooling (MCP `motion_inspect` capabilities). */
 export function jsonSchemas() {

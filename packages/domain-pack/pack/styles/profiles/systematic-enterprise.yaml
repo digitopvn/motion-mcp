@@ -1,0 +1,56 @@
+id: systematic-enterprise
+name: Systematic Enterprise
+family: brand-inspired
+aliases: [ibm, ibm-like, ibm style, ibm carbon]
+summary: Rigorous design-system motion; strict 2x grid, square corners, blue on grey, productive curves and column mask reveals.
+energy: 2
+best_for: [enterprise-solution, data-platform, b2b-explainer, research-story]
+character: >-
+  Disciplined and intelligent: everything sits on a strict modular grid with
+  square corners, colour is mostly greys with one decisive blue, and motion
+  splits into quick productive moves and slower expressive reveals. Data
+  and pictograms carry the story.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#15171a", ink: "#f3f2ef", mute: "#a6a8ad", layer: "#25272b", accent: "#3a4fe0", accent_light: "#8a9cf5", cyan: "#3ec6e0", magenta: "#e0587a", light_bg: "#f3f2ef", light_ink: "#15171a"}
+    rule: "Grey scale plus blue; cyan and magenta only in data viz series. Alternate dark and light scenes by chapter."
+  typography:
+    - "IBM Plex Sans 300 display 96-128 px, 600 for emphasis words, -0.01em"
+    - "IBM Plex Mono 400 18 px labels and numbers"
+    - "Left-aligned always; text aligns to grid columns"
+  layout:
+    - "16-column grid, 32 px gutters, 1 px layer rules optional"
+    - "Text in columns 1-6, visual in 7-16"
+    - "Tiles as square-cornered blocks in exact column multiples"
+  material: ["Flat square tiles (radius 0) in layer grey; 1 px accent top border on active tile"]
+  texture: ["None; optional 8 px dot grid at 6% baked PNG on diagram scenes"]
+  camera: ["Locked-off; grid-aligned slides only"]
+  transitions: ["column-mask (vertical masks open column by column, 0.04 s stagger, cubic productive ease power2.out 0.24 s)", "tile-flip (tiles turn over in grid order to reveal next scene)", "slide by one grid module (expressive power3.inOut 0.4 s)", "hard cut between dark and light chapters"]
+  pacing:
+    bpm: [90, 112]
+    rhythm: "Measured: productive moves 0.1-0.25 s, expressive reveals 0.4-0.7 s; scenes 6-8 beats with data scenes holding longer."
+  beat_response: ["Grid tiles light accent on downbeats during stats", "Otherwise none"]
+  ui_choreography:
+    - "Data tables fill row by row (0.03 s stagger), sort with rows sliding to new positions"
+    - "Tabs switch with an underline sliding 0.2 s; tiles expand in column units"
+    - "Notifications slide in from the right edge with an accent left bar"
+  diagrams: ["Square nodes with Plex Mono labels, orthogonal connectors drawn with draw()", "Line and bar charts on grid axes; series in accent, cyan, magenta", "Monoline pictograms 2 px stroke drawn in"]
+  character_motion: ["No mascot; monoline pictograms may draw themselves"]
+  captions: ["Square block layer grey with 3 px accent left bar, 40 px Be Vietnam Pro 500 ink, left-aligned"]
+  sound: ["Minimal electronic or modern classical 90-112 BPM", "Precise ticks and data blips, low density"]
+scene_types:
+  prefer: [diagram, chart, stats, feature, spec, timeline]
+  avoid: [montage, hook]
+signature_moves:
+  - "Column-by-column mask reveal"
+  - "Tiles flipping in grid order"
+  - "Data table sorting with rows gliding"
+  - "Monoline pictogram drawing itself"
+strengths: ["Credibility for enterprise and data", "Excellent for dense information"]
+constraints:
+  - "Radius 0 everywhere"
+  - "Every element snaps to the 16-column grid"
+  - "Productive vs expressive durations kept distinct"
+avoid: ["Bouncy springs", "Gradients", "Decorative textures"]
+pairs_well_with: [data-editorial, fluent-productivity, blueprint-engineering, swiss-kinetic-editorial]

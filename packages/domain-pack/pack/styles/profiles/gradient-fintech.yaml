@@ -1,0 +1,55 @@
+id: gradient-fintech
+name: Gradient Fintech
+family: brand-inspired
+aliases: [stripe, stripe-like, stripe style, stripe gradient]
+summary: Polished developer fintech; flowing mesh gradients, slanted section edges, crisp floating cards and code.
+energy: 3
+best_for: [fintech, api-product, developer-platform, growth-story]
+character: >-
+  Sophisticated and quietly energetic: a slow flowing colour mesh behind
+  slanted section edges, crisp white cards with deep soft shadows floating in
+  perspective, code snippets and transaction flows that animate with precision.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#f4f6fa", ink: "#14213d", mute: "#4a5468", navy: "#14213d", accent: "#7050e8", mesh_a: "#ff7ab8", mesh_b: "#ffb86b", mesh_c: "#9a6cf5", mesh_d: "#2bd9d0", card: "#ffffff"}
+    rule: "Light body scenes on bg, navy for dark chapters; the four mesh colours appear only in the gradient band and small highlights."
+  typography:
+    - "Sora 700 headlines 72 px at -0.02em, 400 body 30 px in mute"
+    - "JetBrains Mono 400 22 px code, navy background panels"
+    - "Headline left with a small accent kicker above (Sora 600 22 px)"
+  layout:
+    - "Slanted gradient band across the top third (skewY -8deg) behind content"
+    - "Cards float right in a loose perspective stack; text left"
+    - "Numbers large in navy with accent unit"
+  material: ["White cards radius 12, shadow 0 50px 100px -20px rgba(20,33,61,0.22), 0 30px 60px -30px rgba(0,0,0,0.3)", "Navy code panels radius 12"]
+  texture: ["Mesh gradient as 4 large blurred blobs pre-rendered to PNG frames or 2 layered PNGs drifting slowly (one tween spanning the scene, or finite repeats sized to the hold; never repeat -1)"]
+  camera: ["Slow drift of card stack (rotateX 12 rotateY -18, parallax 20-40 px)"]
+  transitions: ["slant-wipe (diagonal band at -8deg sweeps across, power3.inOut 0.6 s)", "card-stack (cards slide in from depth z -300 -> 0 with 0.08 s stagger)", "mesh-flow (gradient band stretches to fill then contracts into next scene)", "fade-up 32 px 0.4 s"]
+  pacing:
+    bpm: [100, 120]
+    rhythm: "Smooth confident flow: scenes 6-8 beats; card and code sequences step every 2 beats."
+  beat_response: ["Mesh brightness lifts 5% on kicks", "Transaction dots emit on beats along flows"]
+  ui_choreography:
+    - "Cards enter from depth and settle into the stack; one lifts forward to become active"
+    - "Payment form fields fill with typeIn, button shows a spinner then a check drawn with draw()"
+    - "Code lines type in; the matching card updates live alongside"
+  diagrams: ["Flows as thin accent lines between rounded nodes with dots travelling along them", "Globe of arcs drawn with draw() for global reach"]
+  character_motion: ["No mascot"]
+  captions: ["White pill with soft shadow, radius 12, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Smooth modern electronic 100-120 BPM", "Soft ticks, success chimes on checks, low-medium density"]
+scene_types:
+  prefer: [feature, ui-demo, code, diagram, stats, cta]
+  avoid: [montage, testimonial]
+signature_moves:
+  - "Slanted gradient band sweeping across"
+  - "Perspective card stack with one card lifting"
+  - "Code typing that drives a live card update"
+  - "Transaction dots flowing along a network"
+strengths: ["Premium developer credibility", "Makes abstract money flows visual"]
+constraints:
+  - "Mesh gradient baked to PNG, never live blurred divs"
+  - "Slant angle constant (-8deg) across the video"
+  - "Max 4 cards in a stack"
+avoid: ["Hard beat cuts", "Grain or retro textures", "Brand wordmarks"]
+pairs_well_with: [precision-dark-product, saas-bento, monochrome-developer, data-editorial]

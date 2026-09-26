@@ -1,0 +1,15 @@
+**/node_modules
+**/dist
+.git
+.github
+.data
+.env
+.env.*
+!.env.example
+plans
+docs
+apps/marketing/.wrangler
+**/tmp
+coverage
+*.log
+workspaces

@@ -1,0 +1,56 @@
+id: fluent-productivity
+name: Fluent Productivity
+family: brand-inspired
+aliases: [microsoft fluent, fluent design, microsoft, microsoft 365 style]
+summary: Calm layered productivity UI; soft translucent layers, depth shadows, connected element moves and decelerated entrances.
+energy: 2
+best_for: [productivity-app, enterprise-feature, workflow-demo, ai-assistant]
+character: >-
+  Quiet, layered and dependable: app windows float on soft tinted backdrops
+  with translucent material, elements travel between views as connected
+  animations, and every entrance decelerates into place. Built for clarity at
+  work rather than spectacle.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#eef1f6", ink: "#242424", mute: "#616161", surface: "rgba(255,255,255,0.82)", accent: "#2a5fc4", accent_soft: "#d6e0fa", teal: "#13856f", purple: "#9a62b5", stroke: "rgba(0,0,0,0.06)"}
+    rule: "Neutral tinted backdrop, white translucent layers, one accent; soft pastel wash gradient in the background only."
+  typography:
+    - "Noto Sans 600 headlines 64 px, 400 body 28 px"
+    - "Noto Sans 500 UI text 20-24 px; clear hierarchy, no tracking tricks"
+    - "Headline left, app window right"
+  layout:
+    - "App window 1200x760 right of centre; headline left third"
+    - "Up to 3 stacked layers (window, panel, flyout) with visible depth"
+    - "An assistant side panel may dock on the right of the window"
+  material: ["Acrylic layer: surface fill over baked blurred-colour PNG, 1 px stroke, radius 8-12", "Depth shadows 0 8px 16px rgba(0,0,0,0.14) for flyouts, 0 32px 64px rgba(0,0,0,0.18) for windows"]
+  texture: ["Soft pastel wash (accent_soft, purple, teal) baked PNG behind windows", "Subtle 2% noise baked into acrylic"]
+  camera: ["Locked-off; slight window scale 0.98 -> 1 on focus"]
+  transitions: ["connected (element travels from its source view to its slot in the next scene, power3.out 0.5 s)", "entrance-slide (y 40 -> 0 + fade, power3.out 0.4 s, decelerate)", "drill-in (current view scales 1 -> 0.96 and fades while next scales 1.04 -> 1)", "fade 0.25 s for dismissals"]
+  pacing:
+    bpm: [90, 110]
+    rhythm: "Workmanlike: 4-8 beats per step; each UI action gets one beat of settle."
+  beat_response: ["None; beats only time actions"]
+  ui_choreography:
+    - "Flyouts and menus drop 12 px from their anchor with fade, 0.2 s"
+    - "List rows enter with 0.03 s stagger; selection indicator pill slides between items"
+    - "Generated text streams in word by word with typeIn; a soft accent shimmer bar precedes it"
+  diagrams: ["Rounded 8 px nodes on white layers with accent connectors, drawn with draw()"]
+  character_motion: ["No mascot"]
+  captions: ["Acrylic pill (surface + stroke), radius 12, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Light corporate electronic 90-110 BPM", "Soft clicks and gentle chimes, vol 0.2, low density"]
+scene_types:
+  prefer: [ui-demo, feature, diagram, title, cta]
+  avoid: [montage, hook]
+signature_moves:
+  - "Connected animation: an element flies from one view into the next"
+  - "Selection pill sliding between list items"
+  - "Streaming text with a shimmer lead"
+  - "Layered window, panel and flyout depth stack"
+strengths: ["Trustworthy enterprise tone", "Clear multi-step workflows"]
+constraints:
+  - "No live backdrop blur; acrylic uses baked PNG"
+  - "Entrances decelerate, exits accelerate; nothing bounces"
+  - "Max 3 depth layers on screen"
+avoid: ["Hard cuts on beats", "Neon or dark hacker looks", "Brand logos or window chrome replicas"]
+pairs_well_with: [systematic-enterprise, calm-workspace, premium-ui-demo, ambient-intelligence]

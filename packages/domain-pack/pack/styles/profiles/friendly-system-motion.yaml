@@ -1,0 +1,54 @@
+id: friendly-system-motion
+name: Friendly System Motion
+family: brand-inspired
+aliases: [google, google-like, google style, google product video]
+summary: Bright, helpful and simple; white space, cheerful primaries, bouncing dots that form shapes, rounded cards.
+energy: 3
+best_for: [explainer, product-feature, how-it-works, consumer-app]
+character: >-
+  Optimistic and plain-spoken: clean white backgrounds, cheerful primary
+  colours, small dots that bounce, gather and morph into icons and charts,
+  rounded cards that lift on interaction. Motion helps explain, never shows off.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#ffffff", ink: "#22252b", mute: "#62666e", accent: "#5566e8", red: "#ef5b6e", yellow: "#f79a2a", green: "#1fa88f", surface: "#f2f2f5"}
+    rule: "White dominant; the primaries used together as dots and small accents, one primary leading per scene."
+  typography:
+    - "Outfit 600 headlines 72 px at -0.01em, 400 body 32 px"
+    - "Short, sentence-case headlines; one key word coloured with the scene primary"
+    - "Roboto Mono 22 px for small data labels"
+  layout:
+    - "Centred composition with lots of white; headline top, illustration centre"
+    - "Rounded cards in a loose 2-3 column row"
+  material: ["Flat rounded cards radius 24, surface fill, shadow 0 2px 6px rgba(34,37,43,0.15) raising to 0 8px 24px on lift"]
+  texture: ["None"]
+  camera: ["Locked-off; gentle scale 1 -> 1.05 on focus moments"]
+  transitions: ["dot-morph (a mixed cluster of dots gathers centre, bounces, and expands into the next scene's shape)", "circle-reveal (primary-coloured circle grows from a dot to fill, next scene revealed inside)", "shared-axis slide (x 60 px + fade, power2.out 0.4 s)", "fade-through white 0.3 s"]
+  pacing:
+    bpm: [100, 120]
+    rhythm: "Friendly steady cadence: scenes 4-8 beats; illustrations assemble over 2 beats, then hold."
+  beat_response: ["Dots hop 12 px on beats while idle", "No flashes or pulse"]
+  ui_choreography:
+    - "Cards lift (y -6, shadow grows) when focused; list items stagger in 0.05 s with power2.out"
+    - "Search-bar style input types text with typeIn, results fade in below"
+    - "Chips pop with back.out(1.6) in rotating primaries"
+  diagrams: ["Dots travel along rounded paths between icon nodes", "Bar and donut charts in the primaries, grown with draw() and odo"]
+  character_motion: ["Coloured dots of mixed sizes (not a fixed row of four) as characters: squash on landing (scaleY 0.8), bounce with power2.out/power2.in arcs"]
+  captions: ["White pill with light shadow, radius 24, 40 px Be Vietnam Pro 600 ink; current word accent"]
+  sound: ["Bright acoustic-electronic pop 100-120 BPM, ukulele or marimba friendly", "Soft bloops on dot bounces, low density"]
+scene_types:
+  prefer: [feature, diagram, chart, ui-demo, title, cta]
+  avoid: [terminal, montage]
+signature_moves:
+  - "A cluster of dots bounces, gathers and morphs into an icon"
+  - "Circle reveal growing from a single dot"
+  - "Search-style input typing, then result cards rising"
+  - "Chart built from dots that settle into bars"
+strengths: ["Approachable and clear", "Great for explainers", "Works for all audiences"]
+constraints:
+  - "Use the primaries together somewhere per scene, never as full backgrounds except circle-reveal"
+  - "No dark mode, no gradients"
+  - "No product logos or brand wordmarks; no four-dot assistant mark"
+avoid: ["Edgy or aggressive cuts", "Heavy textures", "Serif display type"]
+pairs_well_with: [expressive-material, premium-ui-demo, isometric-systems, playful-productivity]

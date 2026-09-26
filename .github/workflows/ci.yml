@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HYPERFRAMES_NO_TELEMETRY: "1"
+      HYPERFRAMES_NO_UPDATE_CHECK: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - run: pnpm install --frozen-lockfile
+      - name: Install headless Chrome for HyperFrames
+        run: pnpm --filter @motion-mcp/hyperframes-adapter exec hyperframes browser ensure
+      - run: pnpm lint
+      - run: pnpm typecheck
+      # Unit project only: CI never calls frontier models.
+      - run: pnpm test

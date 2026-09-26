@@ -1,0 +1,37 @@
+# Motion MCP domain pack: scene transitions mapped to Motion IR TransitionKind values.
+# Original paraphrase informed by ak-motion-video style profiles (MIT, see NOTICE).
+kind: transition-patterns
+entries:
+  - id: one-transition-language
+    text: "Use one transition family per video with at most two kinds; neighbouring scenes should not repeat an attention-grabbing transition back to back."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: cut-default
+    text: "cut is the default and the most honest transition; reserve animated transitions for moments where the story turns."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: out-matches-next-in
+    text: "A scene's transitionOut must match the next scene's transitionIn kind and duration so the handoff is one continuous move."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: true}
+  - id: match-cut-hero
+    text: "match-cut: the hero keeps its position or shrinks into its slot in the next scene. Best from payoff into cta or between two product views."
+    tags: {role: both, scene_types: [payoff, cta, mechanism], styles: [cinematic-product-launch, glass-keynote], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: scale-through
+    text: "scale-through: the outgoing scene grows past the camera while the next settles from about 1.04 to 1.0; 0.5-0.7 s with emphasized easing."
+    tags: {role: worker, scene_types: [], styles: [cinematic-product-launch, glass-keynote], format: [], energy: [1, 2, 3], pipeline_step: animate, invariant: false}
+  - id: fade-soft
+    text: "fade: a soft cross-dissolve of 0.3-0.5 s suits calm, editorial and luxury pieces; avoid it on high-energy pieces where it feels sluggish."
+    tags: {role: worker, scene_types: [], styles: [monochrome-luxury, data-editorial], format: [], energy: [1, 2], pipeline_step: animate, invariant: false}
+  - id: slide-directional
+    text: "slide-left or slide-up: push along one axis consistently for a sequence (for example a feature list); never mix directions within the sequence."
+    tags: {role: worker, scene_types: [mechanism, evidence], styles: [], format: [], energy: [2, 3, 4], pipeline_step: animate, invariant: false}
+  - id: wipe-energy
+    text: "wipe and mask: graphic wipes fit energetic or editorial looks, 0.25-0.4 s with snap easing; land the wipe edge on a beat."
+    tags: {role: worker, scene_types: [], styles: [neo-brutalist-web, comic-multiverse, swiss-kinetic-editorial, kinetic-typography], format: [], energy: [3, 4, 5], pipeline_step: animate, invariant: false}
+  - id: transition-duration-cap
+    text: "Keep transitions short: 0.2-0.7 s. Anything longer steals time from holds; the transition must finish before the next scene's hero enters."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: hard-cut-budget
+    text: "Restrained styles allow at most two hard cuts at story turns; elsewhere use match-cut, fade or scale-through."
+    tags: {role: director, scene_types: [], styles: [cinematic-product-launch, monochrome-luxury], format: [], energy: [1, 2], pipeline_step: direction, invariant: false}
+  - id: cta-arrival
+    text: "Enter the cta with a calm transition (fade or match-cut) even in energetic videos; the energy drop signals the end."
+    tags: {role: both, scene_types: [cta], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}

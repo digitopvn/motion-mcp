@@ -8,3 +8,5 @@ coverage/
 *.log
 .data/
 workspaces/
+tmp/
+.wrangler/

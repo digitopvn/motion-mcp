@@ -8,6 +8,9 @@ export type MotionErrorCode =
   | "RENDER"
   | "LINT"
   | "BUDGET_EXCEEDED"
+  | "INSUFFICIENT_CREDITS"
+  | "CONFLICT"
+  | "RATE_LIMITED"
   | "TIMEOUT"
   | "CANCELLED"
   | "INTERNAL";

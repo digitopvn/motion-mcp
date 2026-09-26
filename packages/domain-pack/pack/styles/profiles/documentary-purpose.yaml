@@ -1,0 +1,56 @@
+id: documentary-purpose
+name: Documentary Purpose
+family: brand-inspired
+aliases: [patagonia, patagonia-like, patagonia-style, outdoor documentary]
+summary: Purpose-led outdoor documentary; natural imagery, earthy palette, typewriter facts and patient handheld pacing.
+energy: 2
+best_for: [mission-film, impact-report, sustainability-story, founder-story]
+character: >-
+  Honest and patient: long takes of landscape and people, earthy colours,
+  facts typed out like field notes and a slightly handheld camera. It argues
+  for a cause with evidence and restraint rather than hype.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#1f1d1a", ink: "#f3ede2", accent: "#d9632b", moss: "#5a6b3c", slate: "#43505a", sand: "#c9b38c", paper: "#efe8da"}
+    rule: "Imagery carries colour, graded warm and muted; rust accent only for the key fact or call to act."
+  typography:
+    - "Fraunces 600 headlines 68 px, soft serif, sentence case"
+    - "Space Mono 400 for facts, dates and coordinates, typed in"
+    - "Be Vietnam Pro 500 for captions"
+  layout:
+    - "Full-bleed imagery; text lower-left or on a paper card inset. Footage needs supplied clips and a verified HyperFrames video path; otherwise use stills with slow scale/pan"
+    - "Field-note cards (paper, mono text) for facts, max 3 lines"
+  material: ["Recycled-paper cards with torn edge mask (baked PNG)", "No gloss or glass"]
+  texture: ["Baked PNG film grain 7%", "Paper fibre texture on cards", "Topographic contour line PNG for map scenes"]
+  camera:
+    - "Handheld drift: seeded rng low-frequency offset 3-6 px and rotate 0.3 deg, sine-interpolated"
+    - "Slow push on landscapes 1.00 -> 1.04 over 6+ s"
+  transitions: ["long cross-dissolve 1.0-1.2 s", "fade to paper (frame whites into a field-note card)", "match cut on horizon or shape", "cut to black before a hard fact"]
+  pacing:
+    bpm: [70, 95]
+    rhythm: "Patient: 8-12 beat shots, facts held long enough to read twice, a quiet resolute close."
+  beat_response: ["None visible; music is felt, not shown"]
+  ui_choreography:
+    - "Facts typeIn() at 0.04 s per character on field-note cards"
+    - "Numbers counted with odo() slowly (2 s, power1.out)"
+    - "Maps reveal routes and protected areas with draw() over topo texture"
+  diagrams: ["Hand-drawn style arrows and circles (baked stroke PNG or rough SVG paths) around subjects", "Simple bar charts in moss and rust on paper"]
+  character_motion: ["Real people only; no mascot"]
+  captions: ["No pill; 42 px Be Vietnam Pro 500 ink with soft black shadow, bottom band; current word #f3ede2, unread 55%"]
+  sound: ["Acoustic, ambient field recordings, sparse piano or strings", "SFX natural: wind, water, footsteps; no whooshes"]
+scene_types:
+  prefer: [hook, montage, stats, quote, testimonial, timeline, cta]
+  avoid: [ui-demo, terminal, code]
+signature_moves:
+  - "Typewriter field-note fact card over imagery"
+  - "Handheld seeded drift on landscapes"
+  - "Cut to black before the hardest fact"
+  - "Route drawn over a topographic map"
+strengths: ["Mission and impact storytelling", "Credibility and sincerity", "Emotional resonance"]
+constraints:
+  - "Every claim backed by a sourced fact card"
+  - "No whooshes, flashes or fast cuts"
+  - "Handheld motion only from seeded rng"
+avoid: ["Glossy tech UI", "Neon or saturated palettes", "Hype copy"]
+pairs_well_with: [human-storytelling, data-editorial, paper-cut-collage, organic-biomorphic]

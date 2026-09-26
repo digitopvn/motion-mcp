@@ -6,7 +6,9 @@
   "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@10.32.1",
-  "engines": { "node": ">=22.19.0" },
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
     "dev": "pnpm --filter @motion-mcp/mcp-server dev",
     "motion": "tsx apps/mcp-server/src/cli.ts",

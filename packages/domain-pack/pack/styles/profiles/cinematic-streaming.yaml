@@ -1,0 +1,57 @@
+id: cinematic-streaming
+name: Cinematic Streaming
+family: brand-inspired
+aliases: [netflix, netflix-like, netflix-style, streaming trailer]
+summary: Dark trailer grammar; letterboxed hero frames, red light sweeps, poster rows sliding in, a booming title hit.
+energy: 4
+best_for: [content-trailer, series-launch, catalogue-promo, teaser]
+character: >-
+  A binge-trailer voice: near-black frames, cinematic letterbox, slow push-ins
+  and a single warm red accent that sweeps like projector light. Rows of
+  poster tiles glide sideways and one title lands on a deep bass hit.
+dimensions:
+  palette:
+    mode: dark
+    colors: {bg: "#0b0b0b", ink: "#f4f4f4", accent: "#dc3a22", ember: "#9e2a17", mute: "rgba(244,244,244,0.6)", scrim: "rgba(0,0,0,0.72)"}
+    rule: "Red only for the light sweep, progress bars and one title word; everything else black and ink alpha steps."
+  typography:
+    - "Bebas Neue display titles, 180-240 px, +0.02em tracking, uppercase"
+    - "Inter 500 body and metadata rows at 28 px, mute colour"
+    - "Be Vietnam Pro 600 for captions"
+  layout:
+    - "2.39:1 letterbox bars (ink-black, 138 px top/bottom) open and close per act"
+    - "Title lower-left third over a bottom scrim gradient; poster rows full-bleed at 16:9 tiles with 16 px gaps"
+  material: ["Flat poster tiles, radius 6, no border; hovered tile scales 1.12 with soft black shadow 0 30 60"]
+  texture: ["Baked PNG film grain at 6% opacity", "Bottom-up black scrim gradient on every hero frame"]
+  camera:
+    - "Continuous slow push (scale 1.00 -> 1.06 over the scene, sine.inOut)"
+    - "Lateral dolly on poster rows (x -240 px over 3 s, power1.inOut)"
+  transitions: ["red light sweep (skewed 30 deg red band crosses frame 0.45 s, reveals next scene)", "dip to black (0.3 s out, 0.2 s hold, 0.4 s in)", "letterbox close/open (bars meet then part)", "hard cut on bass hits only"]
+  pacing:
+    bpm: [80, 100]
+    rhythm: "Trailer arc: slow atmospheric build with long holds, accelerating montage cuts every 1-2 beats before the title, then silence and the title hit."
+  beat_response: ["Quiet until the build; montage cuts land on kicks", "Title hit = one ember flash (0.25) plus scale 1.08 -> 1 expo.out and 0.3 shake", "No pulse wrapper"]
+  ui_choreography:
+    - "Poster rows slide in from right with 0.06 s stagger, power3.out 0.8 s"
+    - "Focus tile grows 1.12 and reveals a metadata card beneath (rise 0.4 s)"
+    - "Red progress bar fills under the focused tile on its spoken word"
+  diagrams: ["Rarely; if needed, thin ink lines on black with red highlighted node, drawn with draw() 1.2 s"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 44 px Be Vietnam Pro 600 ink with 0 2 12 black shadow, bottom band; current word ink, unread mute"]
+  sound: ["Cinematic trailer: low drones, risers, braams and a single low boom on the title", "SFX sparse: whoosh on sweeps, sub boom on hits"]
+scene_types:
+  prefer: [hook, montage, title, product-hero, cta, outro]
+  avoid: [terminal, code, spec]
+signature_moves:
+  - "Red light sweep transition"
+  - "Letterbox bars that close to black and reopen on the next act"
+  - "Poster row glide with a focus tile that grows and reveals metadata"
+  - "Title slam on one low boom after a beat of silence"
+strengths: ["Anticipation and drama", "Showing a catalogue of content", "Strong teaser openings"]
+constraints:
+  - "Red used on at most one element per frame"
+  - "Hard cuts only on bass hits or montage kicks"
+  - "Every hero frame keeps the bottom scrim for title legibility"
+  - "No multi-note sonic signature or any studio's sound logo; one generic boom or riser"
+avoid: ["Bright or light backgrounds", "Bouncy UI easing", "Dense feature explanations"]
+pairs_well_with: [cinematic-technology, music-editorial, cinematic-product-launch, kinetic-typography]

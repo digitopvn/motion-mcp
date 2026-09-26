@@ -1,0 +1,228 @@
+{
+  "version": "0.1",
+  "title": "Make it move",
+  "format": { "aspect": "16:9", "fps": 30 },
+  "styleRefs": ["kinetic-type"],
+  "tastePacket": {
+    "creativeIntent": {
+      "feeling": "a jolt of momentum",
+      "concept": "Words hit on the beat; the message is the motion."
+    },
+    "mood": ["bold", "rhythmic", "playful"],
+    "energy": 5,
+    "visualDensity": 2,
+    "visualLanguage": ["oversized grotesk type", "hard cuts", "single accent color"],
+    "avoid": ["drop shadows", "gradients", "more than two words moving at once"],
+    "visualHierarchy": { "hero": "the word on screen" },
+    "motionLanguage": {
+      "tempo": "energetic",
+      "camera": "none",
+      "transitions": "scale-through and masks on the beat",
+      "holdRatio": 0.3,
+      "easing": ["snap", "emphasized"],
+      "avoidEasing": ["linear"],
+      "principles": ["every word lands on a beat", "contrast scale, not color"]
+    },
+    "typography": {
+      "display": "Space Grotesk",
+      "body": "Space Grotesk",
+      "mono": "JetBrains Mono",
+      "direction": "tight tracking, uppercase statements"
+    },
+    "color": {
+      "background": "#111111",
+      "foreground": "#f5f5f0",
+      "accent": "#ffd400",
+      "direction": "black, bone, one yellow"
+    },
+    "emotionalArc": "stillness → rush → release",
+    "sceneRhythm": "short scenes, accelerating"
+  },
+  "scenes": [
+    {
+      "id": "s01-stop",
+      "role": "hook",
+      "intent": "Arrest attention with one word.",
+      "duration": 3,
+      "focalPoint": "the word",
+      "layout": "statement",
+      "elements": [
+        {
+          "id": "word",
+          "kind": "text",
+          "role": "hero",
+          "text": "Stop.",
+          "style": { "size": "display-xl", "weight": "bold", "uppercase": true }
+        }
+      ],
+      "choreography": [
+        { "target": "word", "primitive": "scale-in", "at": 0.15, "duration": 0.4, "easing": "snap" },
+        { "target": "word", "primitive": "emphasize", "at": 1.2, "duration": 0.4 }
+      ],
+      "transitionOut": "scale-through"
+    },
+    {
+      "id": "s02-scroll",
+      "role": "problem",
+      "intent": "Name the habit.",
+      "duration": 3.5,
+      "focalPoint": "the sentence",
+      "layout": "center",
+      "elements": [
+        {
+          "id": "line",
+          "kind": "text",
+          "role": "hero",
+          "text": "Scrolling past every static slide",
+          "style": { "size": "headline", "weight": "bold" }
+        },
+        {
+          "id": "tag",
+          "kind": "text",
+          "role": "annotation",
+          "text": "sound familiar?",
+          "style": { "font": "mono", "size": "caption", "color": "accent" }
+        }
+      ],
+      "choreography": [
+        {
+          "target": "line",
+          "primitive": "stagger-in",
+          "at": 0.1,
+          "duration": 0.9,
+          "stagger": 0.1,
+          "easing": "emphasized",
+          "direction": "up"
+        },
+        {
+          "target": "tag",
+          "primitive": "slide-in",
+          "at": { "after": "line", "offset": 0.1 },
+          "duration": 0.4,
+          "direction": "right"
+        },
+        { "target": "tag", "primitive": "exit", "at": 2.6, "duration": 0.35, "easing": "accelerate" }
+      ],
+      "transitionOut": "mask"
+    },
+    {
+      "id": "s03-move",
+      "role": "mechanism",
+      "intent": "Deliver the turn.",
+      "duration": 3,
+      "focalPoint": "the word MOVE",
+      "layout": "statement",
+      "elements": [
+        {
+          "id": "big",
+          "kind": "text",
+          "role": "hero",
+          "text": "Make it move",
+          "style": { "size": "display-xl", "weight": "bold", "color": "accent", "uppercase": true }
+        },
+        {
+          "id": "bar",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "rule",
+          "style": { "color": "foreground" }
+        }
+      ],
+      "choreography": [
+        {
+          "target": "big",
+          "primitive": "slide-in",
+          "at": 0.1,
+          "duration": 0.45,
+          "direction": "left",
+          "easing": "snap"
+        },
+        {
+          "target": "bar",
+          "primitive": "draw",
+          "at": { "with": "big", "offset": 0.2 },
+          "duration": 0.4,
+          "easing": "snap"
+        },
+        { "target": "big", "primitive": "hold", "at": 1, "duration": 1 }
+      ],
+      "transitionOut": "slide-up"
+    },
+    {
+      "id": "s04-beat",
+      "role": "evidence",
+      "intent": "Stack the rhythm.",
+      "duration": 3.5,
+      "focalPoint": "the stacked words",
+      "layout": "stack",
+      "elements": [
+        {
+          "id": "w1",
+          "kind": "text",
+          "role": "hero",
+          "text": "Type",
+          "style": { "size": "display", "weight": "bold" }
+        },
+        {
+          "id": "w2",
+          "kind": "text",
+          "role": "hero",
+          "text": "that",
+          "style": { "size": "display", "weight": "light" }
+        },
+        {
+          "id": "w3",
+          "kind": "text",
+          "role": "hero",
+          "text": "dances",
+          "style": { "size": "display", "weight": "bold", "color": "accent", "italic": false }
+        }
+      ],
+      "choreography": [
+        { "target": "w1", "primitive": "fade-up", "at": 0.1, "duration": 0.35, "easing": "snap" },
+        {
+          "target": "w2",
+          "primitive": "fade-up",
+          "at": { "after": "w1", "offset": 0.05 },
+          "duration": 0.35,
+          "easing": "snap"
+        },
+        {
+          "target": "w3",
+          "primitive": "mask-reveal",
+          "at": { "after": "w2", "offset": 0.05 },
+          "duration": 0.45,
+          "direction": "right"
+        }
+      ],
+      "transitionOut": "match-cut"
+    },
+    {
+      "id": "s05-cta",
+      "role": "cta",
+      "intent": "Land the brand.",
+      "duration": 3,
+      "focalPoint": "the wordmark",
+      "elements": [
+        { "id": "mark", "kind": "logo", "role": "hero", "text": "Kinetica" },
+        {
+          "id": "url",
+          "kind": "text",
+          "role": "secondary",
+          "text": "kinetica.studio",
+          "style": { "font": "mono", "size": "title", "color": "accent" }
+        }
+      ],
+      "choreography": [
+        { "target": "mark", "primitive": "type-on", "at": 0.1, "duration": 0.6 },
+        {
+          "target": "url",
+          "primitive": "fade-in",
+          "at": { "after": "mark", "offset": 0.15 },
+          "duration": 0.4
+        }
+      ],
+      "transitionOut": "fade"
+    }
+  ]
+}

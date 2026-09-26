@@ -1,0 +1,238 @@
+{
+  "version": "0.1",
+  "title": "Anatomy of a request",
+  "format": { "aspect": "16:9", "fps": 30 },
+  "styleRefs": ["blueprint"],
+  "tastePacket": {
+    "creativeIntent": {
+      "feeling": "clarity, like reading a clean blueprint",
+      "concept": "Follow one request from the edge to the database and back."
+    },
+    "mood": ["technical", "calm", "systematic"],
+    "energy": 2,
+    "visualDensity": 4,
+    "visualLanguage": ["blueprint diagrams", "boxes and arrows", "mono labels"],
+    "avoid": ["cloud vendor logos", "isometric clutter", "random glow"],
+    "visualHierarchy": { "hero": "the diagram", "secondary": "labels", "tertiary": "annotations" },
+    "motionLanguage": {
+      "tempo": "restrained",
+      "camera": "none",
+      "transitions": "wipes along the data flow",
+      "holdRatio": 0.5,
+      "easing": ["standard", "decelerate"],
+      "avoidEasing": ["spring-soft", "snap"],
+      "principles": ["draw connections after the nodes", "left-to-right data flow"]
+    },
+    "typography": {
+      "display": "Inter",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "direction": "neutral sans, mono for component names"
+    },
+    "color": {
+      "background": "#0b2545",
+      "foreground": "#eef4ed",
+      "accent": "#8da9c4",
+      "muted": "#a3b6c9",
+      "surface": "#13315c",
+      "direction": "blueprint navy with pale ink"
+    },
+    "emotionalArc": "complexity → structure → confidence",
+    "sceneRhythm": "slow build, one layer per scene"
+  },
+  "scenes": [
+    {
+      "id": "s01-overview",
+      "role": "title",
+      "intent": "Introduce the path.",
+      "duration": 4,
+      "focalPoint": "the title",
+      "layout": "center",
+      "elements": [
+        {
+          "id": "frame",
+          "kind": "shape",
+          "role": "background",
+          "shape": "box",
+          "style": { "color": "line" }
+        },
+        {
+          "id": "title",
+          "kind": "text",
+          "role": "hero",
+          "text": "Anatomy of a request",
+          "style": { "size": "headline", "weight": "semibold" }
+        },
+        {
+          "id": "sub",
+          "kind": "text",
+          "role": "annotation",
+          "text": "edge → api → queue → store",
+          "style": { "font": "mono", "size": "caption" }
+        }
+      ],
+      "transitionOut": "wipe"
+    },
+    {
+      "id": "s02-flow",
+      "role": "mechanism",
+      "intent": "Lay out the components left to right.",
+      "duration": 7,
+      "focalPoint": "the node row",
+      "layout": "grid",
+      "elements": [
+        {
+          "id": "heading",
+          "kind": "text",
+          "role": "hero",
+          "text": "The request path",
+          "style": { "size": "title", "weight": "semibold" }
+        },
+        {
+          "id": "edge",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Edge cache",
+          "style": { "font": "mono", "size": "body" }
+        },
+        {
+          "id": "link-a",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "arrow",
+          "style": { "color": "accent" }
+        },
+        {
+          "id": "api",
+          "kind": "text",
+          "role": "secondary",
+          "text": "API gateway",
+          "style": { "font": "mono", "size": "body" }
+        },
+        {
+          "id": "queue",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Job queue",
+          "style": { "font": "mono", "size": "body" }
+        },
+        {
+          "id": "link-b",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "arrow",
+          "style": { "color": "accent" }
+        },
+        {
+          "id": "store",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Postgres",
+          "style": { "font": "mono", "size": "body" }
+        }
+      ],
+      "choreography": [
+        { "target": "heading", "primitive": "fade-in", "at": 0.3, "duration": 0.6 },
+        {
+          "target": "edge",
+          "primitive": "scale-in",
+          "at": { "after": "heading", "offset": 0 },
+          "duration": 0.5
+        },
+        {
+          "target": "api",
+          "primitive": "scale-in",
+          "at": { "with": "edge", "offset": 0.2 },
+          "duration": 0.5
+        },
+        {
+          "target": "queue",
+          "primitive": "scale-in",
+          "at": { "with": "api", "offset": 0.2 },
+          "duration": 0.5
+        },
+        {
+          "target": "store",
+          "primitive": "scale-in",
+          "at": { "with": "queue", "offset": 0.2 },
+          "duration": 0.5
+        },
+        {
+          "target": "link-a",
+          "primitive": "draw",
+          "at": { "after": "store", "offset": 0.1 },
+          "duration": 0.5,
+          "easing": "standard"
+        },
+        {
+          "target": "link-b",
+          "primitive": "draw",
+          "at": { "after": "link-a", "offset": 0 },
+          "duration": 0.5,
+          "easing": "standard"
+        }
+      ],
+      "transitionOut": "slide-left"
+    },
+    {
+      "id": "s03-failure",
+      "role": "problem",
+      "intent": "Show where it breaks.",
+      "duration": 5,
+      "focalPoint": "the failing hop",
+      "layout": "split",
+      "elements": [
+        {
+          "id": "hop",
+          "kind": "text",
+          "role": "hero",
+          "text": "Queue backs up at peak",
+          "style": { "size": "headline", "align": "start" }
+        },
+        {
+          "id": "mark",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "circle",
+          "style": { "color": "accent" },
+          "region": "right"
+        },
+        {
+          "id": "stat",
+          "kind": "metric",
+          "role": "secondary",
+          "value": 3200,
+          "suffix": " jobs",
+          "label": "waiting at 9:00 UTC",
+          "region": "right"
+        }
+      ],
+      "transitionOut": "mask"
+    },
+    {
+      "id": "s04-fix",
+      "role": "payoff",
+      "intent": "Name the fix.",
+      "duration": 5,
+      "focalPoint": "the fix",
+      "layout": "lower-third",
+      "elements": [
+        {
+          "id": "fix",
+          "kind": "text",
+          "role": "hero",
+          "text": "Autoscale workers on queue depth.",
+          "style": { "size": "headline", "align": "start" }
+        },
+        {
+          "id": "config",
+          "kind": "code",
+          "role": "secondary",
+          "language": "yaml",
+          "code": "scale:\n  metric: queue_depth\n  target: 200"
+        }
+      ],
+      "transitionOut": "fade"
+    }
+  ]
+}

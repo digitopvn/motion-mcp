@@ -1,0 +1,49 @@
+id: organic-biomorphic
+name: Organic Biomorphic
+family: aesthetic
+aliases: [biomorphic, organic shapes, fluid blobs]
+summary: Living fluid forms; morphing blobs, soft gradients, growing tendrils, breathing motion and natural calm.
+energy: 2
+best_for: [wellness-brand, sustainability, ai-assistant, brand-story]
+character: >-
+  Calm and alive: soft blob shapes that breathe and morph, tendrils that grow
+  toward content, and earthy gradients like light through leaves. Nothing snaps;
+  every change flows like a living organism.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#f4f1ea", ink: "#1f2a24", accent: "#2f8f6b", moss: "#8fb996", clay: "#d9a47c", sky: "#a9c8d8", blush: "#e8b7b0", deep: "#16352b"}
+    rule: "Earth and botanical tones; blobs use 2-stop soft gradients of neighbouring hues; deep green variant for night scenes."
+  typography:
+    - "Fraunces 500 soft (SOFT 100, WONK 1) for headlines, 88 px, -0.02em"
+    - "Outfit 400 body, 40 px"
+    - "Outfit 600 small caps labels"
+  layout: ["Content cradled inside or beside a large blob; asymmetric, flowing composition", "Headline left-of-centre, blobs anchor opposite corner", "Caption band clear; blobs may bleed off edges above it"]
+  material: ["Soft matte shapes with 2-stop gradients; no strokes; faint inner light via a baked radial PNG"]
+  texture: ["Baked soft grain PNG at 5%", "Optional baked leaf-shadow (dappled light) PNG drifting slowly"]
+  camera: ["Slow drift and breathing (scale 1.00 <-> 1.02 over 8 s, sine.inOut, finite repeats sized to the hold)", "Gentle parallax between blob layers", "No cuts of camera direction"]
+  transitions: ["blob-morph (a blob path morphs and grows to fill the frame, then recedes into the next layout; pre-authored equal-point SVG paths tweened on attr d, 1.0 s sine.inOut)", "ripple (concentric soft rings expand from a point revealing the next scene)", "tendril-grow (vines draw across the frame with draw() and open a new space)", "dissolve-bloom (cross-fade with a slow scale 0.96 -> 1)"]
+  pacing:
+    bpm: [70, 92]
+    rhythm: "Breathing: scenes hold 8-12 beats, reveals flow over 2 beats with long overlaps; no hard cuts."
+  beat_response: ["Blobs breathe (scale 1.00 -> 1.015) on downbeats only", "Soft glow on the active blob on kick beats", "Nothing flashes or shakes"]
+  ui_choreography: ["UI in soft pebble-shaped cards (radius 40, asymmetric corners)", "Items float up and fade (y 24 -> 0, sine.out 0.8 s) with 0.12 s stagger", "Values ease in slowly; no pops"]
+  diagrams: ["Networks as root or mycelium lines drawn with draw(), nodes as small blobs", "Growth charts as organic area shapes morphing between states"]
+  character_motion: ["Optional soft seed or droplet character that sways and stretches slowly; no hard squash"]
+  captions: ["Soft blob-shaped pill rgba(244,241,234,0.85), radius 28, 42 px Be Vietnam Pro 600 ink; current word accent; bottom band"]
+  sound: ["Ambient, organic electronica or acoustic 70-92 BPM", "SFX: soft water drops, wind, gentle chimes; very low density"]
+scene_types:
+  prefer: [cover, title, feature, quote, testimonial, outro]
+  avoid: [terminal, code, montage]
+signature_moves:
+  - "Blob morph that becomes the next scene's container"
+  - "Tendrils growing toward the key message"
+  - "Ripple reveal from the spoken word"
+  - "Whole scene breathing on downbeats"
+strengths: ["Calm, human and trustworthy", "Distinct from tech-slick styles", "Works for wellness, nature and AI assistants"]
+constraints:
+  - "No hard cuts or linear motion; sine and power1 eases only"
+  - "Morphs use pre-authored paths with equal point counts; no runtime path generation"
+  - "Max ~12 blobs on screen; blur baked, never live filter: blur()"
+avoid: ["Neon and pure black", "Glitch, halftone or pixel textures", "Fast rhythmic cuts"]
+pairs_well_with: [calm-workspace, ambient-intelligence, paper-cut-collage, soft-clay-3d]

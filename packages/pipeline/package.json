@@ -4,6 +4,23 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "exports": { ".": "./src/index.ts" },
-  "dependencies": {}
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@motion-mcp/billing": "workspace:*",
+    "@motion-mcp/database": "workspace:*",
+    "@motion-mcp/director": "workspace:*",
+    "@motion-mcp/domain-pack": "workspace:*",
+    "@motion-mcp/hyperframes-adapter": "workspace:*",
+    "@motion-mcp/jev-router": "workspace:*",
+    "@motion-mcp/llm": "workspace:*",
+    "@motion-mcp/media": "workspace:*",
+    "@motion-mcp/motion-ir": "workspace:*",
+    "@motion-mcp/observability": "workspace:*",
+    "@motion-mcp/pi-runtime": "workspace:*",
+    "@motion-mcp/shared": "workspace:*",
+    "@motion-mcp/storage": "workspace:*",
+    "zod": "4.6.5"
+  }
 }

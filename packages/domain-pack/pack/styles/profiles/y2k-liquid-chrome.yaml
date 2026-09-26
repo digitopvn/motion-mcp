@@ -1,0 +1,49 @@
+id: y2k-liquid-chrome
+name: Y2K Liquid Chrome
+family: aesthetic
+aliases: [y2k, liquid chrome, millennium chrome]
+summary: Turn-of-millennium chrome; liquid metal type, iridescent bubbles, lens flares, glossy swooshes on bright skies.
+energy: 4
+best_for: [fashion-drop, music-promo, youth-brand, social-cut]
+character: >-
+  Optimistic, glossy and a little futuristic: mirrored chrome letters, soap-bubble
+  iridescence, star sparkles and fast glossy swooshes. Everything looks wet and
+  reflective, and motion is springy and elastic.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#dfe8ff", ink: "#101422", accent: "#ff5cd6", cyan: "#4ff0ff", lime: "#c6ff3d", silver: "#c9ced8", deep: "#1b1f3b"}
+    rule: "Chrome = linear-gradient(180deg, #ffffff, #9aa3b5 45%, #2a2f45 52%, #e6ebf5) fill; iridescent accent gradient #ff5cd6 -> #4ff0ff -> #c6ff3d on bubbles only."
+  typography:
+    - "Unbounded 800 display words with chrome gradient fill and 2 px white inner highlight, 140-220 px"
+    - "Syne 700 for subheads, 48 px, tracking 0.04em"
+    - "Space Mono 400 for small tech labels and version tags"
+  layout: ["Big centred chrome word with floating bubbles and sparkles orbiting", "Asymmetric sticker clusters in corners, kept above the caption band", "Deep navy variant for night scenes"]
+  material: ["Chrome and glossy plastic: pre-rendered chrome PNG/SVG shapes, pill buttons with top gloss ellipse, soft coloured drop shadows"]
+  texture: ["Baked iridescent bubble PNGs", "4-point star sparkle sprites", "Soft sky gradient with a baked light-leak PNG"]
+  camera: ["Floating drift: y +-12 px sine over 4 s on hero objects", "Quick scale-punch 1.0 -> 1.06 back on reveals (back.out)", "No shake"]
+  transitions: ["chrome-swoosh (curved glossy ribbon sweeps across 0.35 s, power3.inOut, next scene under it)", "bubble-iris (circle clip grows from a bubble, elastic.out(1,0.6) 0.6 s)", "flare-cut (lens-flare streak flash 0.15 s at a kick)", "liquid-melt (displacement map PNG sequence, ends in hard swap)"]
+  pacing:
+    bpm: [112, 128]
+    rhythm: "Bouncy: reveals every 2 beats, hero words hold 4 beats, one drop with a flare cut."
+  beat_response: ["Sparkles twinkle (scale 0 -> 1 -> 0) on every beat, staggered", "Chrome highlight band slides across hero text on kick downbeats", "Bubbles bob 6 px on kicks"]
+  ui_choreography: ["UI in glossy rounded windows (radius 28) with chrome title bars", "Cards pop with back.out(2) 0.5 s and settle with a small overshoot", "Buttons press in (scale 0.94) on the spoken word"]
+  diagrams: ["Nodes as chrome spheres linked by glossy tubes drawn with draw()", "Charts as gloss-filled pill bars"]
+  character_motion: ["Optional chrome blob mascot with elastic squash (elastic.out 1, 0.4)", "Objects spin in 3D (rotationY 360) with springy settle"]
+  captions: ["White pill rgba(255,255,255,0.8) radius 999, 44 px Be Vietnam Pro 700 #101422; current word #ff5cd6; bottom band"]
+  sound: ["Bubblegum pop or UK garage 112-128 BPM", "SFX: glassy swooshes, sparkle chimes on reveals, bubble pops; medium density"]
+scene_types:
+  prefer: [cover, hook, product-hero, feature, montage, cta]
+  avoid: [code, terminal, spec]
+signature_moves:
+  - "Chrome headline with a highlight band sweeping across on the kick"
+  - "Bubble-iris reveal of the next scene"
+  - "Lens-flare streak on the drop"
+  - "Glossy ribbon swoosh transition"
+strengths: ["High shine and fun", "Great for fashion and music", "Distinctive retro-future look"]
+constraints:
+  - "Chrome is a gradient fill or pre-rendered asset; never live SVG lighting filters"
+  - "Max ~20 bubbles and sparkles on screen"
+  - "Elastic eases only on entrances, never on camera"
+avoid: ["Flat matte palettes", "Dense text or code", "Grainy analogue textures"]
+pairs_well_with: [vaporwave-memphis, soft-clay-3d, joyful-pop, holographic-hud]

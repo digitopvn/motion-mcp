@@ -4,6 +4,11 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "exports": { ".": "./src/index.ts" },
-  "dependencies": {}
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@motion-mcp/shared": "workspace:*",
+    "zod": "4.6.5"
+  }
 }

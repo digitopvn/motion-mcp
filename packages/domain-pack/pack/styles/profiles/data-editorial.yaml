@@ -1,0 +1,52 @@
+id: data-editorial
+name: Data Editorial
+family: aesthetic
+aliases: [data journalism, infographic editorial, chart story]
+summary: Newsroom data story; charts build on narration, annotations point at the story and numbers carry the headline.
+energy: 2
+best_for: [data-story, report-launch, research-explainer, benchmarks]
+character: >-
+  Calm and evidential, like a quality newspaper's interactive graphic turned
+  into video: serif headlines, clean axes, one highlighted series and
+  annotations that arrive exactly as the narrator names the point.
+dimensions:
+  palette:
+    mode: light
+    colors: {bg: "#fbf9f4", ink: "#1b1b1b", accent: "#d1495b", series2: "#2e86ab", mute: "#9a968d", axis: "#d9d5cb"}
+    rule: "Context series in mute grey; one story series in accent; optional second series blue. Never more than 3 hues in a chart."
+  typography:
+    - "Fraunces 600 headlines 72-96 px, -0.02em tracking; one-sentence headlines that state the finding"
+    - "IBM Plex Sans 400/600 for axes 20 px, labels 24 px, annotations 26 px italic"
+    - "IBM Plex Mono 500 tabular numerals for big stats 160-220 px"
+  layout:
+    - "Headline + dek top-left; chart below in 12-col grid, 120 px margins"
+    - "Source line and small print above the caption band"
+    - "Annotations sit in whitespace, joined by 1.5 px leader lines"
+  material: ["Flat paper; 1 px axis lines; no shadows or cards"]
+  texture: ["None"]
+  camera: ["Locked-off; axis rescale (domain change animated) acts as the zoom"]
+  transitions: ["chart-morph (bars become dots or line interpolates to next dataset, power2.inOut 0.8 s)", "axis-rescale (y domain animates, series reflow)", "scroll-up (whole story column scrolls to the next graphic, 0.6 s)", "fade (0.4 s) between unrelated charts"]
+  pacing:
+    bpm: [84, 104]
+    rhythm: "Narration-led: each data point reveals on its spoken word; holds 4-8 beats after a key annotation."
+  beat_response: ["None on screen; beats only quantise reveal times"]
+  ui_choreography: ["UI shown as screenshots framed like figures with numbered captions (Fig. 1)", "Tables fill row by row with odo digit rolls"]
+  diagrams: ["Axes draw first (0.4 s), then gridlines, then data", "Lines draw with draw() left to right; bars grow from baseline power2.out 0.6 s, 0.03 s stagger", "Annotation: circle or bracket drawn, leader line, then italic note fades in on W(word)"]
+  character_motion: ["No mascot; small unit pictograms may stack for counts"]
+  captions: ["No pill; 40 px Be Vietnam Pro 500 ink on paper, bottom band flush left; current word accent"]
+  sound: ["Understated documentary electronic or piano 84-104 BPM", "Very sparse SFX: soft tick when a key number lands"]
+scene_types:
+  prefer: [chart, stats, comparison, timeline, title, quote]
+  avoid: [montage, product-hero, terminal]
+signature_moves:
+  - "Annotation drawn on the exact spoken word"
+  - "Chart morph from one encoding to another"
+  - "Axis rescale revealing the outlier"
+  - "Giant tabular numeral with a one-line finding"
+strengths: ["Trustworthy numbers", "Complex data made readable", "Works with long narration"]
+constraints:
+  - "Axes, units and source always shown on charts"
+  - "One highlighted series per chart; others grey"
+  - "No 3D, no dual-axis tricks, bars start at zero"
+avoid: ["Decorative chart junk", "Neon or glass", "Fast cutting"]
+pairs_well_with: [swiss-kinetic-editorial, editorial-intelligence, saas-bento, documentary-purpose]

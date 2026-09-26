@@ -1,0 +1,216 @@
+{
+  "version": "0.1",
+  "title": "Q3 in numbers",
+  "format": { "aspect": "16:9", "fps": 30 },
+  "styleRefs": ["editorial-data"],
+  "tastePacket": {
+    "creativeIntent": {
+      "feeling": "earned pride without hype",
+      "concept": "Three numbers, each given room to land."
+    },
+    "mood": ["editorial", "warm", "precise"],
+    "energy": 3,
+    "visualDensity": 3,
+    "visualLanguage": ["financial-times editorial", "serif numerals", "hairline rules"],
+    "avoid": ["3D charts", "confetti", "neon"],
+    "visualHierarchy": { "hero": "the number", "secondary": "its label", "tertiary": "context" },
+    "motionLanguage": {
+      "tempo": "measured",
+      "camera": "rare",
+      "transitions": "fades between chapters",
+      "holdRatio": 0.5,
+      "easing": ["decelerate", "standard"],
+      "avoidEasing": ["spring-soft", "snap"],
+      "principles": ["count up once, then hold", "rules draw before numbers"]
+    },
+    "typography": {
+      "display": "Fraunces",
+      "body": "DM Sans",
+      "mono": "IBM Plex Mono",
+      "direction": "big serif numerals, quiet sans labels"
+    },
+    "color": {
+      "background": "#fff8ef",
+      "foreground": "#1d1a16",
+      "accent": "#c2410c",
+      "muted": "#6f665c",
+      "surface": "#f3eadf",
+      "direction": "newsprint cream with a rust accent"
+    },
+    "emotionalArc": "context → growth → confidence",
+    "sceneRhythm": "evenly paced chapters"
+  },
+  "brand": {
+    "name": "Northwind",
+    "colors": {
+      "background": "#fff8ef",
+      "foreground": "#1d1a16",
+      "accent": "#c2410c",
+      "accent-2": "#0f766e",
+      "muted": "#6f665c",
+      "surface": "#f3eadf",
+      "line": "#d8cbbb"
+    },
+    "fonts": { "display": "Fraunces", "body": "DM Sans", "mono": "IBM Plex Mono" },
+    "radius": "soft"
+  },
+  "scenes": [
+    {
+      "id": "s01-intro",
+      "role": "title",
+      "intent": "Set the chapter.",
+      "duration": 4,
+      "focalPoint": "the title",
+      "layout": "lower-third",
+      "elements": [
+        {
+          "id": "dots",
+          "kind": "shape",
+          "role": "background",
+          "shape": "dot-grid",
+          "style": { "color": "line" }
+        },
+        {
+          "id": "title",
+          "kind": "text",
+          "role": "hero",
+          "text": "Q3 in numbers",
+          "style": { "size": "display", "align": "start" }
+        },
+        { "id": "rule", "kind": "shape", "role": "tertiary", "shape": "rule" },
+        {
+          "id": "dek",
+          "kind": "text",
+          "role": "secondary",
+          "text": "Northwind quarterly review",
+          "style": { "size": "title", "color": "muted" }
+        }
+      ]
+    },
+    {
+      "id": "s02-revenue",
+      "role": "evidence",
+      "intent": "Revenue growth.",
+      "duration": 5,
+      "focalPoint": "the revenue figure",
+      "layout": "center",
+      "elements": [
+        {
+          "id": "revenue",
+          "kind": "metric",
+          "role": "hero",
+          "value": 4.82,
+          "decimals": 2,
+          "prefix": "$",
+          "suffix": "M",
+          "label": "net revenue, up 31% year over year"
+        },
+        {
+          "id": "source",
+          "kind": "text",
+          "role": "annotation",
+          "text": "Source: audited Q3 statements",
+          "style": { "font": "mono", "size": "label" }
+        }
+      ],
+      "transitionOut": "fade"
+    },
+    {
+      "id": "s03-grid",
+      "role": "evidence",
+      "intent": "Three supporting figures at once.",
+      "duration": 6,
+      "focalPoint": "the grid",
+      "layout": "grid",
+      "elements": [
+        {
+          "id": "heading",
+          "kind": "text",
+          "role": "hero",
+          "text": "Where it came from",
+          "style": { "size": "headline" }
+        },
+        {
+          "id": "customers",
+          "kind": "metric",
+          "role": "secondary",
+          "value": 12480,
+          "label": "active customers",
+          "style": { "size": "headline" }
+        },
+        {
+          "id": "retention",
+          "kind": "metric",
+          "role": "secondary",
+          "value": 96.4,
+          "decimals": 1,
+          "suffix": "%",
+          "label": "gross retention",
+          "style": { "size": "headline", "color": "accent-2" }
+        },
+        {
+          "id": "margin",
+          "kind": "metric",
+          "role": "secondary",
+          "value": 58,
+          "suffix": "%",
+          "label": "gross margin",
+          "style": { "size": "headline", "color": "accent" }
+        }
+      ],
+      "choreography": [
+        { "target": "heading", "primitive": "fade-up", "at": 0.2, "duration": 0.6 },
+        {
+          "target": "customers",
+          "primitive": "count-up",
+          "at": { "after": "heading", "offset": 0 },
+          "duration": 1.2
+        },
+        {
+          "target": "retention",
+          "primitive": "count-up",
+          "at": { "with": "customers", "offset": 0.25 },
+          "duration": 1.2
+        },
+        {
+          "target": "margin",
+          "primitive": "count-up",
+          "at": { "with": "retention", "offset": 0.25 },
+          "duration": 1.2
+        }
+      ],
+      "transitionOut": "slide-up"
+    },
+    {
+      "id": "s04-outlook",
+      "role": "payoff",
+      "intent": "Close with the outlook.",
+      "duration": 5,
+      "focalPoint": "the statement",
+      "layout": "split",
+      "elements": [
+        {
+          "id": "statement",
+          "kind": "text",
+          "role": "hero",
+          "text": "Q4 guidance raised.",
+          "style": { "size": "display", "align": "start" }
+        },
+        {
+          "id": "bracket",
+          "kind": "shape",
+          "role": "tertiary",
+          "shape": "bracket",
+          "style": { "color": "accent" }
+        },
+        {
+          "id": "points",
+          "kind": "list",
+          "role": "secondary",
+          "items": ["Two new regions", "Enterprise tier live", "Hiring in platform"]
+        }
+      ],
+      "transitionOut": "fade"
+    }
+  ]
+}

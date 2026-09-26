@@ -1,0 +1,54 @@
+id: ambient-intelligence
+name: Ambient Intelligence
+family: brand-inspired
+aliases: [openai, openai-like, openai-style, ai lab minimal]
+summary: Calm AI-lab minimalism; soft blurred colour fields, streaming text, generous white space and slow breathing motion.
+energy: 2
+best_for: [ai-model-launch, research-announcement, assistant-demo, product-explainer]
+character: >-
+  Quiet and intelligent: soft painterly colour fields breathe behind plain
+  type, answers stream in token by token, and everything moves slowly with
+  generous space. It feels like thinking made visible, never like a gadget.
+dimensions:
+  palette:
+    mode: mixed
+    colors: {bg: "#ffffff", ink: "#0d0d0d", accent: "#1f9e98", dusk: "#0b0b0f", peach: "#f7c8a8", lilac: "#c9c2f0", sky: "#a8d8f0", mute: "#8a8a96"}
+    rule: "Near-monochrome type on white or dusk; colour only in soft blurred fields (two pastels per scene); green accent for a single cursor or state."
+  typography:
+    - "Inter 500 headlines 64 px, -0.02em, sentence case, left aligned"
+    - "Inter 400 body 30 px; IBM Plex Mono 400 for prompts and model output"
+    - "Be Vietnam Pro 500 for captions"
+  layout:
+    - "Left-aligned text column at x 200, max width 1100 px; colour field fills the right or background"
+    - "Chat surface centred, 960 px wide, rounded input bar at the bottom above the caption band"
+  material: ["Flat white surfaces, radius 24 input bars with 1 px #e5e5e5 border", "No shadows except one soft 0 20 60 rgba(0,0,0,0.06) on the chat surface"]
+  texture: ["Soft painterly gradient fields baked to PNG (blurred pastel blobs), slowly translated and scaled", "No grain"]
+  camera: ["Almost static; background fields drift 40 px and scale 1.0 -> 1.08 over 10 s sine.inOut"]
+  transitions: ["field bloom (a pastel field expands softly to fill, next scene fades up through it, 1.0 s)", "text dissolve (outgoing text fades per word, incoming streams in)", "slow cross-fade 0.8 s", "cut to white on section turns"]
+  pacing:
+    bpm: [70, 95]
+    rhythm: "Unhurried: long 8-beat holds while text streams, gentle 4-beat feature scenes, quiet resolution."
+  beat_response: ["None visible; colour fields breathe with slow sine.inOut tweens (finite repeats sized to the hold), not on beats"]
+  ui_choreography:
+    - "Prompt types into the input bar with typeIn() at 0.035 s per char, cursor blink via stepped opacity, finite repeats sized to the hold"
+    - "Response streams word by word (0.06 s per word, opacity 0 -> 1, no movement)"
+    - "Thinking indicator: a soft pulsing dot (scale 1 -> 1.3 -> 1, sine.inOut 0.8 s, finite repeats sized to the hold; the main timeline is paused and seeked, so never repeat -1)"
+  diagrams: ["Minimal: thin grey lines and small rounded nodes, one path highlighted in accent, drawn with draw() 1.2 s", "Charts as simple monochrome bars with one coloured series"]
+  character_motion: ["No mascot"]
+  captions: ["No pill; 42 px Be Vietnam Pro 500 ink (white on dusk scenes), bottom band; current word ink, unread mute"]
+  sound: ["Ambient piano, soft synth pads, gentle textures", "Almost no SFX: a faint key tick while typing"]
+scene_types:
+  prefer: [title, ui-demo, feature, quote, diagram, cta]
+  avoid: [montage, terminal]
+signature_moves:
+  - "Token-by-token streaming response"
+  - "Painterly colour field bloom between scenes"
+  - "Prompt typed into a rounded input bar"
+  - "Soft thinking-dot pulse before the answer"
+strengths: ["AI and research announcements", "Calm credibility", "Clear assistant demos"]
+constraints:
+  - "Colour only in baked soft fields, never on type"
+  - "No flashes, shake or bouncy eases"
+  - "No logos, knot marks or product names of any AI lab"
+avoid: ["Neon sci-fi AI clichés (brains, circuits, robots)", "Dense dashboards", "Hard fast cuts"]
+pairs_well_with: [editorial-intelligence, calm-workspace, premium-ui-demo, swiss-kinetic-editorial]
