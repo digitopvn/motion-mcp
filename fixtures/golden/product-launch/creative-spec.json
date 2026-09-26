@@ -1,0 +1,118 @@
+{
+  "version": "0.1",
+  "title": "Tracewise launch",
+  "format": { "aspect": "16:9", "fps": 30 },
+  "styleRefs": ["swiss-editorial"],
+  "tastePacket": {
+    "creativeIntent": {
+      "feeling": "quiet confidence turning into controlled acceleration",
+      "concept": "Debugging distributed systems stops being archaeology: one trace, read like a sentence."
+    },
+    "mood": ["editorial", "precise", "calm"],
+    "energy": 2,
+    "visualDensity": 2,
+    "visualLanguage": ["swiss editorial", "technical diagrams", "restrained typography"],
+    "avoid": [
+      "generic SaaS gradient",
+      "floating glass cards",
+      "excessive spring animation",
+      "decorative motion without narrative purpose"
+    ],
+    "visualHierarchy": { "hero": "typography", "secondary": "product UI", "tertiary": "annotation" },
+    "motionLanguage": {
+      "tempo": "restrained",
+      "camera": "rare",
+      "transitions": "motivated cuts",
+      "holdRatio": 0.55,
+      "easing": ["decelerate", "standard"],
+      "avoidEasing": ["spring-soft"],
+      "principles": ["one idea per scene", "hold the key word for a full beat"]
+    },
+    "typography": {
+      "display": "Instrument Serif",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "direction": "large serif statements, small mono annotations"
+    },
+    "color": {
+      "background": "#f4f1ea",
+      "foreground": "#111111",
+      "accent": "#e4572e",
+      "muted": "#6b6b6b",
+      "surface": "#ffffff",
+      "direction": "paper, ink, one signal color"
+    },
+    "emotionalArc": "friction → clarity → momentum",
+    "sceneRhythm": "long holds early, tighter cuts toward the payoff"
+  },
+  "scenes": [
+    {
+      "id": "s01-hook",
+      "role": "hook",
+      "intent": "Name the pain in one line.",
+      "duration": 4,
+      "focalPoint": "the headline",
+      "elements": [
+        { "id": "headline", "kind": "text", "role": "hero", "text": "Your logs are lying by omission.", "style": { "size": "display", "font": "display" } },
+        { "id": "rule", "kind": "shape", "role": "tertiary", "shape": "rule", "style": { "color": "accent" } }
+      ]
+    },
+    {
+      "id": "s02-problem",
+      "role": "problem",
+      "intent": "Show the scale of the mess.",
+      "duration": 5,
+      "focalPoint": "the metric",
+      "layout": "split",
+      "elements": [
+        { "id": "metric", "kind": "metric", "role": "hero", "value": 47, "suffix": " services", "label": "touched by one checkout request" },
+        { "id": "caption", "kind": "text", "role": "secondary", "text": "Each with its own story.", "style": { "size": "title" } }
+      ]
+    },
+    {
+      "id": "s03-mechanism",
+      "role": "mechanism",
+      "intent": "Reveal how Tracewise stitches the story together.",
+      "duration": 6,
+      "focalPoint": "the code line",
+      "layout": "stack",
+      "elements": [
+        { "id": "title", "kind": "text", "role": "hero", "text": "One trace. Read like a sentence.", "style": { "size": "headline", "font": "display" } },
+        { "id": "code", "kind": "code", "role": "secondary", "language": "ts", "code": "trace(\"checkout\").explain()" },
+        { "id": "note", "kind": "text", "role": "annotation", "text": "auto-instrumented · zero config", "style": { "size": "caption", "font": "mono", "color": "muted" } }
+      ]
+    },
+    {
+      "id": "s04-evidence",
+      "role": "evidence",
+      "intent": "Prove it with outcomes.",
+      "duration": 5,
+      "focalPoint": "the list",
+      "elements": [
+        { "id": "heading", "kind": "text", "role": "secondary", "text": "Teams report", "style": { "size": "title", "color": "muted" } },
+        { "id": "outcomes", "kind": "list", "role": "hero", "items": ["73% faster root cause", "Half the on-call pages", "No new agents to deploy"] }
+      ]
+    },
+    {
+      "id": "s05-payoff",
+      "role": "payoff",
+      "intent": "Land the emotional turn: clarity.",
+      "duration": 5,
+      "focalPoint": "the statement",
+      "elements": [
+        { "id": "statement", "kind": "text", "role": "hero", "text": "Stop digging. Start reading.", "style": { "size": "display-xl", "font": "display" } }
+      ]
+    },
+    {
+      "id": "s06-cta",
+      "role": "cta",
+      "intent": "Tell them where to go.",
+      "duration": 5,
+      "focalPoint": "the logo and URL",
+      "elements": [
+        { "id": "logo", "kind": "logo", "role": "hero", "text": "Tracewise" },
+        { "id": "url", "kind": "text", "role": "secondary", "text": "tracewise.dev", "style": { "size": "title", "font": "mono", "color": "accent" } }
+      ]
+    }
+  ]
+}

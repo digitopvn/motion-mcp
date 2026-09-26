@@ -1,0 +1,28 @@
+{
+  "name": "motion-mcp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI-native motion-video production runtime exposed as a Streamable HTTP MCP server.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": { "node": ">=22.19.0" },
+  "scripts": {
+    "dev": "pnpm --filter @motion-mcp/mcp-server dev",
+    "motion": "tsx apps/mcp-server/src/cli.ts",
+    "build": "pnpm -r --if-present build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "test": "vitest run --project unit",
+    "test:live": "vitest run --project live",
+    "check": "pnpm lint && pnpm typecheck && pnpm test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@types/node": "^24.0.0",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vitest": "5.0.2"
+  }
+}

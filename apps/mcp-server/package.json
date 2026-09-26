@@ -1,0 +1,13 @@
+{
+  "name": "@motion-mcp/mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "build": "tsdown"
+  },
+  "dependencies": {}
+}
