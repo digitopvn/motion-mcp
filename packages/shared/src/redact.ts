@@ -22,6 +22,8 @@ const PATTERNS: RegExp[] = [
   /-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----/g,
   // Signed URL query parameters (S3/R2 presigned, generic tokens)
   /([?&](?:X-Amz-Signature|X-Amz-Credential|X-Amz-Security-Token|signature|sig|token|access_token|api_key|apikey|key)=)[^&\s"']+/gi,
+  // Passwords in connection strings (postgres://user:pass@host)
+  /(\b[a-z][a-z0-9+.-]*:\/\/[^:/@\s"']+:)[^@\s"']+(?=@)/gi,
 ];
 
 const KEY_VALUE =
@@ -37,7 +39,7 @@ export function registerSecret(value: string | undefined | null): void {
 /** Register every environment variable whose name looks secret. */
 export function registerSecretsFromEnv(env: NodeJS.ProcessEnv = process.env): void {
   for (const [name, value] of Object.entries(env)) {
-    if (/(KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL)/i.test(name)) registerSecret(value);
+    if (/(KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL|DATABASE_URL)/i.test(name)) registerSecret(value);
   }
 }
 
@@ -48,7 +50,7 @@ export function redact(input: string): string {
   }
   for (const re of PATTERNS) {
     out = out.replace(re, (match, prefix?: string) => {
-      if (typeof prefix === "string" && /[?&]/.test(prefix)) return `${prefix}${REDACTED}`;
+      if (typeof prefix === "string" && /[?&]|:\/\//.test(prefix)) return `${prefix}${REDACTED}`;
       if (/^(Bearer|Basic)\s/i.test(match)) return `${match.split(/\s+/)[0]} ${REDACTED}`;
       return REDACTED;
     });

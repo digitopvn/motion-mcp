@@ -21,6 +21,13 @@ describe("secret redaction", () => {
     expect(out).toContain("X-Amz-Expires=600");
   });
 
+  it("redacts passwords in connection strings", () => {
+    expect(redact("connect postgres://motion:s3cret-pass@db:5432/motion failed")).toBe(
+      "connect postgres://motion:[redacted]@db:5432/motion failed",
+    );
+    expect(redact("see https://example.com:8443/path")).toBe("see https://example.com:8443/path");
+  });
+
   it("redacts registered literal secrets anywhere", () => {
     registerSecret("my-very-custom-secret-value");
     expect(redact("oops my-very-custom-secret-value leaked")).toBe("oops [redacted] leaked");
