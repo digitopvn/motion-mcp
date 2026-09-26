@@ -61,7 +61,8 @@ jobs:
           printf '%s' "${{ secrets.GITHUB_TOKEN }}" | ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
             "cd ~/motion-mcp \
              && docker login ghcr.io -u '${{ github.actor }}' --password-stdin \
-             && MOTION_IMAGE='$TAG' docker compose --profile tunnel pull --ignore-buildable; rc=\$?; docker logout ghcr.io; [ \$rc -eq 0 ] \
+             && docker pull '$TAG'; rc=\$?; docker logout ghcr.io; [ \$rc -eq 0 ] \
+             && docker compose --profile tunnel pull cloudflared \
              && MOTION_IMAGE='$TAG' docker compose --profile tunnel up -d --remove-orphans \
              && docker image prune -f"
       - name: Verify health
