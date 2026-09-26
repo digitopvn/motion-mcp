@@ -39,16 +39,32 @@ console.log("  " + file);
 afterAll(() => rmSync(root, { recursive: true, force: true }));
 
 describe("parseOutputPaths", () => {
-  it("finds paths under the output dir even when they contain spaces", () => {
-    const dir = "C:\\Users\\John Doe\\out";
-    const stdout =
-      "\u001b[32mGenerated 2 image(s):\u001b[0m\n  C:\\Users\\John Doe\\out\\a b.png\n  C:\\Users\\John Doe\\out\\c.webp.\n";
-    const paths = parseOutputPaths(stdout, dir);
-    expect(paths.map((p) => p.replaceAll("/", "\\").toLowerCase())).toEqual([
-      "c:\\users\\john doe\\out\\a b.png",
-      "c:\\users\\john doe\\out\\c.webp",
-    ]);
-  });
+  it.skipIf(process.platform !== "win32")(
+    "finds Windows paths under the output dir even when they contain spaces",
+    () => {
+      const dir = "C:\\Users\\John Doe\\out";
+      const stdout =
+        "\u001b[32mGenerated 2 image(s):\u001b[0m\n  C:\\Users\\John Doe\\out\\a b.png\n  C:\\Users\\John Doe\\out\\c.webp.\n";
+      const paths = parseOutputPaths(stdout, dir);
+      expect(paths.map((p) => p.replaceAll("/", "\\").toLowerCase())).toEqual([
+        "c:\\users\\john doe\\out\\a b.png",
+        "c:\\users\\john doe\\out\\c.webp",
+      ]);
+    },
+  );
+
+  it.skipIf(process.platform === "win32")(
+    "finds POSIX paths under the output dir even when they contain spaces",
+    () => {
+      const dir = "/home/john doe/out";
+      const stdout =
+        "\u001b[32mGenerated 2 image(s):\u001b[0m\n  /home/john doe/out/a b.png\n  /home/john doe/out/c.webp.\n";
+      expect(parseOutputPaths(stdout, dir)).toEqual([
+        "/home/john doe/out/a b.png",
+        "/home/john doe/out/c.webp",
+      ]);
+    },
+  );
 
   it("falls back to generic absolute paths with an extension", () => {
     const paths = parseOutputPaths("Saved video to /data/media/clip.mp4 (12 MB)\nno path here", "/elsewhere");
