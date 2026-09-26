@@ -56,10 +56,12 @@ jobs:
       - name: Pull and restart
         env:
           TAG: ${{ needs.image.outputs.tag }}
+        # The job token (packages:read, expires with the job) authenticates the pull; logout drops it again.
         run: |
-          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+          printf '%s' "${{ secrets.GITHUB_TOKEN }}" | ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
             "cd ~/motion-mcp \
-             && MOTION_IMAGE='$TAG' docker compose --profile tunnel pull \
+             && docker login ghcr.io -u '${{ github.actor }}' --password-stdin \
+             && MOTION_IMAGE='$TAG' docker compose --profile tunnel pull --ignore-buildable; rc=\$?; docker logout ghcr.io; [ \$rc -eq 0 ] \
              && MOTION_IMAGE='$TAG' docker compose --profile tunnel up -d --remove-orphans \
              && docker image prune -f"
       - name: Verify health
