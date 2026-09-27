@@ -22,7 +22,7 @@ Each workspace manages its own model-provider sign-ins from the dashboard:
 ## Phases
 1. [x] Storage: `SealedBox`, `ProviderCredential` entity + file repo, `Workspace.piModel`.
 2. [x] Runtime: encrypted pi `CredentialStore`, per-workspace `ModelRuntime`/`PiWorker`, `JobScope.sceneWorker`, multix env resolver.
-3. [x] API: `/api/dashboard/providers` routes and pi login sessions.
+3. [x] API: `/api/providers` routes and pi login sessions.
 4. [x] Dashboard: Providers page.
 5. [x] Tests, docs (`.env.example`, docs), deploy with a generated production key, live check.
 

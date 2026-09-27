@@ -18,7 +18,7 @@ is still **planned**.
 ## Provider credentials (BYOK)
 
 Each workspace can bring its own model providers from **Dashboard > Model
-providers** (`/api/dashboard/providers`). Two kinds are stored:
+providers** (`/api/providers`). Two kinds are stored:
 
 - **pi providers**, signed in with an API key or OAuth through pi's own
   `ModelRuntime.login`. The dashboard relays pi's prompts (sign-in link, device
