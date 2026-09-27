@@ -16,7 +16,7 @@ export class ApiError extends Error {
   }
 }
 
-export type HttpMethod = "GET" | "POST" | "PATCH" | "DELETE";
+export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export interface RequestOptions {
   body?: unknown;
@@ -34,6 +34,7 @@ export interface ApiClient {
   request<T>(method: HttpMethod, path: string, options?: RequestOptions): Promise<T>;
   get<T>(path: string, options?: Omit<RequestOptions, "body">): Promise<T>;
   post<T>(path: string, body?: unknown, options?: Omit<RequestOptions, "body">): Promise<T>;
+  put<T>(path: string, body?: unknown): Promise<T>;
   patch<T>(path: string, body?: unknown): Promise<T>;
   del<T>(path: string): Promise<T>;
 }
@@ -115,6 +116,7 @@ export function createApiClient({ fetch: fetchImpl, onUnauthorized }: ApiClientO
     request,
     get: (path, options) => request("GET", path, options),
     post: (path, body, options) => request("POST", path, { ...options, body }),
+    put: (path, body) => request("PUT", path, { body }),
     patch: (path, body) => request("PATCH", path, { body }),
     del: (path) => request("DELETE", path),
   };

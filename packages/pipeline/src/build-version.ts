@@ -14,7 +14,7 @@ import {
   type TastePacket,
 } from "@motion-mcp/motion-ir";
 import type { Span } from "@motion-mcp/observability";
-import type { SceneContext } from "@motion-mcp/pi-runtime";
+import type { SceneContext, SceneWorker } from "@motion-mcp/pi-runtime";
 import { MotionError, toMotionError } from "@motion-mcp/shared";
 import { artifactKey } from "@motion-mcp/storage";
 import { z } from "zod";
@@ -26,6 +26,8 @@ import type { PipelineRuntime } from "./runtime.ts";
 /** Per-job execution scope shared by every node of the graph. */
 export interface JobScope {
   rt: PipelineRuntime;
+  /** This job's scene worker: the workspace's chosen pi model, else the server default. */
+  sceneWorker?: SceneWorker;
   jobId: string;
   workspaceId: string;
   projectId: string;
@@ -157,7 +159,7 @@ async function runSceneWorker(
   overrides: SceneOverrides,
   task: { sceneId: string; kind: "build" | "patch"; patch?: ScenePatch; issues?: QaIssue[] },
 ): Promise<boolean> {
-  const worker = scope.rt.sceneWorker;
+  const worker = scope.sceneWorker;
   const scene = ir.scenes.find((s) => s.id === task.sceneId);
   if (!worker || !scene) return false;
   const file = sceneFile(dir, scene.id);
@@ -206,7 +208,7 @@ export async function implementCustomScenes(
     (s) => (mode === "pi" || s.implementation === "custom") && overrides[s.id]?.scene !== sceneJson(s),
   );
   if (targets.length === 0) return;
-  if (!scope.rt.sceneWorker) {
+  if (!scope.sceneWorker) {
     scope.warnings.push(
       `${targets.length} custom scene(s) used the deterministic compiler (no scene worker configured)`,
     );
@@ -226,7 +228,7 @@ export async function applyWorkerPatches(
   patches: ScenePatch[],
 ): Promise<void> {
   for (const patch of patches) {
-    if (!scope.rt.sceneWorker) {
+    if (!scope.sceneWorker) {
       scope.warnings.push(
         `Scene ${patch.sceneId}: ${patch.changes.length} change(s) need a code-level edit and no scene worker is configured`,
       );
@@ -444,7 +446,7 @@ export async function reviseVersion(
 
     if (irChanged) await compileVersion(scope, ir, input.dir, input.overrides);
     let workerChanged = false;
-    if (rt.sceneWorker) {
+    if (scope.sceneWorker) {
       for (const [sceneId, issues] of workerIssues) {
         workerChanged =
           (await runSceneWorker(scope, ir, input.dir, input.overrides, { sceneId, kind: "patch", issues })) ||

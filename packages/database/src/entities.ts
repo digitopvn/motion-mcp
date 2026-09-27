@@ -118,11 +118,20 @@ export const User = z.object({
 });
 export type User = z.infer<typeof User>;
 
+/** Provider and model the workspace's own pi sign-in uses for scene building. */
+export const PiModelChoice = z.object({
+  provider: z.string().min(1).max(80),
+  model: z.string().min(1).max(200),
+});
+export type PiModelChoice = z.infer<typeof PiModelChoice>;
+
 /** One personal workspace per user; the owner is its only member. */
 export const Workspace = z.object({
   id: RecordId,
   name: z.string().min(1).max(200),
   ownerUserId: RecordId,
+  /** Unset: jobs use the server's default scene worker. */
+  piModel: PiModelChoice.optional(),
   createdAt: Timestamp,
 });
 export type Workspace = z.infer<typeof Workspace>;
@@ -191,3 +200,27 @@ export const UsageEvent = z.object({
   createdAt: Timestamp,
 });
 export type UsageEvent = z.infer<typeof UsageEvent>;
+
+/** Which tool a stored provider sign-in belongs to. */
+export const ProviderKind = z.enum(["pi", "multix"]);
+export type ProviderKind = z.infer<typeof ProviderKind>;
+
+/**
+ * A workspace's own provider sign-in (pi OAuth token or API key, or a multix API key), sealed with
+ * AES-256-GCM. `provider` is the pi provider id, or the multix environment variable name.
+ */
+export const ProviderCredential = z.object({
+  id: RecordId,
+  workspaceId: RecordId,
+  kind: ProviderKind,
+  provider: z.string().regex(/^[A-Za-z0-9_.:-]{1,80}$/),
+  authType: z.enum(["api_key", "oauth"]),
+  ciphertext: z.string().min(1).max(64_000),
+  nonce: z.string().min(1).max(64),
+  keyId: z.string().regex(/^[a-f0-9]{16}$/),
+  /** Last 4 characters of an API key, for display only. */
+  hint: z.string().max(8).optional(),
+  createdAt: Timestamp,
+  updatedAt: Timestamp,
+});
+export type ProviderCredential = z.infer<typeof ProviderCredential>;

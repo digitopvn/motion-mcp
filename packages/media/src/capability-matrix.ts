@@ -633,3 +633,20 @@ export const CAPABILITY_MATRIX: Readonly<Record<Capability, readonly ProviderRou
     },
   ],
 };
+
+/** Every environment variable a multix route can need, with the providers that use it (sorted by name). */
+export function multixEnvKeys(): { name: string; providers: MediaProvider[] }[] {
+  const byName = new Map<string, Set<MediaProvider>>();
+  for (const routes of Object.values(CAPABILITY_MATRIX)) {
+    for (const route of routes) {
+      for (const name of route.requiredEnv) {
+        const set = byName.get(name) ?? new Set<MediaProvider>();
+        set.add(route.provider);
+        byName.set(name, set);
+      }
+    }
+  }
+  return [...byName.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([name, providers]) => ({ name, providers: [...providers].sort() }));
+}

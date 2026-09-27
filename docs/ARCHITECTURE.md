@@ -135,6 +135,7 @@ Operationally important keys that are easy to miss:
 | `JOB_CONCURRENCY` | 1 | Jobs compile and render in-process, and renders are CPU bound, so one job runs at a time unless the host has headroom. |
 | `TRIAL_CREDITS` | 500 | Early-access credits granted once per workspace the first time it is seen. 0 disables them. See [BILLING.md](BILLING.md). |
 | `ARTIFACT_SIGNING_SECRET` | unset | HMAC secret for `/artifacts/*` URLs. When unset it is derived from `MOTION_API_KEYS`; without either, development uses a fixed value and production a per-process secret, so URLs stop working after a restart. Set it in production. |
+| `CREDENTIALS_ENCRYPTION_KEY` | unset | 32-byte key (hex or base64) that seals workspace pi sign-ins and multix keys. Unset disables Dashboard > Model providers and every job uses the server worker. See [SECURITY.md](SECURITY.md#provider-credentials-byok). |
 | `POLAR_ENVIRONMENT` | `sandbox` | Selects Polar's sandbox or production API. Declared for checkout creation, which is **planned**; the webhook handler does not use it. |
 | `MAX_REVISION_LOOPS` | 2 | Upper bound on QA and fix loops per job. See [JEV_ROUTING.md](JEV_ROUTING.md). |
 

@@ -939,6 +939,8 @@ pre.json {
 /* ---------- Tables ---------- */
 
 .table-scroll {
+  /* Containing block for visually-hidden cell text, so it scrolls with the table instead of widening the page. */
+  position: relative;
   min-width: 0;
   overflow-x: auto;
 }

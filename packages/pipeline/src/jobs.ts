@@ -89,6 +89,7 @@ export async function executeJob(
   const critiques: CritiqueUsage = structuredClone(meta.critiques ?? { job: 0, scenes: {} });
   const scope: JobScope = {
     rt,
+    sceneWorker: rt.sceneWorker,
     jobId: meta.jobId,
     workspaceId: meta.workspaceId,
     projectId: meta.projectId,
@@ -117,6 +118,11 @@ export async function executeJob(
       status: "running",
       progress: { stage: "starting", pct: 1, message: "" },
     });
+    try {
+      scope.sceneWorker = await rt.providers.sceneWorkerFor(meta.workspaceId);
+    } catch (err) {
+      logger.warn("providers.worker_unavailable", { jobId: meta.jobId, message: toMotionError(err).message });
+    }
     outcome = await body(scope);
     span.end();
     const summary = summarize(span.data);

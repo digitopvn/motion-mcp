@@ -21,7 +21,6 @@ import {
  * object storage; rows keep only storage keys. Requires the `vector` extension for `search_documents`.
  */
 
-const bytea = customType<{ data: Buffer; driverData: Buffer }>({ dataType: () => "bytea" });
 const tsvector = customType<{ data: string }>({ dataType: () => "tsvector" });
 
 const id = () => text("id").primaryKey();
@@ -48,6 +47,8 @@ export const workspaces = pgTable(
     plan: text("plan").notNull().default("free"),
     /** Overdraft allowance in credits for postpaid workspaces (0 = prepaid only). */
     overdraftCredits: integer("overdraft_credits").notNull().default(0),
+    /** `{ provider, model }` the workspace's jobs run on, when it signed in to that provider. */
+    piModel: jsonb("pi_model"),
     createdAt: createdAt(),
   },
   (t) => [index("workspaces_owner_idx").on(t.ownerId)],
@@ -372,7 +373,10 @@ export const creditLedger = pgTable(
   ],
 );
 
-/** Workspace-supplied provider keys (BYOK), encrypted with an envelope key identified by `keyId`. */
+/**
+ * Workspace-supplied provider sign-ins (BYOK): pi providers (API key or OAuth) and multix API keys.
+ * Values are AES-256-GCM sealed (base64) under CREDENTIALS_ENCRYPTION_KEY, identified by `keyId`.
+ */
 export const providerCredentials = pgTable(
   "provider_credentials",
   {
@@ -380,16 +384,21 @@ export const providerCredentials = pgTable(
     workspaceId: text("workspace_id")
       .notNull()
       .references(() => workspaces.id, { onDelete: "cascade" }),
+    /** `pi` (model provider) or `multix` (env key name). */
+    kind: text("kind").notNull(),
     provider: text("provider").notNull(),
-    ciphertext: bytea("ciphertext").notNull(),
-    nonce: bytea("nonce").notNull(),
+    authType: text("auth_type").notNull(),
+    ciphertext: text("ciphertext").notNull(),
+    nonce: text("nonce").notNull(),
     keyId: text("key_id").notNull(),
-    /** Last 4 characters for display only. */
+    /** Last 4 characters of an API key, for display only. */
     hint: text("hint"),
     createdAt: createdAt(),
-    rotatedAt: timestamp("rotated_at", { withTimezone: true }),
+    updatedAt: updatedAt(),
   },
-  (t) => [uniqueIndex("provider_credentials_workspace_provider_uq").on(t.workspaceId, t.provider)],
+  (t) => [
+    uniqueIndex("provider_credentials_workspace_kind_provider_uq").on(t.workspaceId, t.kind, t.provider),
+  ],
 );
 
 export const searchDocuments = pgTable(

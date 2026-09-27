@@ -21,3 +21,4 @@ export {
 export { createVisionQaSource, type QaContext, type QaSource } from "./qa.ts";
 export { createRuntime, type PipelineRuntime, type RuntimeOverrides } from "./runtime.ts";
 export { bm25Search, type SearchDoc } from "./search.ts";
+export { keyHint, WorkspaceCredentialStore, WorkspaceProviders } from "./workspace-providers.ts";

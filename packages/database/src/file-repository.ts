@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { mkdir, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
@@ -9,6 +9,7 @@ import {
   Job,
   LoginToken,
   Project,
+  ProviderCredential,
   Recipe,
   RecordId,
   Session,
@@ -30,6 +31,7 @@ import type {
   Patch,
   ProjectPatch,
   ProjectRepo,
+  ProviderCredentialRepo,
   RecipePatch,
   RecipeRepo,
   Repositories,
@@ -38,6 +40,7 @@ import type {
   UsageRepo,
   UserPatch,
   UserRepo,
+  WorkspacePatch,
   WorkspaceRepo,
 } from "./repositories.ts";
 
@@ -212,6 +215,9 @@ const SHA256_HEX = /^[a-f0-9]{64}$/;
 /** Record ids derived from a token hash make hash lookups a single file read instead of a scan. */
 const sessionIdFor = (tokenHash: string) => `ses_${tokenHash.slice(0, 48)}`;
 const loginTokenIdFor = (tokenHash: string) => `lt_${tokenHash.slice(0, 48)}`;
+/** One record per (workspace, kind, provider), addressed without a scan. */
+const providerCredentialIdFor = (workspaceId: string, kind: string, provider: string) =>
+  `pc_${createHash("sha256").update(`${workspaceId}\0${kind}\0${provider}`).digest("hex").slice(0, 48)}`;
 
 function applyPatch<T extends { updatedAt: string }, P extends object>(
   current: T,
@@ -242,6 +248,7 @@ export class FileRepository implements Repositories {
   readonly sessions: SessionRepo;
   readonly loginTokens: LoginTokenRepo;
   readonly recipes: RecipeRepo;
+  readonly providerCredentials: ProviderCredentialRepo;
 
   constructor(options: { root: string }) {
     this.root = resolve(options.root);
@@ -355,6 +362,15 @@ export class FileRepository implements Repositories {
       create: (input: NewWorkspace) =>
         workspaces.insert({ ...input, id: input.id ?? newId("ws"), createdAt: nowIso() }),
       get: (id) => workspaces.get(id),
+      update: (id, patch: WorkspacePatch) =>
+        workspaces.update(id, (cur) => {
+          if ("id" in patch || "ownerUserId" in patch || "createdAt" in patch) {
+            throw new MotionError("VALIDATION", "workspace id, owner and createdAt cannot be changed");
+          }
+          const next: Record<string, unknown> = { ...cur, ...patch };
+          for (const [k, v] of Object.entries(next)) if (v === undefined) delete next[k];
+          return next as Workspace;
+        }),
       listByOwner: async (userId) =>
         (await workspaces.all()).filter((w) => w.ownerUserId === userId).sort(oldestFirst),
     };
@@ -415,6 +431,31 @@ export class FileRepository implements Repositories {
       list: async ({ workspaceId, limit }) =>
         take((await recipes.all()).filter((r) => r.workspaceId === workspaceId).sort(newestFirst), limit),
       delete: (id) => recipes.delete(id),
+    };
+
+    const providerCredentials = new JsonCollection(
+      this.root,
+      "provider-credentials",
+      ProviderCredential,
+      mutex,
+    );
+    this.providerCredentials = {
+      get: async (workspaceId, kind, provider) => {
+        const record = await providerCredentials.get(providerCredentialIdFor(workspaceId, kind, provider));
+        return record?.workspaceId === workspaceId ? record : undefined;
+      },
+      list: async (workspaceId, kind) =>
+        (await providerCredentials.all())
+          .filter((r) => r.workspaceId === workspaceId && (kind === undefined || r.kind === kind))
+          .sort((a, b) => a.provider.localeCompare(b.provider)),
+      put: async (input) => {
+        const id = providerCredentialIdFor(input.workspaceId, input.kind, input.provider);
+        const ts = nowIso();
+        const existing = await providerCredentials.get(id);
+        return providerCredentials.put({ ...input, id, createdAt: existing?.createdAt ?? ts, updatedAt: ts });
+      },
+      delete: (workspaceId, kind, provider) =>
+        providerCredentials.delete(providerCredentialIdFor(workspaceId, kind, provider)),
     };
   }
 

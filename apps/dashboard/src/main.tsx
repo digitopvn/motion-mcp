@@ -7,6 +7,7 @@ import { KeysPage } from "./pages/keys.tsx";
 import { LoginPage } from "./pages/login.tsx";
 import { NotFoundPage } from "./pages/not-found.tsx";
 import { OverviewPage } from "./pages/overview.tsx";
+import { ProvidersPage } from "./pages/providers.tsx";
 import { RecipesPage } from "./pages/recipes.tsx";
 import { SearchPage } from "./pages/search.tsx";
 import { SettingsPage } from "./pages/settings.tsx";
@@ -31,6 +32,7 @@ createRoot(container).render(
           <Route path="search" element={<SearchPage />} />
           <Route path="recipes" element={<RecipesPage />} />
           <Route path="keys" element={<KeysPage />} />
+          <Route path="providers" element={<ProvidersPage />} />
           <Route path="billing" element={<BillingPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFoundPage />} />

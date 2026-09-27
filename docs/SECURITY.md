@@ -17,12 +17,34 @@ is still **planned**.
 
 ## Provider credentials (BYOK)
 
-**Planned.** Workspace provider keys would be stored in `provider_credentials`
-with authenticated encryption (the table is defined in the drizzle schema). The
-data-encryption key would be held outside the database, in the runtime secret
-store, with `key_version` for rotation and `last4` for display. Keys would be
-decrypted in memory only for the call that needs them and passed to a child
-process through its environment, never through argv or files.
+Each workspace can bring its own model providers from **Dashboard > Model
+providers** (`/api/dashboard/providers`). Two kinds are stored:
+
+- **pi providers**, signed in with an API key or OAuth through pi's own
+  `ModelRuntime.login`. The dashboard relays pi's prompts (sign-in link, device
+  code, pasted redirect URL or API key) without seeing more than the prompt;
+  sessions are bound to one workspace, expire after 10 minutes, and errors are
+  redacted before they reach the browser.
+- **multix API keys**, limited to the env names multix providers declare.
+
+Storage and use (`packages/pipeline/src/workspace-providers.ts`):
+
+- Every value is sealed with AES-256-GCM under `CREDENTIALS_ENCRYPTION_KEY`
+  (`packages/shared/src/sealed-box.ts`), with a fresh nonce per write and the
+  record's `workspace:kind:provider` as additional data, so a ciphertext copied
+  to another workspace or provider fails authentication. Rows keep only the
+  ciphertext, nonce, a key id and, for long API keys, the last 4 characters.
+- The master key lives only in the runtime secret store (VPS `.env`). Without
+  it the feature is off and every job uses the server's own worker.
+- Decrypted values are registered with the redactor before use. Unlike pi's
+  file store, stored values are never expanded as `$ENV` or run as `!command`.
+- A job uses the workspace's chosen pi model only when the workspace holds a
+  stored sign-in for that provider, so pi's ambient environment fallback never
+  spends the server's keys on a workspace's behalf.
+- Key rotation is **planned**: changing the master key makes stored sign-ins
+  unreadable, and workspaces must connect again.
+- multix keys are stored and resolved per workspace, but the pipeline does not
+  run multix yet (see [multix environment scrubbing](#multix-environment-scrubbing)).
 
 ## Redaction
 

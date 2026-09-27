@@ -33,6 +33,15 @@ export function sendApiError(res: Response, err: unknown, logger?: Logger): void
   });
 }
 
+export function bodyObject(req: Request): Record<string, unknown> {
+  const body: unknown = req.body;
+  if (body === undefined || body === null) return {};
+  if (typeof body !== "object" || Array.isArray(body)) {
+    throw new MotionError("VALIDATION", "Expected a JSON object body");
+  }
+  return body as Record<string, unknown>;
+}
+
 export function parseCookies(header: string | undefined): Record<string, string> {
   const out: Record<string, string> = {};
   if (!header) return out;

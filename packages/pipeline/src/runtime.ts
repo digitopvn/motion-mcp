@@ -8,11 +8,12 @@ import { createHyperframesAdapter, type MotionRendererAdapter } from "@motion-mc
 import { createDecisionClient, type DecisionClient } from "@motion-mcp/jev-router";
 import { type ModelGateway, OpenRouterClient } from "@motion-mcp/llm";
 import { PiWorker, type SceneWorker } from "@motion-mcp/pi-runtime";
-import { createLogger, type Logger, type MotionConfig, registerSecret } from "@motion-mcp/shared";
+import { createLogger, type Logger, type MotionConfig, registerSecret, SealedBox } from "@motion-mcp/shared";
 import { type ArtifactStore, createArtifactStore } from "@motion-mcp/storage";
 import { ArtifactSigner, type ArtifactUrlFn, artifactUrlFn, resolveSigningSecret } from "./artifact-urls.ts";
 import { JobQueue } from "./job-queue.ts";
 import { createVisionQaSource, type QaSource } from "./qa.ts";
+import { WorkspaceProviders } from "./workspace-providers.ts";
 
 /** Everything the pipeline needs, built once per process by `createRuntime`. */
 export interface PipelineRuntime {
@@ -34,6 +35,8 @@ export interface PipelineRuntime {
   renderer: MotionRendererAdapter;
   /** Pi scene worker; absent without OPENROUTER_API_KEY. */
   sceneWorker?: SceneWorker;
+  /** Workspace-owned pi sign-ins and multix keys; resolves each job's scene worker. */
+  providers: WorkspaceProviders;
   /** Extra QA passes after lint/check (vision QA when a key is configured). */
   qaSources: QaSource[];
   queue: JobQueue;
@@ -69,6 +72,7 @@ export async function createRuntime(
     config.POLAR_WEBHOOK_SECRET,
     config.POLAR_ACCESS_TOKEN,
     config.ARTIFACT_SIGNING_SECRET,
+    config.CREDENTIALS_ENCRYPTION_KEY,
   ]) {
     registerSecret(secret);
   }
@@ -105,6 +109,14 @@ export async function createRuntime(
     }
   }
 
+  const providers = new WorkspaceProviders({
+    repos,
+    box: config.CREDENTIALS_ENCRYPTION_KEY ? new SealedBox(config.CREDENTIALS_ENCRYPTION_KEY) : undefined,
+    logger,
+    defaultWorker: sceneWorker,
+    workersAllowed: config.IMPLEMENTATION_MODE !== "deterministic",
+  });
+
   const qaSources =
     overrides.qaSources ??
     (gateway && config.OPENROUTER_API_KEY && config.VISION_MODEL
@@ -131,6 +143,7 @@ export async function createRuntime(
     decisions,
     renderer: overrides.renderer ?? createHyperframesAdapter(),
     sceneWorker,
+    providers,
     qaSources,
     queue,
     close: (graceMs) => queue.close(graceMs),

@@ -296,3 +296,60 @@ export interface RecipeInput {
   quality: Quality;
   notes?: string | null;
 }
+
+export type ProviderAuthType = "oauth" | "api_key";
+
+export interface PiProvider {
+  id: string;
+  name: string;
+  apiKey: { name: string } | null;
+  oauth: { name: string; loginLabel: string | null; isSubscription: boolean } | null;
+  connected: { authType: ProviderAuthType; hint: string | null; updatedAt: string } | null;
+}
+
+export interface PiModelChoice {
+  provider: string;
+  model: string;
+}
+
+export interface MultixKey {
+  name: string;
+  providers: string[];
+  set: boolean;
+  hint: string | null;
+  updatedAt: string | null;
+}
+
+export interface ProvidersOverview {
+  enabled: boolean;
+  pi: {
+    providers: PiProvider[];
+    selected: PiModelChoice | null;
+    models: Record<string, { id: string; name: string }[]>;
+  };
+  multix: { keys: MultixKey[] };
+}
+
+export type PiLoginEvent =
+  | { type: "info"; message: string; links?: { url: string; label?: string }[] }
+  | { type: "auth_url"; url: string; instructions?: string }
+  | { type: "device_code"; userCode: string; verificationUri: string }
+  | { type: "progress"; message: string };
+
+export interface PiLoginPrompt {
+  id: string;
+  type: "text" | "secret" | "select" | "manual_code";
+  message: string;
+  placeholder?: string;
+  options?: { id: string; label: string; description?: string }[];
+}
+
+export interface PiLogin {
+  id: string;
+  provider: string;
+  type: ProviderAuthType;
+  status: "running" | "waiting" | "succeeded" | "failed" | "cancelled";
+  events: PiLoginEvent[];
+  prompt: PiLoginPrompt | null;
+  error: string | null;
+}

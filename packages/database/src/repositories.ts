@@ -4,6 +4,8 @@ import type {
   JobStatus,
   LoginToken,
   Project,
+  ProviderCredential,
+  ProviderKind,
   Recipe,
   Session,
   TraceRecord,
@@ -80,10 +82,13 @@ export interface UserRepo {
 }
 
 export type NewWorkspace = Omit<Workspace, "id" | "createdAt"> & Partial<Pick<Workspace, "id">>;
+export type WorkspacePatch = Partial<Omit<Workspace, "id" | "createdAt" | "ownerUserId">>;
 
 export interface WorkspaceRepo {
   create(input: NewWorkspace): Promise<Workspace>;
   get(id: string): Promise<Workspace | undefined>;
+  /** Keys set to undefined are removed. Throws NOT_FOUND when the workspace does not exist. */
+  update(id: string, patch: WorkspacePatch): Promise<Workspace>;
   /** Oldest first, so the first entry is the user's personal workspace. */
   listByOwner(userId: string): Promise<Workspace[]>;
 }
@@ -119,6 +124,18 @@ export interface RecipeRepo {
   delete(id: string): Promise<boolean>;
 }
 
+export type ProviderCredentialInput = Omit<ProviderCredential, "id" | "createdAt" | "updatedAt">;
+
+/** At most one record per (workspace, kind, provider). */
+export interface ProviderCredentialRepo {
+  get(workspaceId: string, kind: ProviderKind, provider: string): Promise<ProviderCredential | undefined>;
+  /** Sorted by provider. */
+  list(workspaceId: string, kind?: ProviderKind): Promise<ProviderCredential[]>;
+  /** Insert or replace, keeping the original createdAt. */
+  put(input: ProviderCredentialInput): Promise<ProviderCredential>;
+  delete(workspaceId: string, kind: ProviderKind, provider: string): Promise<boolean>;
+}
+
 export interface Repositories {
   projects: ProjectRepo;
   jobs: JobRepo;
@@ -130,4 +147,5 @@ export interface Repositories {
   sessions: SessionRepo;
   loginTokens: LoginTokenRepo;
   recipes: RecipeRepo;
+  providerCredentials: ProviderCredentialRepo;
 }

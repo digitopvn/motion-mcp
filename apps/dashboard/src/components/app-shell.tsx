@@ -14,6 +14,7 @@ const NAV = [
   { to: "/search", label: "Search", end: false },
   { to: "/recipes", label: "Recipes", end: false },
   { to: "/keys", label: "API keys", end: false },
+  { to: "/providers", label: "Model providers", end: false },
   { to: "/billing", label: "Usage & billing", end: false },
   { to: "/settings", label: "Settings", end: false },
 ] as const;

@@ -63,6 +63,11 @@ export const ConfigSchema = z.object({
   /** Email magic-link sign-in via Resend; enabled only when both are set. */
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().max(320).optional(),
+  /**
+   * 32-byte key (64 hex chars or base64) that encrypts workspace provider sign-ins (pi OAuth tokens, API
+   * keys, multix keys) at rest. Workspace provider management is off until it is set.
+   */
+  CREDENTIALS_ENCRYPTION_KEY: z.string().optional(),
   /** Built dashboard directory; defaults to apps/dashboard/dist in the repository. */
   DASHBOARD_DIST: z.string().optional(),
 

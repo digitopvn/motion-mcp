@@ -31,7 +31,8 @@ import { MotionError, newId, toMotionError } from "@motion-mcp/shared";
 import express, { type NextFunction, type Request, type Response, type Router } from "express";
 import { z } from "zod";
 import { DashboardAuth, type DashboardIdentity } from "./dashboard-auth.ts";
-import { sendApiError } from "./dashboard-http.ts";
+import { bodyObject, sendApiError } from "./dashboard-http.ts";
+import { providerRoutes } from "./dashboard-providers.ts";
 
 export interface DashboardApiOptions {
   rt: PipelineRuntime;
@@ -66,15 +67,6 @@ function optionalInt(value: unknown): number | undefined {
   const n = Number(value);
   if (!Number.isInteger(n)) throw new MotionError("VALIDATION", "Expected an integer query parameter");
   return n;
-}
-
-function bodyObject(req: Request): Record<string, unknown> {
-  const body: unknown = req.body;
-  if (body === undefined || body === null) return {};
-  if (typeof body !== "object" || Array.isArray(body)) {
-    throw new MotionError("VALIDATION", "Expected a JSON object body");
-  }
-  return body as Record<string, unknown>;
 }
 
 const IsoTime = z.iso.datetime({ offset: true });
@@ -549,6 +541,8 @@ export function createDashboardApi(opts: DashboardApiOptions): Router {
       res.status(204).end();
     }),
   );
+
+  router.use("/providers", providerRoutes(rt, authed));
 
   // Unknown /api paths are JSON 404s, never the SPA shell.
   router.use((_req, res) => {
