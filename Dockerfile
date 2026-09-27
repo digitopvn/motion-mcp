@@ -25,8 +25,9 @@ RUN corepack enable
 WORKDIR /app
 COPY . .
 
-# Full install (tsx runs the TypeScript sources directly).
+# Full install (tsx runs the TypeScript sources directly), then build the dashboard SPA it serves at /.
 RUN pnpm install --frozen-lockfile --prod=false \
+ && pnpm --filter @motion-mcp/dashboard build \
  && mkdir -p /data && chown node:node /data
 
 # HyperFrames caches its managed Chrome under the runtime user's ~/.cache/hyperframes.

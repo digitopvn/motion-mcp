@@ -103,6 +103,80 @@ export const TraceRecord = z.object({
 });
 export type TraceRecord = z.infer<typeof TraceRecord>;
 
+/** A dashboard account. Login identities (GitHub id, verified email) resolve to exactly one user. */
+export const User = z.object({
+  id: RecordId,
+  email: z.email().max(320).optional(),
+  name: z.string().min(1).max(200),
+  avatarUrl: z.url().max(2000).optional(),
+  githubId: z
+    .string()
+    .regex(/^\d{1,20}$/)
+    .optional(),
+  createdAt: Timestamp,
+  updatedAt: Timestamp,
+});
+export type User = z.infer<typeof User>;
+
+/** One personal workspace per user; the owner is its only member. */
+export const Workspace = z.object({
+  id: RecordId,
+  name: z.string().min(1).max(200),
+  ownerUserId: RecordId,
+  createdAt: Timestamp,
+});
+export type Workspace = z.infer<typeof Workspace>;
+
+const Sha256Hex = z.string().regex(/^[a-f0-9]{64}$/);
+
+/** Browser session. Only the sha256 of the cookie token is stored. */
+export const Session = z.object({
+  id: RecordId,
+  userId: RecordId,
+  tokenHash: Sha256Hex,
+  expiresAt: Timestamp,
+  createdAt: Timestamp,
+  lastSeenAt: Timestamp,
+});
+export type Session = z.infer<typeof Session>;
+
+/** Single-use email sign-in link. Only the sha256 of the emailed token is stored. */
+export const LoginToken = z.object({
+  id: RecordId,
+  email: z.email().max(320),
+  tokenHash: Sha256Hex,
+  expiresAt: Timestamp,
+  usedAt: Timestamp.optional(),
+  /** Same-origin relative path to land on after sign-in. */
+  next: z.string().max(500).optional(),
+  createdAt: Timestamp,
+});
+export type LoginToken = z.infer<typeof LoginToken>;
+
+export const RecipeFormat = z.object({
+  width: z.number().int().min(320).max(3840).optional(),
+  height: z.number().int().min(320).max(3840).optional(),
+  fps: z.number().int().min(12).max(60).optional(),
+  aspectRatio: z.enum(["16:9", "9:16", "1:1", "4:5"]).optional(),
+});
+export type RecipeFormat = z.infer<typeof RecipeFormat>;
+
+/** A saved brief/prompt preset in a workspace. */
+export const Recipe = z.object({
+  id: RecordId,
+  workspaceId: RecordId,
+  name: z.string().min(1).max(120),
+  brief: z.string().min(3).max(8000),
+  directorMode: DirectorMode.optional(),
+  format: RecipeFormat.optional(),
+  durationSeconds: z.number().min(3).max(180).optional(),
+  quality: z.enum(["preview", "final"]).optional(),
+  notes: z.string().max(4000).optional(),
+  createdAt: Timestamp,
+  updatedAt: Timestamp,
+});
+export type Recipe = z.infer<typeof Recipe>;
+
 export const UsageEvent = z.object({
   id: RecordId,
   workspaceId: RecordId,

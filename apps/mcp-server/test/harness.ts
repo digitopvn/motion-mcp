@@ -7,7 +7,7 @@ import { Client, StreamableHTTPClientTransport } from "@modelcontextprotocol/cli
 import { createDecisionClient } from "@motion-mcp/jev-router";
 import { createRuntime, type PipelineRuntime, type RuntimeOverrides } from "@motion-mcp/pipeline";
 import { createLogger, loadConfig } from "@motion-mcp/shared";
-import { buildApp } from "../src/server.ts";
+import { type BuildAppOptions, buildApp } from "../src/server.ts";
 
 export const TEST_KEY = "mmcp_pipeline_test_key_0123456789";
 export const SIGNING_SECRET = "test-artifact-signing-secret-0123456789";
@@ -30,6 +30,7 @@ export interface Harness {
 export async function startHarness(
   env: Record<string, string> = {},
   overrides: RuntimeOverrides = {},
+  appOptions: BuildAppOptions = {},
 ): Promise<Harness> {
   const dataDir = await mkdtemp(join(tmpdir(), "motion-pipeline-"));
   const config = loadConfig({
@@ -50,7 +51,7 @@ export async function startHarness(
     decisions: createDecisionClient({ ...config, TYPESAFE_API_KEY: undefined }),
     ...overrides,
   });
-  const app = buildApp(rt);
+  const app = buildApp(rt, appOptions);
   const server = await new Promise<Server>((resolve) => {
     const s = app.listen(0, "127.0.0.1", () => resolve(s));
   });

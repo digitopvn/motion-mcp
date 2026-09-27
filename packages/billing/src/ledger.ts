@@ -219,6 +219,12 @@ export class CreditLedger {
     return { available: a, held: h, total: a + h };
   }
 
+  /** A workspace's transactions in append order (for usage history views). */
+  async transactions(workspaceId: string): Promise<LedgerTransaction[]> {
+    assertId(workspaceId, "workspaceId");
+    return this.store.list({ workspaceId });
+  }
+
   async getReservation(reservationId: string): Promise<Reservation | undefined> {
     const txs = await this.store.list({ reservationId });
     const opened = txs.find((t) => t.kind === "reserve");

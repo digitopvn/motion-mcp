@@ -52,6 +52,19 @@ export const ConfigSchema = z.object({
   POLAR_ENVIRONMENT: z.enum(["sandbox", "production"]).default("sandbox"),
   POLAR_ACCESS_TOKEN: z.string().optional(),
   POLAR_WEBHOOK_SECRET: z.string().optional(),
+  /** Polar product sold by the dashboard's "Buy credits" checkout; checkout is off when unset. */
+  POLAR_PRODUCT_ID: z.string().optional(),
+
+  /** Dashboard sign-in with GitHub OAuth; enabled when both id and secret are set. */
+  GITHUB_CLIENT_ID: z.string().optional(),
+  GITHUB_CLIENT_SECRET: z.string().optional(),
+  /** Must equal the OAuth app's registered callback URL (the marketing Worker redirects it to the app). */
+  GITHUB_CALLBACK_URL: z.url().default("https://motion.digitop.ai/api/auth/oauth/github/callback"),
+  /** Email magic-link sign-in via Resend; enabled only when both are set. */
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().max(320).optional(),
+  /** Built dashboard directory; defaults to apps/dashboard/dist in the repository. */
+  DASHBOARD_DIST: z.string().optional(),
 
   HYPERFRAMES_BIN: z.string().optional(),
   FFMPEG_PATH: z.string().default("ffmpeg"),

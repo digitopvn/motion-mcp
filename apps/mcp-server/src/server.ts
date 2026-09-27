@@ -1,8 +1,12 @@
+import { existsSync } from "node:fs";
 import type { Server } from "node:http";
+import { join } from "node:path";
 import { hashApiKey, isApiKeyFormat, type Repositories } from "@motion-mcp/database";
 import { createMotionService, type PipelineRuntime, recoverInterruptedJobs } from "@motion-mcp/pipeline";
 import type { MotionConfig } from "@motion-mcp/shared";
 import type { Express } from "express";
+import { createDashboardApi } from "./dashboard-api.ts";
+import { dashboardDistDir, mountDashboardStatic } from "./dashboard-static.ts";
 import { type ApiKeyVerifier, chainVerifiers, createHttpApp, staticKeyVerifier } from "./http-app.ts";
 import { mountPublicRoutes } from "./public-routes.ts";
 
@@ -39,16 +43,26 @@ export function allowedHostnames(config: MotionConfig): string[] {
   return [...hosts];
 }
 
-/** The complete HTTP app (MCP, artifacts, published videos, webhook) over a runtime. */
-export function buildApp(rt: PipelineRuntime): Express {
+export interface BuildAppOptions {
+  /** Outbound HTTP client for the dashboard (GitHub, Resend, Polar); injectable for tests. */
+  fetch?: typeof fetch;
+}
+
+/** The complete HTTP app (MCP, dashboard API and SPA, artifacts, published videos, webhook) over a runtime. */
+export function buildApp(rt: PipelineRuntime, options: BuildAppOptions = {}): Express {
   const { config } = rt;
+  const service = createMotionService(rt);
   return createHttpApp({
-    service: createMotionService(rt),
+    service,
     verifyKey: chainVerifiers(staticKeyVerifier(staticApiKeys(config)), repositoryKeyVerifier(rt.repos)),
     allowedHosts: allowedHostnames(config),
     logger: rt.logger,
     anonymousWorkspaceId: anonymousWorkspaceFor(config),
-    mount: (app) => mountPublicRoutes(app, rt),
+    mount: (app) => {
+      mountPublicRoutes(app, rt);
+      app.use("/api", createDashboardApi({ rt, service, fetch: options.fetch }));
+      mountDashboardStatic(app, config);
+    },
   });
 }
 
@@ -89,6 +103,12 @@ export async function doctorSummary(rt: PipelineRuntime): Promise<Record<string,
     staticApiKeys: staticApiKeys(config).length,
     anonymousAccess: anonymousWorkspaceFor(config) !== undefined,
     polarWebhook: Boolean(config.POLAR_WEBHOOK_SECRET),
+    dashboard: {
+      built: existsSync(join(dashboardDistDir(config), "index.html")),
+      github: Boolean(config.GITHUB_CLIENT_ID && config.GITHUB_CLIENT_SECRET),
+      email: Boolean(config.RESEND_API_KEY && config.EMAIL_FROM),
+      checkout: Boolean(config.POLAR_ACCESS_TOKEN && config.POLAR_PRODUCT_ID),
+    },
     artifactSigningSecret: config.ARTIFACT_SIGNING_SECRET ? "explicit" : "derived",
     jobConcurrency: config.JOB_CONCURRENCY,
   };

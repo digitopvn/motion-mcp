@@ -137,6 +137,61 @@ export function polarOrderToGrant(order: PolarOrder, options: PolarGrantOptions 
   return { workspaceId, credits, idempotencyKey: `polar:order:${order.id}`, orderId: order.id };
 }
 
+export const POLAR_API_BASE = {
+  production: "https://api.polar.sh",
+  sandbox: "https://sandbox-api.polar.sh",
+} as const;
+
+export interface PolarCheckoutInput {
+  accessToken: string;
+  environment: keyof typeof POLAR_API_BASE;
+  productId: string;
+  /** Credited workspace; echoed back on `order.paid` as metadata `workspace_id`. */
+  workspaceId: string;
+  successUrl: string;
+  customerEmail?: string;
+  fetch?: typeof fetch;
+}
+
+const PolarCheckoutResponse = z.looseObject({ id: z.string(), url: z.url() });
+
+/**
+ * Create a hosted Polar checkout for a credit product. The workspace travels in checkout metadata so the
+ * `order.paid` webhook grants credits to it (see `polarOrderToGrant`).
+ */
+export async function createPolarCheckout(input: PolarCheckoutInput): Promise<{ id: string; url: string }> {
+  const doFetch = input.fetch ?? fetch;
+  let res: Response;
+  try {
+    res = await doFetch(`${POLAR_API_BASE[input.environment]}/v1/checkouts/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${input.accessToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        products: [input.productId],
+        success_url: input.successUrl,
+        external_customer_id: input.workspaceId,
+        metadata: { workspace_id: input.workspaceId },
+        ...(input.customerEmail ? { customer_email: input.customerEmail } : {}),
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+  } catch (err) {
+    throw new MotionError("PROVIDER", "Polar checkout request failed", { cause: err, retryable: true });
+  }
+  if (!res.ok) {
+    throw new MotionError("PROVIDER", `Polar checkout failed with HTTP ${res.status}`, {
+      retryable: res.status >= 500,
+    });
+  }
+  const parsed = PolarCheckoutResponse.safeParse(await res.json().catch(() => undefined));
+  if (!parsed.success) throw new MotionError("PROVIDER", "Unexpected Polar checkout response");
+  return { id: parsed.data.id, url: parsed.data.url };
+}
+
 export interface PolarWebhookResult {
   type: string;
   handled: boolean;

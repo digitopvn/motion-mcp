@@ -163,6 +163,89 @@ describe("FileRepository api keys, traces and usage", () => {
   });
 });
 
+const hashOf = (s: string) => hashApiKey(s);
+
+describe("FileRepository users, workspaces and recipes", () => {
+  it("creates users and finds them by GitHub id and email", async () => {
+    const user = await repo.users.create({ name: "Ada", email: "Ada@Example.com", githubId: "4242" });
+    expect(user.id).toMatch(/^usr_/);
+    expect((await repo.users.findByGithubId("4242"))?.id).toBe(user.id);
+    expect((await repo.users.findByEmail("ada@example.COM"))?.id).toBe(user.id);
+    expect(await repo.users.findByGithubId("1")).toBeUndefined();
+    const renamed = await repo.users.update(user.id, { name: "Ada L." });
+    expect(renamed.name).toBe("Ada L.");
+    await expect(repo.users.update(user.id, { email: "not-an-email" })).rejects.toMatchObject({
+      code: "VALIDATION",
+    });
+  });
+
+  it("lists a user's workspaces oldest first", async () => {
+    const first = await repo.workspaces.create({ name: "Personal", ownerUserId: "usr_owner" });
+    await repo.workspaces.create({ name: "Other", ownerUserId: "usr_someone" });
+    expect(first.id).toMatch(/^ws_/);
+    expect((await repo.workspaces.listByOwner("usr_owner")).map((w) => w.id)).toEqual([first.id]);
+  });
+
+  it("scopes recipes to a workspace and protects workspaceId", async () => {
+    const r = await repo.recipes.create({
+      workspaceId: "ws_r1",
+      name: "Launch teaser",
+      brief: "A 20 second teaser",
+      format: { aspectRatio: "9:16" },
+      durationSeconds: 20,
+    });
+    await repo.recipes.create({ workspaceId: "ws_r2", name: "Other", brief: "Other brief" });
+    expect((await repo.recipes.list({ workspaceId: "ws_r1" })).map((x) => x.id)).toEqual([r.id]);
+    const updated = await repo.recipes.update(r.id, { notes: "keep it upbeat", durationSeconds: undefined });
+    expect(updated).toMatchObject({ notes: "keep it upbeat" });
+    expect(updated.durationSeconds).toBeUndefined();
+    await expect(repo.recipes.update(r.id, { workspaceId: "ws_r2" } as never)).rejects.toThrow(
+      /cannot be changed/,
+    );
+    expect(await repo.recipes.delete(r.id)).toBe(true);
+    expect(await repo.recipes.get(r.id)).toBeUndefined();
+  });
+});
+
+describe("FileRepository sessions and login tokens", () => {
+  const future = () => new Date(Date.now() + 60_000).toISOString();
+
+  it("finds sessions by token hash, slides them and drops expired ones", async () => {
+    const tokenHash = hashOf("session-token-a");
+    const session = await repo.sessions.create({ userId: "usr_s", tokenHash, expiresAt: future() });
+    expect((await repo.sessions.findByTokenHash(tokenHash))?.id).toBe(session.id);
+    expect(await repo.sessions.findByTokenHash(hashOf("other"))).toBeUndefined();
+    expect(await repo.sessions.findByTokenHash("not-a-hash")).toBeUndefined();
+
+    const later = new Date(Date.now() + 120_000);
+    const touched = await repo.sessions.touch(session.id, {
+      lastSeenAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 3_600_000).toISOString(),
+    });
+    expect((await repo.sessions.findByTokenHash(tokenHash, later))?.expiresAt).toBe(touched.expiresAt);
+
+    expect(await repo.sessions.findByTokenHash(tokenHash, new Date(Date.now() + 7_200_000))).toBeUndefined();
+    expect(await repo.sessions.delete(session.id)).toBe(false);
+  });
+
+  it("consumes a login token exactly once, even under concurrency", async () => {
+    const tokenHash = hashOf("login-token-a");
+    await repo.loginTokens.create({ email: "a@example.com", tokenHash, expiresAt: future(), next: "/keys" });
+    const results = await Promise.all(Array.from({ length: 5 }, () => repo.loginTokens.consume(tokenHash)));
+    const used = results.filter((r) => r !== undefined);
+    expect(used).toHaveLength(1);
+    expect(used[0]).toMatchObject({ email: "a@example.com", next: "/keys" });
+    expect(await repo.loginTokens.consume(tokenHash)).toBeUndefined();
+    expect(await repo.loginTokens.consume(hashOf("unknown"))).toBeUndefined();
+  });
+
+  it("rejects expired login tokens", async () => {
+    const tokenHash = hashOf("login-token-expired");
+    await repo.loginTokens.create({ email: "b@example.com", tokenHash, expiresAt: future() });
+    expect(await repo.loginTokens.consume(tokenHash, new Date(Date.now() + 120_000))).toBeUndefined();
+  });
+});
+
 describe("api key helpers", () => {
   it("generates mmcp_ keys and verifies them against the stored hash", () => {
     const a = generateApiKey();

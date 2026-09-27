@@ -7,7 +7,7 @@ import type { z } from "zod";
 export const SERVER_NAME = "motion-mcp";
 export const SERVER_VERSION = "0.1.0";
 
-const PUBLIC_ERROR_CODES: Record<MotionErrorCode, string> = {
+export const PUBLIC_ERROR_CODES: Record<MotionErrorCode, string> = {
   VALIDATION: "invalid_input",
   LINT: "invalid_input",
   NOT_FOUND: "not_found",

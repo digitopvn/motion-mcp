@@ -4,19 +4,41 @@ import { join, resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { MotionError, newId } from "@motion-mcp/shared";
 import type { z } from "zod";
-import { ApiKey, Job, Project, RecordId, TraceRecord, UsageEvent } from "./entities.ts";
+import {
+  ApiKey,
+  Job,
+  LoginToken,
+  Project,
+  Recipe,
+  RecordId,
+  Session,
+  TraceRecord,
+  UsageEvent,
+  User,
+  Workspace,
+} from "./entities.ts";
 import type {
   ApiKeyRepo,
   JobPatch,
   JobRepo,
+  LoginTokenRepo,
   NewJob,
   NewProject,
+  NewRecipe,
+  NewUser,
+  NewWorkspace,
   Patch,
   ProjectPatch,
   ProjectRepo,
+  RecipePatch,
+  RecipeRepo,
   Repositories,
+  SessionRepo,
   TraceRepo,
   UsageRepo,
+  UserPatch,
+  UserRepo,
+  WorkspaceRepo,
 } from "./repositories.ts";
 
 /** Serializes async work per key (one queue per file path). In-process only. */
@@ -181,8 +203,15 @@ class JsonCollection<T extends { id: string }> {
 const nowIso = () => new Date().toISOString();
 const newestFirst = (a: { createdAt: string; id: string }, b: { createdAt: string; id: string }) =>
   b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id);
+const oldestFirst = (a: { createdAt: string; id: string }, b: { createdAt: string; id: string }) =>
+  a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id);
 const take = <T>(items: T[], limit?: number) =>
   limit === undefined ? items : items.slice(0, Math.max(0, limit));
+
+const SHA256_HEX = /^[a-f0-9]{64}$/;
+/** Record ids derived from a token hash make hash lookups a single file read instead of a scan. */
+const sessionIdFor = (tokenHash: string) => `ses_${tokenHash.slice(0, 48)}`;
+const loginTokenIdFor = (tokenHash: string) => `lt_${tokenHash.slice(0, 48)}`;
 
 function applyPatch<T extends { updatedAt: string }, P extends object>(
   current: T,
@@ -208,6 +237,11 @@ export class FileRepository implements Repositories {
   readonly apiKeys: ApiKeyRepo;
   readonly traces: TraceRepo;
   readonly usage: UsageRepo;
+  readonly users: UserRepo;
+  readonly workspaces: WorkspaceRepo;
+  readonly sessions: SessionRepo;
+  readonly loginTokens: LoginTokenRepo;
+  readonly recipes: RecipeRepo;
 
   constructor(options: { root: string }) {
     this.root = resolve(options.root);
@@ -293,7 +327,94 @@ export class FileRepository implements Repositories {
           .filter((e) => e.workspaceId === workspaceId)
           .filter((e) => since === undefined || e.createdAt >= since)
           .filter((e) => until === undefined || e.createdAt < until)
-          .sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id)),
+          .sort(oldestFirst),
+    };
+
+    const users = new JsonCollection(this.root, "users", User, mutex);
+    const workspaces = new JsonCollection(this.root, "workspaces", Workspace, mutex);
+    const sessions = new JsonCollection(this.root, "sessions", Session, mutex);
+    const loginTokens = new JsonCollection(this.root, "login-tokens", LoginToken, mutex);
+    const recipes = new JsonCollection(this.root, "recipes", Recipe, mutex);
+
+    this.users = {
+      create: (input: NewUser) => {
+        const ts = nowIso();
+        return users.insert({ ...input, id: input.id ?? newId("usr"), createdAt: ts, updatedAt: ts });
+      },
+      get: (id) => users.get(id),
+      update: (id, patch: Patch<User, UserPatch>) =>
+        users.update(id, (cur) => applyPatch(cur, patch, ["id", "createdAt"])),
+      findByGithubId: async (githubId) => (await users.all()).find((u) => u.githubId === githubId),
+      findByEmail: async (email) => {
+        const wanted = email.trim().toLowerCase();
+        return (await users.all()).sort(oldestFirst).find((u) => u.email?.toLowerCase() === wanted);
+      },
+    };
+
+    this.workspaces = {
+      create: (input: NewWorkspace) =>
+        workspaces.insert({ ...input, id: input.id ?? newId("ws"), createdAt: nowIso() }),
+      get: (id) => workspaces.get(id),
+      listByOwner: async (userId) =>
+        (await workspaces.all()).filter((w) => w.ownerUserId === userId).sort(oldestFirst),
+    };
+
+    this.sessions = {
+      create: (input) => {
+        const ts = nowIso();
+        return sessions.insert({
+          ...input,
+          id: sessionIdFor(input.tokenHash),
+          createdAt: ts,
+          lastSeenAt: ts,
+        });
+      },
+      findByTokenHash: async (tokenHash, now = new Date()) => {
+        if (!SHA256_HEX.test(tokenHash)) return undefined;
+        const session = await sessions.get(sessionIdFor(tokenHash));
+        if (!session || session.tokenHash !== tokenHash) return undefined;
+        if (session.expiresAt <= now.toISOString()) {
+          await sessions.delete(session.id);
+          return undefined;
+        }
+        return session;
+      },
+      touch: (id, patch) => sessions.update(id, (cur) => ({ ...cur, ...patch })),
+      delete: (id) => sessions.delete(id),
+    };
+
+    this.loginTokens = {
+      create: (input) =>
+        loginTokens.insert({ ...input, id: loginTokenIdFor(input.tokenHash), createdAt: nowIso() }),
+      consume: async (tokenHash, now = new Date()) => {
+        if (!SHA256_HEX.test(tokenHash)) return undefined;
+        const at = now.toISOString();
+        let consumed = false;
+        try {
+          const record = await loginTokens.update(loginTokenIdFor(tokenHash), (t) => {
+            if (t.tokenHash !== tokenHash || t.usedAt !== undefined || t.expiresAt <= at) return t;
+            consumed = true;
+            return { ...t, usedAt: at };
+          });
+          return consumed ? record : undefined;
+        } catch (err) {
+          if (err instanceof MotionError && err.code === "NOT_FOUND") return undefined;
+          throw err;
+        }
+      },
+    };
+
+    this.recipes = {
+      create: (input: NewRecipe) => {
+        const ts = nowIso();
+        return recipes.insert({ ...input, id: input.id ?? newId("rcp"), createdAt: ts, updatedAt: ts });
+      },
+      get: (id) => recipes.get(id),
+      update: (id, patch: Patch<Recipe, RecipePatch>) =>
+        recipes.update(id, (cur) => applyPatch(cur, patch, ["id", "workspaceId", "createdAt"])),
+      list: async ({ workspaceId, limit }) =>
+        take((await recipes.all()).filter((r) => r.workspaceId === workspaceId).sort(newestFirst), limit),
+      delete: (id) => recipes.delete(id),
     };
   }
 

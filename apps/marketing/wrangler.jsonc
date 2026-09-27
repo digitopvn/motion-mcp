@@ -1,8 +1,15 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  // Static marketing site for Motion MCP, served from Workers static assets.
+  // Static marketing site for Motion MCP, served from Workers static assets. The Worker script only runs
+  // for /api/*: it redirects OAuth routes to the app and proxies the Polar webhook (see src/worker.ts).
   "name": "motion-mcp-marketing",
+  "main": "src/worker.ts",
   "compatibility_date": "2026-09-25",
-  "assets": { "directory": "./public" },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": { "APP_ORIGIN": "https://app.motion.digitop.ai" },
   "routes": [{ "pattern": "motion.digitop.ai", "custom_domain": true }]
 }
