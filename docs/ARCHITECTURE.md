@@ -29,7 +29,8 @@ exactly one owning package. When upstream churns, only one wrapper changes.
 |---|---|---|
 | `apps/mcp-server` | HTTP transport, host allow-list, bearer auth, the eight MCP tools, public routes (`/healthz`, `/artifacts/*`, `/v/:renderId`, `/webhooks/polar`) and the `motion` CLI. | Contains no pipeline logic. It calls the `pipeline` service. See [MCP_API.md](MCP_API.md). |
 | `apps/marketing` | Static marketing site on Cloudflare Workers static assets. | Imports no engine code. |
-| `apps/dashboard`, `apps/render-worker` | **Planned.** The editor UI and a dedicated render process. | `render-worker` would consume the same pipeline jobs. |
+| `apps/dashboard` | React SPA built with Vite and served by `apps/mcp-server` at `/`; it talks to the cookie-session JSON API under `/api` ([dashboard-api.ts](../apps/mcp-server/src/dashboard-api.ts), [dashboard-auth.ts](../apps/mcp-server/src/dashboard-auth.ts)). | GitHub OAuth callback is registered on `motion.digitop.ai`; the marketing Worker ([worker.ts](../apps/marketing/src/worker.ts)) forwards `/api/auth/*` to the app. |
+| `apps/render-worker` | **Planned.** A dedicated render process. | It would consume the same pipeline jobs. |
 | `packages/pipeline` | The runtime (`createRuntime`), the in-process job queue, the create, edit and render graphs, the revision-loop bound, credit reservation, signed artifact URLs, publishing and search. It also owns the public tool schemas in `src/contract/`. | This is the only scheduler. Pi is a worker, never the job scheduler. |
 | `packages/motion-ir` | Zod schemas for Motion IR, `TastePacket`, `CreativeSpec`, `ScenePatch` and `QaIssue`, the spec compiler, the patch applier and JSON Schema export. | Stays renderer-neutral and imports nothing from renderers. |
 | `packages/director` | Director mode resolution, director prompts, spec creation, scene critique, critique bundles and host critique requests. | Calls models only through `llm`. |

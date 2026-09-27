@@ -1,6 +1,6 @@
 # Dashboard at app.motion.digitop.ai
 
-Status: in progress · Created 2026-09-27
+Status: released 2026-09-27 (fec9379); live GitHub sign-in awaits a manual check by a user · Created 2026-09-27
 
 ## Outcome
 `https://app.motion.digitop.ai/` serves the account dashboard. Signed-out visitors see a login page; after GitHub sign-in a user lands in their own workspace and can manage videos, API keys, usage and recipes. `/mcp`, `/healthz`, `/artifacts/*`, `/v/*` and `/webhooks/polar` keep working unchanged.
