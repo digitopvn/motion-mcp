@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://motion.digitop.ai/sitemap.xml

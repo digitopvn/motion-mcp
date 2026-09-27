@@ -1,7 +1,6 @@
 /*
  * Motion MCP dashboard
- * Same editorial system as the marketing site (apps/marketing/public/css/site.css): warm paper, near-black
- * ink, one accent. Every color resolves through tokens so dark mode is a token swap.
+ * Editorial system: warm paper, near-black ink, one accent. Every color resolves through tokens so dark mode is a token swap.
  */
 
 :root {

@@ -3,220 +3,363 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Motion MCP · Motion video your AI can direct</title>
-  <meta name="description" content="Motion MCP is an open-source (MIT) motion-video production runtime exposed as a Streamable HTTP MCP server. Send a brief, get back a rendered, web-optimized MP4.">
+  <title>Motion MCP · Describe a video. Get a finished film.</title>
+  <meta name="description" content="Motion MCP gives your AI assistant a real motion studio. Write one sentence; get a directed, rendered MP4. Open source, MIT.">
   <link rel="canonical" href="https://motion.digitop.ai/">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0f1116">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://motion.digitop.ai/">
-  <meta property="og:title" content="Motion MCP · Motion video your AI can direct">
-  <meta property="og:description" content="An open-source MCP server that turns a brief into a rendered MP4. Opus for taste, cheap models and code for everything else.">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:title" content="Motion MCP · Describe a video. Get a finished film.">
+  <meta property="og:description" content="A motion studio your AI assistant can direct. One sentence in, a rendered MP4 out. Open source, MIT.">
+  <meta property="og:image" content="https://motion.digitop.ai/media/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A blueprint-style frame from a Motion MCP explainer film.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="/index.md" title="This page as Markdown">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://motion.digitop.ai/#app",
+        "name": "Motion MCP",
+        "url": "https://motion.digitop.ai/",
+        "description": "An open-source MCP server that lets AI assistants direct, build and render motion-graphics videos as MP4 files.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "license": "https://opensource.org/licenses/MIT",
+        "codeRepository": "https://github.com/digitopvn/motion-mcp",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "5,000 free credits on sign-up during early access." },
+        "publisher": { "@id": "https://motion.digitop.ai/#org" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://motion.digitop.ai/#org",
+        "name": "Digitop",
+        "url": "https://github.com/digitopvn"
+      },
+      {
+        "@type": "VideoObject",
+        "name": "Motion MCP intro",
+        "description": "An 84-second intro to Motion MCP, made with the motion-video skill that runs under the hood.",
+        "thumbnailUrl": "https://motion.digitop.ai/media/intro.webp",
+        "contentUrl": "https://motion.digitop.ai/media/intro.mp4",
+        "uploadDate": "2026-09-27",
+        "duration": "PT1M24S"
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800;125,800&amp;family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap">
   <link rel="stylesheet" href="/css/site.css">
-  <script src="/js/copy.js" defer></script>
+  <script src="/js/site.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
+  <header class="site-header" data-header>
     <div class="wrap header-inner">
       <a class="wordmark" href="/" aria-label="Motion MCP home">
         <img src="/img/mark.svg" alt="" width="28" height="28">
         <span>Motion MCP</span>
       </a>
-      <nav aria-label="Primary">
+      <nav class="nav" aria-label="Primary">
         <ul class="nav-list">
+          <li><a href="#showcase">Showcase</a></li>
           <li><a href="#how">How it works</a></li>
-          <li><a href="#tools">Tools</a></li>
-          <li><a href="#connect">Connect</a></li>
-          <li><a href="#cost">Cost</a></li>
-          <li class="nav-gh"><a href="https://github.com/digitopvn/motion-mcp">GitHub</a></li>
+          <li><a href="#why">Why it's different</a></li>
+          <li><a href="#assistants">For AI assistants</a></li>
+          <li><a href="#pricing">Pricing</a></li>
         </ul>
       </nav>
+      <a class="btn btn-small btn-primary header-cta" href="https://app.motion.digitop.ai">Start free</a>
     </div>
   </header>
 
   <main id="main">
-    <!-- HERO: one-line definition, two actions, and a CSS-only render timeline. -->
+    <!-- HERO: the promise on the left, a real film on the right with its slate. -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap">
-        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Open source · MIT · Early access</p>
-        <h1 id="hero-title" class="display reveal">
-          A motion studio your AI can <em>direct.</em>
-        </h1>
-        <div class="hero-grid">
-          <p class="lede reveal reveal-2">
-            Motion MCP is a Streamable HTTP MCP server. Your host model calls
-            <code>motion_create</code> with a brief and gets back a rendered,
-            web-optimized MP4, from Claude, ChatGPT, Pi or any other MCP client.
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title" class="display">
+            <span class="line">Describe a video.</span>
+            <span class="line">Get a finished <em>film.</em></span>
+          </h1>
+          <p class="lede">
+            Motion MCP gives your AI assistant a real motion studio. You write one
+            sentence. It directs, builds and renders the MP4.
           </p>
-          <div class="actions reveal reveal-3">
-            <a class="btn btn-primary" href="#connect">Connect your client</a>
-            <a class="btn btn-quiet" href="https://github.com/digitopvn/motion-mcp">Read the source <span aria-hidden="true">↗</span></a>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://app.motion.digitop.ai">Start free</a>
+            <a class="btn btn-ghost" href="#showcase">Watch the samples</a>
           </div>
+          <p class="hero-note">5,000 free credits on sign-up. No video software to learn. No credit card.</p>
         </div>
 
-        <!-- Decorative timeline: a playhead sweeps the execution graph. Hidden from AT; the same stages are described in #how. -->
-        <figure class="timeline" aria-hidden="true">
-          <div class="ruler">
-            <span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span><span>00:25</span><span>00:30</span>
+        <figure class="monitor">
+          <div class="frame frame-16x9">
+            <video class="intro-film" src="/media/intro.mp4" poster="/media/intro.webp" playsinline controls preload="none"
+              aria-label="Motion MCP intro film, 84 seconds, with sound"></video>
           </div>
-          <ol class="track">
-            <li style="--i:0"><span>brief</span></li>
-            <li style="--i:1"><span>direction</span></li>
-            <li style="--i:2"><span>motion&nbsp;ir</span></li>
-            <li style="--i:3"><span>build</span></li>
-            <li style="--i:4"><span>lint · check</span></li>
-            <li style="--i:5"><span>render</span></li>
-            <li style="--i:6"><span>ffmpeg</span></li>
-          </ol>
-          <div class="playhead"></div>
+          <figcaption class="slate">
+            <p class="slate-meta"><span>SC 00</span><span>16:9</span><span>84 s</span><span>Intro, sound on</span></p>
+            <p class="slate-brief">“Explain Motion MCP in under a minute and a half. Twelve styles, one story, a little cheeky.”</p>
+            <p class="slate-note">Made with the same motion-video skill that runs under the hood. Yes, it made its own ad.</p>
+          </figcaption>
         </figure>
-        <p class="status-note">
-          <strong>Status.</strong> In active development. The design is public in the
-          repository and the hosted endpoint opens in early access.
-        </p>
       </div>
     </section>
 
-    <!-- HOW IT WORKS: four roles, then the two director modes. -->
-    <section id="how" class="section" aria-labelledby="how-title">
+    <!-- PROOF STRIP: four plain facts, each true today. -->
+    <section class="facts" aria-label="At a glance">
+      <ul class="wrap fact-list">
+        <li><strong>Open source</strong><span>MIT licence. Read every line, or host it yourself.</span></li>
+        <li><strong>Works with your assistant</strong><span>Claude Code, Cursor, VS Code and other apps that speak MCP.</span></li>
+        <li><strong>Real renders</strong><span>Every sample on this page came out of the product.</span></li>
+        <li><strong>32 credits</strong><span>What each sample film cost to make. About 32 cents.</span></li>
+      </ul>
+    </section>
+
+    <!-- SHOWCASE: six genres, four formats. The slate under each film is the exact brief. -->
+    <section id="showcase" class="section" aria-labelledby="showcase-title">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-no">01</p>
-          <h2 id="how-title" class="h2">How it works</h2>
+          <h2 id="showcase-title" class="h2">Six briefs. Six films. Zero stock footage.</h2>
           <p class="section-intro">
-            Each step goes to the cheapest thing that can do it well. Judgment goes
-            to a model; everything mechanical goes to code.
+            Each film was made from the one-line brief printed under it. The brands are
+            made up. The renders are real, straight out of the pipeline, untouched.
           </p>
         </header>
 
-        <ol class="steps">
-          <li class="step">
-            <p class="step-no">A</p>
-            <h3 class="h3">Opus directs</h3>
-            <p class="step-role">Creative director</p>
-            <p>Opus writes the creative spec, the taste packet and scene architecture, in one structured call, and critiques creative issues. It never writes HyperFrames HTML.</p>
+        <div class="reel">
+          <div class="reel-row">
+          <figure class="clip" style="--ar: 16 / 9; --grow: 1.778" data-order-mobile="1">
+            <div class="frame">
+              <video class="film" src="/media/launch.mp4" poster="/media/launch.webp" muted loop playsinline controls preload="none"
+                aria-label="Sample film: launch teaser for a focus timer app"></video>
+              <button class="film-toggle" type="button" hidden aria-label="Pause video">Pause</button>
+            </div>
+            <figcaption class="slate">
+              <p class="slate-meta"><span>SC 01</span><span>16:9</span><span>9.5 s</span><span>Product launch</span></p>
+              <p class="slate-brief">“Launch teaser for Quiet Hours, a focus timer app. Calm, editorial, a little smug about silence.”</p>
+            </figcaption>
+          </figure>
+
+          <figure class="clip" style="--ar: 9 / 16; --grow: 0.5625" data-order-mobile="2">
+            <div class="frame">
+              <video class="film" src="/media/kinetic.mp4" poster="/media/kinetic.webp" muted loop playsinline controls preload="none"
+                aria-label="Sample film: vertical kinetic typography reel"></video>
+              <button class="film-toggle" type="button" hidden aria-label="Pause video">Pause</button>
+            </div>
+            <figcaption class="slate">
+              <p class="slate-meta"><span>SC 02</span><span>9:16</span><span>8.2 s</span><span>Social reel</span></p>
+              <p class="slate-brief">“Nobody reads the manual, so make it move. Loud, playful.”</p>
+            </figcaption>
+          </figure>
+
+          <figure class="clip" style="--ar: 4 / 5; --grow: 0.8" data-order-mobile="5">
+            <div class="frame">
+              <video class="film" src="/media/bakery.mp4" poster="/media/bakery.webp" muted loop playsinline controls preload="none"
+                aria-label="Sample film: Vietnamese social ad for a weekend sourdough class"></video>
+              <button class="film-toggle" type="button" hidden aria-label="Pause video">Pause</button>
+            </div>
+            <figcaption class="slate">
+              <p class="slate-meta"><span>SC 03</span><span>4:5</span><span>9.5 s</span><span>Local ad</span></p>
+              <p class="slate-brief" lang="vi">“Quảng cáo lớp làm bánh mì chua cuối tuần. Ấm áp, gần gũi, tiếng Việt.”</p>
+              <p class="slate-note">Briefed and rendered in Vietnamese. Diacritics included, at no extra charge.</p>
+            </figcaption>
+          </figure>
+
+          </div>
+          <div class="reel-row">
+          <figure class="clip" style="--ar: 16 / 9; --grow: 1.778" data-order-mobile="4">
+            <div class="frame">
+              <video class="film" src="/media/data.mp4" poster="/media/data.webp" muted loop playsinline controls preload="none"
+                aria-label="Sample film: a deadpan data story about coffee"></video>
+              <button class="film-toggle" type="button" hidden aria-label="Pause video">Pause</button>
+            </div>
+            <figcaption class="slate">
+              <p class="slate-meta"><span>SC 04</span><span>16:9</span><span>9.0 s</span><span>Data story</span></p>
+              <p class="slate-brief">“A data story about developer coffee habits. Deadpan humor, dark editorial charts feel.”</p>
+            </figcaption>
+          </figure>
+
+          <figure class="clip" style="--ar: 1 / 1; --grow: 1" data-order-mobile="3">
+            <div class="frame">
+              <video class="film" src="/media/event.mp4" poster="/media/event.webp" muted loop playsinline controls preload="none"
+                aria-label="Sample film: square invitation to a year-end party"></video>
+              <button class="film-toggle" type="button" hidden aria-label="Pause video">Pause</button>
+            </div>
+            <figcaption class="slate">
+              <p class="slate-meta"><span>SC 05</span><span>1:1</span><span>9.0 s</span><span>Invitation</span></p>
+              <p class="slate-brief">“Square invite for a year-end company party. Elegant, with a wink.”</p>
+            </figcaption>
+          </figure>
+          <figure class="clip" style="--ar: 16 / 9; --grow: 1.778" data-order-mobile="6">
+            <div class="frame">
+              <video class="film" src="/media/explainer.mp4" poster="/media/explainer.webp" muted loop playsinline controls preload="none"
+                aria-label="Sample film: how one request becomes a video, in three steps"></video>
+              <button class="film-toggle" type="button" hidden aria-label="Pause video">Pause</button>
+            </div>
+            <figcaption class="slate">
+              <p class="slate-meta"><span>SC 06</span><span>16:9</span><span>9.5 s</span><span>Explainer</span></p>
+              <p class="slate-brief">“Technical explainer: how one MCP call turns a brief into a finished video. Blueprint feel.”</p>
+            </figcaption>
+          </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS: the story of one brief, told as a film crew on an edit timeline. -->
+    <section id="how" class="section section-alt" aria-labelledby="how-title">
+      <div class="wrap">
+        <header class="section-head">
+          <h2 id="how-title" class="h2">A whole film crew. In one sentence.</h2>
+          <p class="section-intro">
+            Behind every request sits a small production team. Each member does only
+            the job it is best and cheapest at.
+          </p>
+        </header>
+
+        <div class="timeline" aria-hidden="true">
+          <div class="track">
+            <span class="clip-bar" style="--w: 14">Brief</span>
+            <span class="clip-bar" style="--w: 22">Direction</span>
+            <span class="clip-bar" style="--w: 36">Build and check</span>
+            <span class="clip-bar" style="--w: 28">Render</span>
+          </div>
+          <span class="playhead"></span>
+        </div>
+
+        <ol class="crew">
+          <li class="crew-member">
+            <p class="crew-step">01 · You</p>
+            <h3 class="h3">Write the brief</h3>
+            <p>Say what you need, in plain words. “A calm launch teaser, no gradients” is plenty. Vietnamese works too.</p>
           </li>
-          <li class="step">
-            <p class="step-no">B</p>
-            <h3 class="h3">Jev routes</h3>
-            <p class="step-role">Decision layer</p>
-            <p>Jev answers typed questions about where work should go: a mechanical patch, a new asset, a render retry or an Opus critique. Every escalation is a traced decision. Jev never generates content.</p>
+          <li class="crew-member">
+            <p class="crew-step">02 · The director</p>
+            <h3 class="h3">Set the taste</h3>
+            <p>A top model (Claude Opus) decides the story, pacing, type and color. It is expensive, so it is only called when taste matters.</p>
+            <p class="aside">It does not write code. It has people for that.</p>
           </li>
-          <li class="step">
-            <p class="step-no">C</p>
-            <h3 class="h3">Pi and cheap workers build</h3>
-            <p class="step-role">Scene builders</p>
-            <p>A deterministic compiler turns Motion IR into scenes. Only scenes that need bespoke code go to Pi, driving a cheap coder model (<code>deepseek/deepseek-v4-flash</code> by default).</p>
+          <li class="crew-member">
+            <p class="crew-step">03 · The crew</p>
+            <h3 class="h3">Build every scene</h3>
+            <p>Code and small, fast models turn the plan into scenes. A producer (Jev) decides who fixes what, and whether a fix is worth paying for.</p>
           </li>
-          <li class="step">
-            <p class="step-no">D</p>
-            <h3 class="h3">HyperFrames renders</h3>
-            <p class="step-role">Render and finish</p>
-            <p>HyperFrames lints, checks, snapshots and renders in a pinned Linux container. FFmpeg finishes the file: faststart, yuv420p and loudness normalization when audio is present.</p>
+          <li class="crew-member">
+            <p class="crew-step">04 · The editor</p>
+            <h3 class="h3">Check, then render</h3>
+            <p>Every scene is checked frame by frame before the final render. You get a web-ready MP4 and a link to share it.</p>
           </li>
         </ol>
+      </div>
+    </section>
 
-        <div class="modes">
-          <h3 id="modes-title" class="h3 modes-title">Two director modes. You choose, per call.</h3>
-          <p class="modes-intro">The server never infers the mode from model names. Pass <code>directorMode</code> on each call, or let the workspace default apply.</p>
-          <div class="mode-grid">
-            <article class="mode">
-              <p class="mode-name"><code>host-opus</code></p>
-              <h4 class="h4">Your host is the director.</h4>
-              <p>The calling model writes the <code>CreativeSpec</code> against the JSON Schema that <code>motion_inspect</code> returns. A valid spec skips the internal director entirely; an invalid one returns validation issues with no Opus spend.</p>
-              <p class="mode-when"><span>Use when</span> your host is already a frontier model, so a second Opus call would pay twice for the same taste.</p>
-            </article>
-            <article class="mode">
-              <p class="mode-name"><code>internal-opus</code></p>
-              <h4 class="h4">Motion MCP directs.</h4>
-              <p>Send only a brief. Motion MCP calls Opus through OpenRouter for creative direction and critique, gated by Jev and bounded by your budget.</p>
-              <p class="mode-when"><span>Use when</span> the host is a small model or a script, or you want the platform’s direction.</p>
-            </article>
-          </div>
+    <!-- WHY: a plain comparison with the usual ways of getting a video. -->
+    <section id="why" class="section" aria-labelledby="why-title">
+      <div class="wrap why-grid">
+        <header class="section-head">
+          <h2 id="why-title" class="h2">Dream machines are fun. Your launch needs spelling.</h2>
+          <p class="section-intro">
+            Most AI video tools paint pixels and hope. Motion MCP composes real
+            scenes, so text stays sharp and every change is precise.
+          </p>
+        </header>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <caption class="visually-hidden">Typical AI video compared with Motion MCP</caption>
+            <thead>
+              <tr>
+                <th scope="col"><span class="visually-hidden">Topic</span></th>
+                <th scope="col">Typical AI video</th>
+                <th scope="col" class="us">Motion MCP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Text on screen</th>
+                <td>Melted letters, creative spelling</td>
+                <td class="us">Real typography, spelled right every time</td>
+              </tr>
+              <tr>
+                <th scope="row">Changing one thing</th>
+                <td>Regenerate everything and hope</td>
+                <td class="us">Say what to change. Only that scene is rebuilt.</td>
+              </tr>
+              <tr>
+                <th scope="row">Your brand</th>
+                <td>Colors that are “close enough”</td>
+                <td class="us">Your exact colors, clean type, same result every render</td>
+              </tr>
+              <tr>
+                <th scope="row">Cost</th>
+                <td>A big model on every step</td>
+                <td class="us">A big model only for taste. Code does the chores.</td>
+              </tr>
+              <tr>
+                <th scope="row">What happened</th>
+                <td>A black box</td>
+                <td class="us">Every step and its cost, visible in your dashboard</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- TOOLS: the full public surface. Eight tools, no more. -->
-    <section id="tools" class="section" aria-labelledby="tools-title">
+    <!-- FOR AI ASSISTANTS: what MCP is in one line, a transcript, and the config. -->
+    <section id="assistants" class="section section-alt" aria-labelledby="assistants-title">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-no">02</p>
-          <h2 id="tools-title" class="h2">Eight tools. That’s the whole surface.</h2>
+          <h2 id="assistants-title" class="h2">Built for AI assistants. Friendly to humans.</h2>
           <p class="section-intro">
-            New capability lands as arguments on these tools, never as new tools.
-            Long work returns a <code>jobId</code> right away; poll
-            <code>motion_get_project</code> for progress.
+            MCP is the standard plug that lets AI assistants use outside tools. Plug in
+            Motion MCP once, and your assistant can make videos whenever you ask.
           </p>
         </header>
 
-        <dl class="tools">
-          <div class="tool">
-            <dt><code>motion_create</code></dt>
-            <dd>Start a video from a brief, or from a host-written creative spec. Returns a project and a job.</dd>
+        <div class="assist-grid">
+          <div class="chat" role="group" aria-label="Example conversation with an AI assistant">
+            <p class="chat-label">What it looks like</p>
+            <div class="bubble bubble-you">
+              <p class="who">You</p>
+              <p>Make a 10-second vertical teaser for my Saturday bread class. Warm, friendly, in Vietnamese.</p>
+            </div>
+            <div class="bubble bubble-ai">
+              <p class="who">Your assistant</p>
+              <p>On it. I sent the brief to Motion MCP, reviewed the preview frames and asked for the final render.</p>
+              <p class="tool-call"><code>motion_create</code> → <code>motion_render</code></p>
+              <p>Here is your MP4, 1080 × 1920. Want the date in bigger type?</p>
+            </div>
+            <div class="bubble bubble-you">
+              <p class="who">You</p>
+              <p>Yes. And make it a bit more cozy.</p>
+            </div>
+            <p class="chat-foot">Only the scene with the date is rebuilt. The rest stays exactly as you approved it.</p>
           </div>
-          <div class="tool">
-            <dt><code>motion_edit</code></dt>
-            <dd>Revise with a plain-language instruction or typed scene patches. Only the affected scenes are touched.</dd>
-          </div>
-          <div class="tool">
-            <dt><code>motion_inspect</code></dt>
-            <dd>The director handshake: schema, director modes, pricing and limits. Also inspects projects, scenes and styles.</dd>
-          </div>
-          <div class="tool">
-            <dt><code>motion_render</code></dt>
-            <dd>Render a draft preview, or a final once lint and check pass. MP4 or WebM.</dd>
-          </div>
-          <div class="tool">
-            <dt><code>motion_search</code></dt>
-            <dd>Search styles, shot patterns, recipes, registry blocks, projects and assets.</dd>
-          </div>
-          <div class="tool">
-            <dt><code>motion_get_project</code></dt>
-            <dd>Poll job state, stage and progress. Include versions, renders, usage or a cost trace.</dd>
-          </div>
-          <div class="tool">
-            <dt><code>motion_list_projects</code></dt>
-            <dd>Page through the projects in your workspace.</dd>
-          </div>
-          <div class="tool">
-            <dt><code>motion_publish</code></dt>
-            <dd>Publish a finished final render at a stable share URL, unlisted or public.</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
 
-    <!-- CONNECT: copyable client config. Copy button is progressive enhancement (js/copy.js). -->
-    <section id="connect" class="section section-inverse" aria-labelledby="connect-title">
-      <div class="wrap connect-grid">
-        <header class="section-head">
-          <p class="section-no">03</p>
-          <h2 id="connect-title" class="h2">Connect in one block.</h2>
-          <p class="section-intro">
-            Add the endpoint to any MCP client that speaks Streamable HTTP. Every
-            request carries a per-workspace API key as a bearer token.
-          </p>
-          <ol class="connect-steps">
-            <li>Create an API key in the <a href="https://app.motion.digitop.ai">dashboard</a>.</li>
-            <li>Paste the config and replace the placeholder.</li>
-            <li>Ask your model to call <code>motion_inspect</code>, then <code>motion_create</code>.</li>
-          </ol>
-        </header>
+          <div class="connect">
+            <ol class="connect-steps">
+              <li><span class="n">1</span><span>Sign in to the <a href="https://app.motion.digitop.ai">dashboard</a> and create an API key.</span></li>
+              <li><span class="n">2</span><span>Paste this block into your assistant's MCP settings.</span></li>
+              <li><span class="n">3</span><span>Ask for a video, in your own words.</span></li>
+            </ol>
 
-        <div class="code-card">
-          <div class="code-bar">
-            <span class="code-file">mcp.json</span>
-            <button class="copy-btn" type="button" data-copy-target="config-snippet" hidden>Copy</button>
-          </div>
+            <div class="code-card">
+              <div class="code-bar">
+                <span class="code-file">mcp.json</span>
+                <button class="copy-btn" type="button" data-copy-target="config-snippet" hidden>Copy</button>
+              </div>
 <pre id="config-snippet" tabindex="0" aria-label="MCP client configuration"><code>{
   <span class="k">"mcpServers"</span>: {
     <span class="k">"motion"</span>: {
@@ -228,80 +371,107 @@
     }
   }
 }</code></pre>
-          <p class="code-note" role="status" aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
+              <p class="code-note" role="status" aria-live="polite"></p>
+            </div>
 
-    <!-- COST: the taste principle, then indicative credit values from the billing design. -->
-    <section id="cost" class="section" aria-labelledby="cost-title">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="section-no">04</p>
-          <h2 id="cost-title" class="h2">Frontier tokens only for <em>taste.</em></h2>
-          <p class="section-intro">
-            Before every model call, one question: does this step need taste? If it
-            is mechanical, code does it. If it needs judgment, the cheapest model
-            that can make that judgment does it. Opus is reserved for creative
-            direction and critique.
-          </p>
-        </header>
-
-        <div class="cost-grid">
-          <ul class="principles">
-            <li><strong>Deterministic first.</strong> Normalizing, compiling, linting, checks and FFmpeg finishing are code, not model calls.</li>
-            <li><strong>Respect a host spec.</strong> A valid <code>host-opus</code> spec skips the internal director and its cost.</li>
-            <li><strong>Scene isolation.</strong> Critique, patches and rebuilds touch only the affected scenes.</li>
-            <li><strong>Snapshot before render.</strong> Checks run on contact sheets. Previews render at draft quality; the final renders once.</li>
-            <li><strong>Bounded budgets.</strong> Set <code>budgetCredits</code> per job. A job that would overspend stops and reports the shortfall.</li>
-          </ul>
-
-          <div class="price">
-            <p class="price-unit"><span class="price-big">1 credit</span> = US$0.01</p>
-            <table class="price-table">
-              <caption>Indicative credits per operation</caption>
-              <thead>
-                <tr><th scope="col">Operation</th><th scope="col">Unit</th><th scope="col" class="num">Credits</th></tr>
-              </thead>
-              <tbody>
-                <tr><th scope="row">Job orchestration</th><td>per job</td><td class="num">10</td></tr>
-                <tr><th scope="row">Internal director</th><td>per call</td><td class="num">40</td></tr>
-                <tr><th scope="row">Opus critique</th><td>per scene</td><td class="num">20</td></tr>
-                <tr><th scope="row">Pi scene build</th><td>per attempt</td><td class="num">3</td></tr>
-                <tr><th scope="row">Preview render</th><td>per 10 s</td><td class="num">2</td></tr>
-                <tr><th scope="row">Final render, 1080p</th><td>per 10 s</td><td class="num">5</td></tr>
-              </tbody>
-            </table>
-            <p class="price-note">
-              <span class="tag">Early access</span>
-              These are design values, not a price list. Live prices come from
-              <code>motion_inspect</code>. A <code>host-opus</code> job never pays the director line.
+            <p class="connect-alt">
+              <strong>No assistant?</strong> Type your brief straight into the
+              <a href="https://app.motion.digitop.ai">dashboard</a>. Same studio, fewer steps.
             </p>
+
+            <details class="tools">
+              <summary>For developers: the eight tools</summary>
+              <dl class="tool-list">
+                <div><dt><code>motion_create</code></dt><dd>Start a video from a brief, or from a creative spec your own model wrote.</dd></div>
+                <div><dt><code>motion_edit</code></dt><dd>Revise in plain words or with typed scene patches.</dd></div>
+                <div><dt><code>motion_inspect</code></dt><dd>Schema, director modes, pricing and limits in one call.</dd></div>
+                <div><dt><code>motion_render</code></dt><dd>Draft preview, or the final once every check passes.</dd></div>
+                <div><dt><code>motion_search</code></dt><dd>Styles, shot patterns, recipes and past projects.</dd></div>
+                <div><dt><code>motion_get_project</code></dt><dd>Progress, versions, renders, usage and a cost trace.</dd></div>
+                <div><dt><code>motion_list_projects</code></dt><dd>Page through your workspace.</dd></div>
+                <div><dt><code>motion_publish</code></dt><dd>A stable share link, unlisted or public.</dd></div>
+              </dl>
+              <p class="tools-foot">
+                Already on Claude Opus? Pass <code>directorMode: "host-opus"</code> with your own
+                spec and skip our director entirely. Machine-readable notes live in
+                <a href="/llms.txt">llms.txt</a>.
+              </p>
+            </details>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- OPEN SOURCE -->
-    <section id="open-source" class="section" aria-labelledby="oss-title">
-      <div class="wrap oss">
+    <!-- PRICING: credits in plain numbers, all measured or from the live price table. -->
+    <section id="pricing" class="section" aria-labelledby="pricing-title">
+      <div class="wrap pricing-grid">
         <header class="section-head">
-          <p class="section-no">05</p>
-          <h2 id="oss-title" class="h2">Open source, MIT.<br>Host it yourself.</h2>
+          <h2 id="pricing-title" class="h2">Pay for pixels, not for hype.</h2>
+          <p class="section-intro">
+            One credit is one US cent. You pay for what actually runs, and a budget
+            cap stops any job before it overspends.
+          </p>
         </header>
-        <div class="oss-body">
-          <p>
-            Run the whole stack on your own machine or VPS with your own provider
-            keys. Renders run in a pinned Linux container, and billing can be turned
-            off entirely when you self-host.
-          </p>
-          <p>
-            Motion MCP stands on HyperFrames, Pi and multix rather than
-            re-implementing them. What it adds is the taste layer: a director, a
-            renderer-neutral Motion IR and cost-aware routing where every decision
-            is traced.
-          </p>
-          <a class="btn btn-primary" href="https://github.com/digitopvn/motion-mcp">digitopvn/motion-mcp <span aria-hidden="true">↗</span></a>
+
+        <div class="price-cards">
+          <article class="price">
+            <p class="price-label">Your assistant directs</p>
+            <p class="price-num"><span>32</span> credits</p>
+            <p>What each 10-second sample above cost when the calling assistant wrote the creative plan.</p>
+          </article>
+          <article class="price">
+            <p class="price-label">Our director directs</p>
+            <p class="price-num"><span>~130</span> credits</p>
+            <p>Add one call to our creative director, 100 credits, when you send only a brief.</p>
+          </article>
+          <article class="price price-free">
+            <p class="price-label">Early access</p>
+            <p class="price-num"><span>5,000</span> free</p>
+            <p>Every new account starts with 5,000 credits. Paid top-ups come later. For now, make things.</p>
+            <a class="btn btn-primary" href="https://app.motion.digitop.ai">Start free</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ: the questions a non-technical visitor actually asks. -->
+    <section id="faq" class="section section-alt" aria-labelledby="faq-title">
+      <div class="wrap faq-grid">
+        <header class="section-head">
+          <h2 id="faq-title" class="h2">Fair questions.</h2>
+        </header>
+        <div class="faq">
+          <details>
+            <summary>Do I need to know how to code or edit video?</summary>
+            <p>No. You describe the video in plain words, to your AI assistant or in the dashboard. The code and the editing happen behind the scenes.</p>
+          </details>
+          <details>
+            <summary>What kinds of videos can it make?</summary>
+            <p>Motion graphics: launch teasers, explainers, social reels, data stories, invitations and announcements, in 16:9, 9:16, 1:1 or 4:5. It composes text, shapes, numbers and code on screen. It does not film people or generate photoreal footage.</p>
+          </details>
+          <details>
+            <summary>What if I don't like the result?</summary>
+            <p>Say what to change: “bigger date”, “slower second scene”, “warmer colors”. Only the affected scenes are rebuilt, so the parts you liked stay put.</p>
+          </details>
+          <details>
+            <summary>Can I download and post the videos?</summary>
+            <p>Yes. Every final render is a web-ready MP4 you can download, or share through a stable link from the dashboard.</p>
+          </details>
+          <details>
+            <summary>Can I run it on my own servers?</summary>
+            <p>Yes. The whole stack is open source under the MIT licence. Bring your own model keys, and billing can be switched off entirely.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING CTA -->
+    <section class="closing" aria-labelledby="closing-title">
+      <div class="wrap closing-inner">
+        <h2 id="closing-title" class="display display-sm">Your next video is one sentence away.</h2>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://app.motion.digitop.ai">Start free</a>
+          <a class="btn btn-ghost" href="https://github.com/digitopvn/motion-mcp">Read the source</a>
         </div>
       </div>
     </section>
@@ -309,16 +479,20 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <p class="footer-mark">Motion <em>MCP</em></p>
+      <a class="wordmark" href="/" aria-label="Motion MCP home">
+        <img src="/img/mark.svg" alt="" width="24" height="24">
+        <span>Motion MCP</span>
+      </a>
       <nav aria-label="Footer">
         <ul class="footer-links">
-          <li><a href="https://github.com/digitopvn/motion-mcp">GitHub</a></li>
           <li><a href="https://app.motion.digitop.ai">Dashboard</a></li>
+          <li><a href="https://github.com/digitopvn/motion-mcp">GitHub</a></li>
           <li><a href="/llms.txt">llms.txt</a></li>
-          <li><a href="https://github.com/digitopvn/motion-mcp/blob/main/LICENSE">MIT License</a></li>
+          <li><a href="/index.md">This page as Markdown</a></li>
+          <li><a href="https://github.com/digitopvn/motion-mcp/blob/main/LICENSE">MIT licence</a></li>
         </ul>
       </nav>
-      <p class="footer-meta">Endpoint <code>https://app.motion.digitop.ai/mcp</code><br>Built by <a href="https://github.com/digitopvn">Digitop</a>.</p>
+      <p class="footer-meta">MCP endpoint <code>app.motion.digitop.ai/mcp</code> · Made by <a href="https://github.com/digitopvn">Digitop</a></p>
     </div>
   </footer>
 </body>

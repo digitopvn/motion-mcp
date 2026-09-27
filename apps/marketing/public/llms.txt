@@ -1,6 +1,6 @@
 # Motion MCP
 
-> Motion MCP is an open-source (MIT) motion-video production runtime exposed as a Streamable HTTP MCP server. A host model (Claude, ChatGPT, Pi or any other MCP client) calls `motion_create` with a brief and gets back a rendered, web-optimized MP4. Status: in active development; the hosted endpoint is in early access.
+> Motion MCP is an open-source (MIT) motion-video production runtime exposed as a Streamable HTTP MCP server. A host model (Claude, ChatGPT, Pi or any other MCP client) calls `motion_create` with a brief and gets back a rendered, web-optimized MP4. Status: in active development; the hosted endpoint is in early access, and every new account starts with 5,000 free credits.
 
 ## Connect
 
@@ -53,6 +53,9 @@ Opus is the creative director (spec and critique only; it never writes HyperFram
 - `budgetCredits` caps a job. A job whose estimated cost exceeds its remaining budget stops and reports the shortfall.
 
 ## Links
+
+- [Marketing page as Markdown](https://motion.digitop.ai/index.md): showcase briefs, how it works, pricing and FAQ.
+- [Intro film (MP4, 84 s)](https://motion.digitop.ai/media/intro.mp4)
 
 - Source (MIT): https://github.com/digitopvn/motion-mcp
 - Website: https://motion.digitop.ai

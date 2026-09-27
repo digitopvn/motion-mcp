@@ -1,0 +1,7 @@
+/llms.txt
+  X-Robots-Tag: noindex
+/index.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex
+/media/*
+  Cache-Control: public, max-age=604800
