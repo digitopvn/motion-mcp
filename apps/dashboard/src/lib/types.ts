@@ -303,7 +303,7 @@ export interface PiProvider {
   id: string;
   name: string;
   apiKey: { name: string } | null;
-  oauth: { name: string; loginLabel: string | null; isSubscription: boolean } | null;
+  oauth: { name: string; loginLabel: string | null } | null;
   connected: { authType: ProviderAuthType; hint: string | null; updatedAt: string } | null;
 }
 

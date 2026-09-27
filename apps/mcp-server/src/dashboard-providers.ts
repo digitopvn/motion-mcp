@@ -8,6 +8,7 @@ import { z } from "zod";
 import type { DashboardIdentity } from "./dashboard-auth.ts";
 import { bodyObject } from "./dashboard-http.ts";
 
+type PiProvider = ReturnType<ModelRuntime["getProviders"]>[number];
 type Authed = (fn: (req: Request, res: Response, id: DashboardIdentity) => Promise<void>) => RequestHandler;
 
 const LOGIN_TTL_MS = 10 * 60 * 1000;
@@ -207,9 +208,16 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
     }
   };
 
-  /** Pi providers a workspace can connect: those with OAuth or an interactive API-key setup. */
+  /**
+   * OAuth that signs in to a personal subscription (Claude Pro/Max, ChatGPT Plus/Pro, Copilot, ...) is not
+   * offered: those plans cover the vendor's own apps, and a hosted service running jobs on them can get
+   * the subscriber's account suspended. OAuth that issues API access (OpenRouter, ...) stays.
+   */
+  const oauthOffered = (p: PiProvider) => Boolean(p.auth.oauth && !p.auth.oauth.isSubscription);
+
+  /** Pi providers a workspace can connect: those with offered OAuth or an interactive API-key setup. */
   const connectable = (runtime: ModelRuntime) =>
-    runtime.getProviders().filter((p) => p.auth.oauth || p.auth.apiKey?.login);
+    runtime.getProviders().filter((p) => oauthOffered(p) || p.auth.apiKey?.login);
 
   const findProvider = (runtime: ModelRuntime, providerId: string) => {
     const provider = connectable(runtime).find((p) => p.id === providerId);
@@ -246,13 +254,10 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
         id: p.id,
         name: p.name,
         apiKey: p.auth.apiKey?.login ? { name: p.auth.apiKey.name } : null,
-        oauth: p.auth.oauth
-          ? {
-              name: p.auth.oauth.name,
-              loginLabel: p.auth.oauth.loginLabel ?? null,
-              isSubscription: p.auth.oauth.isSubscription ?? false,
-            }
-          : null,
+        oauth:
+          p.auth.oauth && oauthOffered(p)
+            ? { name: p.auth.oauth.name, loginLabel: p.auth.oauth.loginLabel ?? null }
+            : null,
         connected: record
           ? { authType: record.authType, hint: record.hint ?? null, updatedAt: record.updatedAt }
           : null,
@@ -278,7 +283,7 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
       const { provider, type } = LoginBody.parse(bodyObject(req));
       const runtime = await providers.piRuntime(workspace.id);
       const p = findProvider(runtime, provider);
-      if (type === "oauth" ? !p.auth.oauth : !p.auth.apiKey?.login) {
+      if (type === "oauth" ? !oauthOffered(p) : !p.auth.apiKey?.login) {
         throw new MotionError("VALIDATION", `${p.name} does not support this sign-in method`);
       }
       const session = logins.start(runtime, workspace.id, provider, type);

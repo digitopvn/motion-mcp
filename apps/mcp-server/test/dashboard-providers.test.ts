@@ -132,7 +132,7 @@ describe("workspace providers API", () => {
     expect(res.status).toBe(403);
   });
 
-  it("lists pi providers with both sign-in methods and every multix key", async () => {
+  it("lists pi providers without subscription OAuth, and every multix key", async () => {
     const res = await request("/api/providers", { cookie: owner.cookie });
     expect(res.status).toBe(200);
     const body = (await res.json()) as {
@@ -142,9 +142,18 @@ describe("workspace providers API", () => {
     };
     expect(body.enabled).toBe(true);
     const anthropic = body.pi.providers.find((p) => p.id === "anthropic");
-    expect(anthropic?.oauth).toMatchObject({ name: "Anthropic (Claude Pro/Max)" });
+    expect(anthropic?.oauth).toBeNull();
     expect(anthropic?.apiKey).toMatchObject({ name: "Anthropic API key" });
-    expect(body.pi.providers.find((p) => p.id === "openai-codex")?.apiKey).toBeNull();
+    expect(body.pi.providers.find((p) => p.id === "openai-codex")).toBeUndefined();
+    expect(body.pi.providers.find((p) => p.id === "openrouter")?.oauth).toMatchObject({
+      name: "OpenRouter OAuth",
+    });
+
+    const refused = await send("POST", "/api/providers/pi/logins", owner.cookie, {
+      provider: "anthropic",
+      type: "oauth",
+    });
+    expect(refused.status).toBe(400);
     expect(body.multix.keys.map((k) => k.name)).toContain("GEMINI_API_KEY");
     expect(body.multix.keys.every((k) => !k.set)).toBe(true);
   });

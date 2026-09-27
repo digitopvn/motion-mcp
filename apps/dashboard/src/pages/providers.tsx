@@ -43,6 +43,11 @@ export function ProvidersPage() {
         title="Model providers"
         intro="Bring your own model accounts. Jobs in this workspace use them instead of the server's defaults. Keys are encrypted at rest and never shown again after you save them."
       />
+      <p className="notice">
+        Your keys pay the model and media providers directly, so media generated with them costs no credits.
+        Motion still charges credits for orchestration, the creative director and rendering, which run on our
+        side.
+      </p>
       <Async state={overview} label="Loading providers">
         {(data) =>
           data.enabled ? (
@@ -111,8 +116,10 @@ function PiSection({ data, reload }: { data: ProvidersOverview; reload: () => vo
           Pi agent sign-ins
         </h2>
         <p className="muted">
-          The pi agent builds each scene. Connect a provider with its own sign-in (a Claude, ChatGPT or
-          Copilot subscription) or with an API key, the same two ways the pi CLI offers.
+          The pi agent builds each scene. Connect a provider with an API key, or with OAuth where the provider
+          issues API access (such as OpenRouter). Personal subscriptions (Claude Pro/Max, ChatGPT, Copilot)
+          are not offered: they only cover the vendor's own apps, and using them here could get your account
+          suspended.
         </p>
 
         {connected.length > 0 ? (
@@ -571,8 +578,13 @@ function MultixSection({ keys, reload }: { keys: MultixKey[]; reload: () => void
         Media generation keys (multix)
       </h2>
       <p className="muted">
-        The multix CLI generates images, video and audio. Each key below unlocks the providers listed next to
-        it.
+        The multix CLI generates media. Each key below unlocks the providers listed next to it. When a scene
+        calls for a generated image, jobs use this workspace's image keys first, and those images cost no
+        credits.
+      </p>
+      <p className="muted">
+        Not used by jobs yet: video, speech, music and sound-effect generation. Keys you save for them are
+        kept for when those steps arrive.
       </p>
       {remove.error ? (
         <p className="form-error" role="alert">
