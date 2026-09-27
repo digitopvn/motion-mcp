@@ -26,9 +26,12 @@ What a job is charged:
 - Each internal critique, and each free-text edit interpreted by the director,
   pays one critique line.
 - Renders pay per draft preview, and per output minute for finals.
-- The table also prices media generation, storage and API calls. They are not
-  metered yet, because asset generation is not wired into the pipeline and
-  storage and request metering do not exist yet.
+- Each scene image the job generates pays one `image_generation` line, or zero
+  credits when the workspace's own key paid for it (see [BYOK](#byok)).
+- The table also prices video, speech, music and sound-effect generation,
+  storage and API calls. They are not metered yet, because those media steps
+  are not wired into the pipeline and storage and request metering do not exist
+  yet.
 
 ## Reservations
 
@@ -37,7 +40,9 @@ Before a job is enqueued, the pipeline quotes it with `quoteJob`
 balance:
 
 - The quote covers the worst case. For internal modes it includes the maximum
-  number of critiques the job may run.
+  number of critiques the job may run. When an image provider is available, it
+  includes `ASSET_IMAGES_PER_JOB` images; under a `budgetCredits` that cannot
+  cover them all, the image allowance shrinks instead of failing the job.
 - If the caller's `budgetCredits` is below the quote, the call fails with
   `budget_exceeded` before anything runs.
 - If the available balance cannot cover the quote, the call fails with
@@ -104,11 +109,20 @@ subscription grants, refund reversals, and per-product credit packs.
 
 ## BYOK
 
-**Planned.** A workspace would store its own provider credentials, encrypted as
-described in [SECURITY.md](SECURITY.md#provider-credentials-byok). The price
-table already flags which lines a workspace key would waive: only third-party
-media provider charges. Orchestration, renders, storage, API calls and internal
-director calls are always charged, because the platform still pays for them.
+A workspace stores its own provider credentials under **Dashboard > Model
+providers**, encrypted as described in
+[SECURITY.md](SECURITY.md#provider-credentials-byok). Its keys pay the model
+and media providers directly:
+
+- Scene images generated with the workspace's multix key are recorded as
+  `image_generation` lines with `byok: true` and zero credits. The price table
+  flags which lines a workspace key may waive (`byokWaivable`); today that is
+  only third-party media generation.
+- Scene workers running on the workspace's pi sign-in spend the workspace's
+  tokens; scene implementation was never a separate credit line.
+- Orchestration, the internal creative director, critiques, renders, storage
+  and API calls are always charged, because the platform still runs and pays
+  for them.
 
 ## Limits
 

@@ -24,6 +24,7 @@ import type * as S from "./contract/tool-schemas.ts";
 import { jobResult, type RenderRecord, updateJobResult } from "./job-record.ts";
 import { executeJob, type JobMeta, runCreateJob, runEditJob, runRenderJob } from "./jobs.ts";
 import type { PipelineRuntime } from "./runtime.ts";
+import { quoteWithAssets } from "./scene-assets.ts";
 import { domainPackDocs, projectDocs, searchDocs } from "./search.ts";
 
 export const SERVER_VERSION = "0.1.0";
@@ -216,12 +217,17 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
         );
       }
       await trial.ensure(caller.workspaceId);
-      const quote = quoteJob({
-        durationSeconds: input.durationSeconds ?? specDuration ?? 30,
-        directorMode: mode,
-        critiqueLoops: mode === "host-opus" ? 0 : internalCritiqueCap,
-        previews: 1,
-      });
+      const { quote, assetImages } = await quoteWithAssets(
+        rt,
+        caller.workspaceId,
+        {
+          durationSeconds: input.durationSeconds ?? specDuration ?? 30,
+          directorMode: mode,
+          critiqueLoops: mode === "host-opus" ? 0 : internalCritiqueCap,
+          previews: 1,
+        },
+        input.budgetCredits,
+      );
       const projectId = newId("prj");
       const jobId = newId("job");
       const reservation = await reserveForJob(rt.ledger, {
@@ -260,6 +266,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             mode,
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
+            assetImages,
           },
           (scope) =>
             runCreateJob(scope, {
@@ -336,12 +343,17 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
       const patches: ScenePatch[] = given.map((p) => ({ ...p, source: answering ? "host" : "user" }));
 
       await trial.ensure(caller.workspaceId);
-      const quote = quoteJob({
-        durationSeconds: ir.format.duration ?? 30,
-        directorMode: "host-opus",
-        critiqueLoops: (patches.length === 0 ? 1 : 0) + (mode === "host-opus" ? 0 : internalCritiqueCap),
-        previews: 1,
-      });
+      const { quote, assetImages } = await quoteWithAssets(
+        rt,
+        caller.workspaceId,
+        {
+          durationSeconds: ir.format.duration ?? 30,
+          directorMode: "host-opus",
+          critiqueLoops: (patches.length === 0 ? 1 : 0) + (mode === "host-opus" ? 0 : internalCritiqueCap),
+          previews: 1,
+        },
+        input.budgetCredits,
+      );
       const jobId = newId("job");
       const version = project.irVersion + 1;
       const reservation = await reserveForJob(rt.ledger, {
@@ -380,6 +392,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
             critiques,
+            assetImages,
           },
           (scope) =>
             runEditJob(scope, {

@@ -298,6 +298,27 @@ export function isRenderJustified(input: RenderInput): PolicyVerdict {
   return { ok: true, reason: `${input.kind} render justified` };
 }
 
+export interface AssetInput {
+  /** Paid with the workspace's own provider key: no credits, so only the count cap applies. */
+  byok: boolean;
+  generatedForJob: number;
+  /** The job's image allowance (quoted and reserved up front). */
+  maxPerJob: number;
+  budgetRemainingUsd: number;
+  estimatedCostUsd: number;
+}
+
+/** Generate a scene asset only within the job's allowance and, when the platform pays, its budget. Pure. */
+export function shouldGenerateAsset(input: AssetInput): PolicyVerdict {
+  if (input.generatedForJob >= input.maxPerJob) {
+    return { ok: false, reason: `asset cap ${input.maxPerJob} reached` };
+  }
+  if (!input.byok && input.budgetRemainingUsd < input.estimatedCostUsd) {
+    return { ok: false, reason: "remaining budget does not cover the asset" };
+  }
+  return { ok: true, reason: input.byok ? "workspace key" : "within allowance and budget" };
+}
+
 const NEVER_RETRY = new Set([
   "VALIDATION",
   "BUDGET_EXCEEDED",

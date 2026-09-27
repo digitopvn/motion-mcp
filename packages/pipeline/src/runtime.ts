@@ -7,12 +7,14 @@ import { type DomainPack, loadDomainPack } from "@motion-mcp/domain-pack";
 import { createHyperframesAdapter, type MotionRendererAdapter } from "@motion-mcp/hyperframes-adapter";
 import { createDecisionClient, type DecisionClient } from "@motion-mcp/jev-router";
 import { type ModelGateway, OpenRouterClient } from "@motion-mcp/llm";
+import { MultixRunner } from "@motion-mcp/media";
 import { PiWorker, type SceneWorker } from "@motion-mcp/pi-runtime";
 import { createLogger, type Logger, type MotionConfig, registerSecret, SealedBox } from "@motion-mcp/shared";
 import { type ArtifactStore, createArtifactStore } from "@motion-mcp/storage";
 import { ArtifactSigner, type ArtifactUrlFn, artifactUrlFn, resolveSigningSecret } from "./artifact-urls.ts";
 import { JobQueue } from "./job-queue.ts";
 import { createVisionQaSource, type QaSource } from "./qa.ts";
+import { type MediaRuntime, serverMediaEnv } from "./scene-assets.ts";
 import { WorkspaceProviders } from "./workspace-providers.ts";
 
 /** Everything the pipeline needs, built once per process by `createRuntime`. */
@@ -37,6 +39,8 @@ export interface PipelineRuntime {
   sceneWorker?: SceneWorker;
   /** Workspace-owned pi sign-ins and multix keys; resolves each job's scene worker. */
   providers: WorkspaceProviders;
+  /** multix for scene images; absent when the CLI is missing or ASSET_IMAGES_PER_JOB is 0. */
+  media?: MediaRuntime;
   /** Extra QA passes after lint/check (vision QA when a key is configured). */
   qaSources: QaSource[];
   queue: JobQueue;
@@ -54,7 +58,18 @@ export interface RuntimeOverrides {
   decisions?: DecisionClient;
   renderer?: MotionRendererAdapter;
   sceneWorker?: SceneWorker | null;
+  media?: MediaRuntime | null;
   qaSources?: QaSource[];
+}
+
+function createMedia(config: MotionConfig, logger: Logger): MediaRuntime | undefined {
+  if (config.ASSET_IMAGES_PER_JOB === 0) return undefined;
+  try {
+    return { runner: new MultixRunner({ multixBin: config.MULTIX_BIN }), serverEnv: serverMediaEnv() };
+  } catch (err) {
+    logger.warn("multix.unavailable", { message: err instanceof Error ? err.message : String(err) });
+    return undefined;
+  }
 }
 
 export async function createRuntime(
@@ -73,6 +88,7 @@ export async function createRuntime(
     config.POLAR_ACCESS_TOKEN,
     config.ARTIFACT_SIGNING_SECRET,
     config.CREDENTIALS_ENCRYPTION_KEY,
+    ...Object.values(serverMediaEnv()),
   ]) {
     registerSecret(secret);
   }
@@ -144,6 +160,7 @@ export async function createRuntime(
     renderer: overrides.renderer ?? createHyperframesAdapter(),
     sceneWorker,
     providers,
+    media: overrides.media === null ? undefined : (overrides.media ?? createMedia(config, logger)),
     qaSources,
     queue,
     close: (graceMs) => queue.close(graceMs),

@@ -75,6 +75,11 @@ export const ConfigSchema = z.object({
   FFMPEG_PATH: z.string().default("ffmpeg"),
   FFPROBE_PATH: z.string().default("ffprobe"),
   MULTIX_BIN: z.string().optional(),
+  /**
+   * Most images a create/edit job may generate through multix for scenes that call for one. The
+   * workspace's own image keys are used first, then the server's. 0 turns asset generation off.
+   */
+  ASSET_IMAGES_PER_JOB: z.coerce.number().int().min(0).max(12).default(4),
 });
 
 export type MotionConfig = z.infer<typeof ConfigSchema>;

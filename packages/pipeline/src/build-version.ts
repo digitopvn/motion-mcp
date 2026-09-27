@@ -22,12 +22,15 @@ import type { UsageMeter } from "./billing-guard.ts";
 import { type CritiqueUsage, jobResult, type RenderRecord, updateJobResult } from "./job-record.ts";
 import { mechanicalPatch } from "./qa.ts";
 import type { PipelineRuntime } from "./runtime.ts";
+import { materializeGeneratedAssets } from "./scene-assets.ts";
 
 /** Per-job execution scope shared by every node of the graph. */
 export interface JobScope {
   rt: PipelineRuntime;
   /** This job's scene worker: the workspace's chosen pi model, else the server default. */
   sceneWorker?: SceneWorker;
+  /** Images this job may generate for its scenes (quoted and reserved up front); 0 for render jobs. */
+  assetImages: number;
   jobId: string;
   workspaceId: string;
   projectId: string;
@@ -108,9 +111,12 @@ export async function loadOverrides(
   return parsed.success ? parsed.data : {};
 }
 
-/** Deterministic compile of every scene, then re-apply overrides whose scene IR is unchanged. */
+/**
+ * Deterministic compile of every scene, copy in generated images, then re-apply overrides whose scene IR
+ * is unchanged.
+ */
 export async function compileVersion(
-  scope: Pick<JobScope, "rt" | "span">,
+  scope: Pick<JobScope, "rt" | "span" | "workspaceId" | "projectId">,
   ir: MotionIR,
   dir: string,
   overrides: SceneOverrides,
@@ -118,6 +124,7 @@ export async function compileVersion(
   await scope.span.run("scenes.build", async (span) => {
     await rm(dir, { recursive: true, force: true });
     const compiled = await scope.rt.renderer.compile(ir, dir);
+    const assets = await materializeGeneratedAssets(scope, ir, dir);
     let restored = 0;
     for (const scene of ir.scenes) {
       const override = overrides[scene.id];
@@ -132,6 +139,7 @@ export async function compileVersion(
     span.setAttributes({
       "compile.scenes": ir.scenes.length,
       "compile.overrides": restored,
+      "compile.generated_assets": assets,
       "compile.warnings": compiled.warnings.length,
       "compile.duration_s": compiled.duration,
     });

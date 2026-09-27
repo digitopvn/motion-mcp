@@ -16,9 +16,11 @@ export class UsageMeter {
 
   constructor(private readonly limitCredits: number) {}
 
-  add(operation: BillableOperation, quantity: number): void {
+  add(operation: BillableOperation, quantity: number, options: { byok?: boolean } = {}): void {
     if (quantity <= 0) return;
-    this.lines.push({ operation, quantity, credits: priceOf(operation, quantity) });
+    const line: UsageLine = { operation, quantity, credits: priceOf(operation, quantity, options) };
+    if (options.byok) line.byok = true;
+    this.lines.push(line);
   }
 
   get credits(): number {

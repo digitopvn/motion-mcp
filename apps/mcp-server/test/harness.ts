@@ -47,6 +47,7 @@ export async function startHarness(
     logger: createLogger({ service: "motion-test" }, "error"),
     gateway: null,
     sceneWorker: null,
+    media: null,
     qaSources: [],
     decisions: createDecisionClient({ ...config, TYPESAFE_API_KEY: undefined }),
     ...overrides,

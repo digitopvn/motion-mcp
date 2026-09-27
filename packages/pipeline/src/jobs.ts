@@ -41,6 +41,7 @@ import {
 import type { CreateInput } from "./contract/tool-schemas.ts";
 import { type CritiqueUsage, type JobResult, jobResult, updateJobResult } from "./job-record.ts";
 import type { PipelineRuntime } from "./runtime.ts";
+import { generateSceneAssets } from "./scene-assets.ts";
 
 export type JobOutcome = "succeeded" | "awaiting_host";
 
@@ -64,6 +65,8 @@ export interface JobMeta {
   /** Explicit budgetCredits, else the reservation size. */
   limitCredits: number;
   critiques?: CritiqueUsage;
+  /** Image allowance for scene assets, included in the quote. */
+  assetImages?: number;
 }
 
 /**
@@ -90,6 +93,7 @@ export async function executeJob(
   const scope: JobScope = {
     rt,
     sceneWorker: rt.sceneWorker,
+    assetImages: meta.assetImages ?? 0,
     jobId: meta.jobId,
     workspaceId: meta.workspaceId,
     projectId: meta.projectId,
@@ -141,7 +145,7 @@ export async function executeJob(
         operation: line.operation,
         quantity: line.quantity,
         credits: line.credits,
-        byok: false,
+        byok: line.byok ?? false,
       });
     }
     await updateJobResult(repos.jobs, meta.jobId, () => ({
@@ -252,22 +256,23 @@ export interface DeliverInput {
 }
 
 /**
- * Shared tail of create and edit: compile → custom scenes → revision loop → store version → preview →
- * optional final. Pauses with `awaiting_host` when the loop needs a host critique.
+ * Shared tail of create and edit: scene images → compile → custom scenes → revision loop → store version
+ * → preview → optional final. Pauses with `awaiting_host` when the loop needs a host critique.
  */
 async function buildAndDeliver(scope: JobScope, input: DeliverInput): Promise<JobOutcome> {
   const { rt } = scope;
   const dir = versionDir(rt, scope.projectId, input.version);
+  const withAssets = await generateSceneAssets(scope, input.ir);
   await scope.progress("compile", 0.12, `Compiling version ${input.version}`);
-  await compileVersion(scope, input.ir, dir, input.overrides);
+  await compileVersion(scope, withAssets, dir, input.overrides);
   await scope.progress("build", 0.18);
-  await implementCustomScenes(scope, input.ir, dir, input.overrides);
+  await implementCustomScenes(scope, withAssets, dir, input.overrides);
   if (input.workerPatches?.length) {
-    await applyWorkerPatches(scope, input.ir, dir, input.overrides, input.workerPatches);
+    await applyWorkerPatches(scope, withAssets, dir, input.overrides, input.workerPatches);
   }
 
   const revised: RevisionResult = await reviseVersion(scope, {
-    ir: input.ir,
+    ir: withAssets,
     dir,
     overrides: input.overrides,
     taste: input.taste,

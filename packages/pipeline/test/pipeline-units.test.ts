@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { ArtifactSigner, resolveSigningSecret } from "../src/artifact-urls.ts";
 import { reserveForJob, TrialGrants } from "../src/billing-guard.ts";
 import { JobQueue } from "../src/job-queue.ts";
+import { serverMediaEnv } from "../src/scene-assets.ts";
 import { bm25Search } from "../src/search.ts";
 
 const BASE = "https://motion.example";
@@ -140,5 +141,13 @@ describe("bm25Search", () => {
     expect(out.exact).toBe(true);
     expect(bm25Search(docs, "typography", 5)).toMatchObject({ exact: false, results: [{ id: "swiss" }] });
     expect(bm25Search(docs, "!!", 5).results).toEqual([]);
+  });
+});
+
+describe("serverMediaEnv", () => {
+  it("keeps only non-empty multix provider keys", () => {
+    expect(
+      serverMediaEnv({ OPENROUTER_API_KEY: " or-key ", GEMINI_API_KEY: "", DATABASE_URL: "postgres://x" }),
+    ).toEqual({ OPENROUTER_API_KEY: "or-key" });
   });
 });

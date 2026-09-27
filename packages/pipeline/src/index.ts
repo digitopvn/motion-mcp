@@ -20,5 +20,6 @@ export {
 } from "./motion-service.ts";
 export { createVisionQaSource, type QaContext, type QaSource } from "./qa.ts";
 export { createRuntime, type PipelineRuntime, type RuntimeOverrides } from "./runtime.ts";
+export { type MediaRuntime, serverMediaEnv } from "./scene-assets.ts";
 export { bm25Search, type SearchDoc } from "./search.ts";
 export { keyHint, WorkspaceCredentialStore, WorkspaceProviders } from "./workspace-providers.ts";

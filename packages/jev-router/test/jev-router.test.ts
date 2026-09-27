@@ -17,6 +17,7 @@ import {
   routeIntent,
   selectModel,
   shouldEscalateToOpus,
+  shouldGenerateAsset,
   shouldRetry,
   TypeSafeJevClient,
   type YesNoQuestion,
@@ -324,6 +325,16 @@ describe("policies", () => {
     expect(isRenderJustified({ ...r, lintErrors: 1 }).ok).toBe(false);
     expect(isRenderJustified({ ...r, changedSinceLastRender: false }).ok).toBe(false);
     expect(isRenderJustified({ ...r, budgetRemainingUsd: 0 }).ok).toBe(false);
+  });
+
+  it("gates generated assets by the per-job cap, and by budget only when the server pays", () => {
+    const a = { byok: false, generatedForJob: 0, maxPerJob: 2, budgetRemainingUsd: 1, estimatedCostUsd: 0.1 };
+    expect(shouldGenerateAsset(a).ok).toBe(true);
+    expect(shouldGenerateAsset({ ...a, generatedForJob: 2 }).ok).toBe(false);
+    expect(shouldGenerateAsset({ ...a, budgetRemainingUsd: 0.05 }).ok).toBe(false);
+    expect(shouldGenerateAsset({ ...a, byok: true, budgetRemainingUsd: 0 }).ok).toBe(true);
+    expect(shouldGenerateAsset({ ...a, byok: true, generatedForJob: 2 }).ok).toBe(false);
+    expect(shouldGenerateAsset({ ...a, maxPerJob: 0 }).ok).toBe(false);
   });
 
   it("retries only transient errors", () => {

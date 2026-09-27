@@ -20,8 +20,11 @@ is still **planned**.
 Each workspace can bring its own model providers from **Dashboard > Model
 providers** (`/api/providers`). Two kinds are stored:
 
-- **pi providers**, signed in with an API key or OAuth through pi's own
-  `ModelRuntime.login`. The dashboard relays pi's prompts (sign-in link, device
+- **pi providers**, signed in with an API key, or with OAuth that grants API
+  access (such as OpenRouter), through pi's own `ModelRuntime.login`. OAuth for
+  personal subscriptions (pi marks these `isSubscription`, for example Claude
+  or ChatGPT plans) is not offered, because those plans' terms do not cover use
+  by a hosted service. The dashboard relays pi's prompts (sign-in link, device
   code, pasted redirect URL or API key) without seeing more than the prompt;
   sessions are bound to one workspace, expire after 10 minutes, and errors are
   redacted before they reach the browser.
@@ -43,8 +46,12 @@ Storage and use (`packages/pipeline/src/workspace-providers.ts`):
   spends the server's keys on a workspace's behalf.
 - Key rotation is **planned**: changing the master key makes stored sign-ins
   unreadable, and workspaces must connect again.
-- multix keys are stored and resolved per workspace, but the pipeline does not
-  run multix yet (see [multix environment scrubbing](#multix-environment-scrubbing)).
+- Scene image generation uses the workspace's multix keys when they unlock an
+  image provider, and otherwise the server's own multix keys. The two sets are
+  never mixed in one job, so an image billed as BYOK was always paid by the
+  workspace. Only image keys are used today; keys for video, speech, music and
+  sound effects are stored for later steps. Every run goes through the scrubbed
+  environment described in [multix environment scrubbing](#multix-environment-scrubbing).
 
 ## Redaction
 

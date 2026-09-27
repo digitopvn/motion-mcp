@@ -1,6 +1,6 @@
 # Workspace model providers (pi + multix)
 
-Status: in progress · Branch: main
+Status: done · Branch: main
 
 ## Outcome
 Each workspace manages its own model-provider sign-ins from the dashboard:

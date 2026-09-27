@@ -32,6 +32,8 @@ export const UsageLine = z.object({
   operation: z.string(),
   quantity: z.number(),
   credits: z.number().int(),
+  /** Paid with the workspace's own provider key, so a waivable line costs no credits. */
+  byok: z.boolean().optional(),
 });
 export type UsageLine = z.infer<typeof UsageLine>;
 
