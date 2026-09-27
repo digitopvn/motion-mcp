@@ -62,6 +62,8 @@ Each film was made from the one-line brief below. The brands are made up; the re
 
 No assistant? Type the brief straight into the dashboard.
 
+The dashboard shows your credit balance, credits held by running jobs, recent usage, your videos, API keys and the setup snippet on one page: [screenshot](https://motion.digitop.ai/media/dashboard.webp).
+
 ## Pricing
 
 - One credit is one US cent. A budget cap stops any job before it overspends.

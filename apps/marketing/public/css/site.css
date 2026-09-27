@@ -240,6 +240,11 @@ strong { color: var(--ink); font-weight: 600; }
   .clip[data-order-mobile="5"] { order: 5; }
   .clip[data-order-mobile="6"] { order: 6; }
 }
+/* Dashboard screenshot under the assistant section. */
+.dash-shot { margin-top: clamp(48px, 6vw, 96px); }
+.dash-shot img { width: 100%; height: auto; border-radius: var(--radius); outline: 1px solid var(--line); outline-offset: -1px; background: var(--bg-3); }
+.dash-shot .slate-brief { max-width: 60ch; }
+
 /* How it works: an edit timeline with a playhead, then the crew. */
 .timeline { position: relative; margin-bottom: var(--space-7); padding-block: var(--space-3); border-block: 1px solid var(--line); }
 .track { display: flex; gap: var(--space-1); }
