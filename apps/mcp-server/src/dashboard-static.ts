@@ -36,12 +36,13 @@ export function dashboardCsp(config: Pick<MotionConfig, "R2_PUBLIC_BASE_URL">): 
     .join(" ");
   return [
     "default-src 'self'",
-    "script-src 'self'",
+    // Cloudflare injects its Web Analytics beacon at the edge.
+    "script-src 'self' https://static.cloudflareinsights.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     `img-src 'self' data: blob: ${storage} https://avatars.githubusercontent.com`,
     `media-src 'self' blob: ${storage}`,
-    "connect-src 'self'",
+    "connect-src 'self' https://cloudflareinsights.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self' https://github.com",
