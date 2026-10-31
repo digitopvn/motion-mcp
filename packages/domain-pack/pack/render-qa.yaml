@@ -1,0 +1,64 @@
+# Motion MCP domain pack: verify loop, encoding targets and render failure fixes for compiled HyperFrames projects.
+# Original paraphrase informed by ak-motion-graphics, ak-hyperframes, ak-media-processing and ak-video (see NOTICE), adapted to Motion IR.
+kind: render-qa
+entries:
+  - id: gates-cheapest-first
+    text: "Run gates cheapest first: lint, then check (runtime, layout, motion, contrast), then frame snapshots, then a preview render. A failing gate stops the loop before any render time is spent."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: true}
+  - id: fix-at-source
+    text: "Fix QA findings in the scene IR or the scene file and re-render. Never patch the MP4 (crop, overlay, re-time) to hide a composition bug."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: true}
+  - id: sample-inside-hold
+    text: "Sample each scene inside its hold window, after entrances and the in-transition settle and before exits begin. A frame taken mid-transition hides real layout bugs and flags false ones."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: busy-and-last-frames
+    text: "For dense scenes, also snapshot the moment with the most elements on stage and the scene's last frame; overlaps and unfinished draws show up there, not at the midpoint."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: contact-sheet-first
+    text: "Review one contact sheet, one row per scene, before watching the video. Each tile should show the declared hero, readable text, only brand colours and nothing cut off at the frame edge."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: thumbnail-read
+    text: "Judge frames at about 480 px wide as well as at full size. If the hierarchy does not read at thumbnail width, it will not read in a feed."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: per-scene-questions
+    text: "Ask four questions of each scene frame: does the eye land on the declared hero first, is every word legible at phone size, does it match its neighbours' style, and does it show only what the IR asked for?"
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: fallback-paint-is-load-failure
+    text: "A frame with a fallback font or an empty image box is a load failure (font face or asset path), not a timing bug. Fix the reference and re-snapshot instead of delaying the tween."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: black-segment-diagnosis
+    text: "Locate a black segment's scene by time. At a scene start it is usually a transition hiding the stage too early; mid-scene it is usually too many live blur, gradient or clip-path layers."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: duration-drift-cause
+    text: "If the probed duration is off the IR total by more than a frame, look for a scene timeline shorter than its data-duration (missing end padding) or a tween scheduled past the scene end."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: watch-for-sync
+    text: "Watch the finished file once end to end at real speed: word-anchored beats land on their words, captions match speech and cuts fall where planned. Still frames cannot show sync."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: validate, invariant: false}
+  - id: each-format-own-pass
+    text: "Every format edition gets its own contact sheet and probe. A 16:9 pass proves nothing for 9:16, 1:1 or 4:5, where wrapped headlines, stacked layouts and app-chrome zones fail differently."
+    tags: {role: worker, scene_types: [], styles: [], format: ["9:16", "1:1", "4:5"], energy: [], pipeline_step: validate, invariant: false}
+  - id: probe-the-real-file
+    text: "Judge the delivered file by ffprobe, never by the render settings: read width, height, codec, pixel format, frame rate and duration from the encoded MP4 itself."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: blank-mp4-means-composition
+    text: "A blank or short MP4 almost always comes from the composition: a missing or misnamed timeline registration, a bad data-duration or a script error. Re-run lint and check instead of retrying the render."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: preview-is-draft
+    text: "Preview renders are draft quality at no more than 15 fps and 540p. Use them to judge timing and layout only; judge type crispness, gradients and banding on a final render."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: final-encode-settings
+    text: "Final delivery is H.264 at CRF 18, medium preset, at the composition's native size and fps. Never raise fps above the IR format or re-encode a file that is already finished."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: even-dimensions
+    text: "yuv420p needs even width and height. Keep custom formats at even pixel sizes, and when downscaling let the height drive and round the width to an even number."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: four-k-limits
+    text: "final-4k captures at 2x and only accepts 1920x1080, 1080x1920 or 1080x1080 compositions. For 4:5 or custom sizes, deliver the final at native size rather than upscaling afterwards."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: bitrate-sanity
+    text: "At CRF 18, a 1080p motion-graphics file usually lands around 8-15 Mbps. Far above that points to grain or noise textures; far below to flat frames or a frozen timeline. Inspect before shipping."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}
+  - id: non-h264-is-failure
+    text: "Treat a probe that reports HEVC, VP9 or AV1, or a pixel format other than yuv420p, as a failed render: social and web upload paths expect H.264 and may reject or badly re-encode anything else."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: render, invariant: false}

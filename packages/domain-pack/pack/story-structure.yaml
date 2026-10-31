@@ -1,0 +1,64 @@
+# Motion MCP domain pack: script and storyboard structure for short motion-graphic videos.
+# Original paraphrase informed by ak-video, ak-motion-video and ak-creativity (see NOTICE), adapted to Motion IR.
+kind: story-structure
+entries:
+  - id: arc-by-topic
+    text: "Pick the arc from the topic: product pitch uses problem-agitate-solve or before-after-bridge, a system uses how-it-works, a launch is a feature tour, a wrong belief is a myth-buster, tips are a listicle."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: arc-to-roles
+    text: "Map arc stages to scene roles: problem-agitate-solve is problem, problem, mechanism, evidence, cta; before-after-bridge is problem, payoff, mechanism, cta; how-it-works is hook, title, mechanism x2-3, payoff, cta."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: hook-formulas
+    text: "Choose one hook pattern: mistake callout, surprising number, direct question, named pain, outcome tease, myth flip or pattern interrupt. It becomes both the first spoken line and the first on-screen words."
+    tags: {role: director, scene_types: [hook], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: hook-open-loop
+    text: "A hook that asks a question or teases a result opens a loop; the payoff must close it explicitly, ideally repeating the hook's number or key word so the viewer feels the promise was kept."
+    tags: {role: director, scene_types: [hook, payoff], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: beats-15s
+    text: "15 s plan: 3-4 scenes. Hook about 2 s, one mechanism or evidence beat, payoff, then a 2.5-3 s cta. Roughly 30-35 voice-over words; drop title and problem scenes."
+    tags: {role: director, scene_types: [hook, mechanism, evidence, payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: beats-30s
+    text: "30 s plan: 5-7 scenes of about 4-5 s: hook, problem, mechanism, evidence, payoff, cta. Roughly 65-72 voice-over words; one title card at most."
+    tags: {role: director, scene_types: [hook, problem, mechanism, evidence, payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: beats-60s
+    text: "60 s plan: 9-12 scenes: hook, title, problem, 2-3 mechanism steps, 1-2 evidence beats, payoff, cta. Roughly 130-145 voice-over words; something visibly changes every 3-5 s."
+    tags: {role: director, scene_types: [hook, title, problem, mechanism, evidence, payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: beats-90s
+    text: "90 s plan: 13-16 scenes. Three mechanism steps, each followed by its own evidence; add a re-hook (new question or number) near the midpoint. Roughly 200-215 voice-over words."
+    tags: {role: director, scene_types: [mechanism, evidence], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: time-proportions
+    text: "Split total time roughly as hook 1.5-3 s, body 70-80%, payoff 10-20%, cta 2.5-4 s. If the body cannot fit, cut a beat rather than squeezing every scene."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: vo-budget-per-scene
+    text: "Size each scene's line at about 2.5 spoken words per second minus a short tail: 2 s fits 4 words, 4 s about 9, 6 s about 14. Never exceed 3 words per second, even in a punchy hook."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: durations-sum-check
+    text: "Before writing copy, make scene durations sum to the target length; if the script's word count exceeds 2.5 x total seconds, cut words, never the holds."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: storyboard-fields
+    text: "Storyboard each scene as: role, intent (what the viewer learns or feels), focalPoint, on-screen words, spoken line, shot size and camera move, transitionOut, and one or two acceptance checks."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: screen-text-compresses-vo
+    text: "On-screen words compress the spoken line instead of transcribing it: 2-6 key words per scene that still tell the story with the sound off. Captions handle the full transcript."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: shot-scale-progression
+    text: "Vary shot scale across scenes: wide to orient, medium to explain, close or detail for a punch. Build intensity wide to medium to close; a close-to-wide pull reveals context and makes a good ending."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: camera-anti-monotony
+    text: "No two adjacent scenes use the same camera move. Alternate scale moves (push, pull), translate moves (pan, tilt, parallax) and static, and save static for the payoff or headline number."
+    tags: {role: director, scene_types: [payoff], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: long-scene-cut-in
+    text: "A scene longer than about 7 s needs an internal reframe: open wide to orient, then move onto the key element on a spoken keyword. Nothing should hold unchanged past 8 s."
+    tags: {role: director, scene_types: [mechanism, evidence], styles: [], format: [], energy: [1, 2, 3], pipeline_step: direction, invariant: false}
+  - id: ending-choice
+    text: "Pick one ending: hard cut on the payoff, a quick cta of one action plus its benefit, a loop close whose last line mirrors the first, or a calm outro hold. Loop closes suit short vertical feeds."
+    tags: {role: director, scene_types: [payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: problem-copy
+    text: "Problem copy names the viewer's pain in their own words, concrete and present tense, one symptom per line, with no hint of the solution yet."
+    tags: {role: director, scene_types: [problem], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: mechanism-copy
+    text: "Mechanism copy is a short numbered path: 2-3 steps, each a verb-led line under 8 words, with the visual showing the step rather than the text describing it."
+    tags: {role: director, scene_types: [mechanism], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: payoff-and-cta-copy
+    text: "Payoff copy states the outcome as a benefit to the viewer; cta copy starts with a verb and pairs the action with its benefit in 3-6 words. Spell no long URLs aloud."
+    tags: {role: director, scene_types: [payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}

@@ -42,6 +42,7 @@ describe("pack files", () => {
     expect(license).toMatch(/BestAgentKits/);
     const notice = await readFile(join(DEFAULT_PACK_DIR, "NOTICE"), "utf8");
     expect(notice).toMatch(/bestagentkits\/motion-video-skill/);
+    expect(notice).toMatch(/AgentKit commit\s+[0-9a-f]{40}/);
   });
 
   it("caches the parsed pack", async () => {

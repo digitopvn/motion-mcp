@@ -11,6 +11,13 @@ export const KNOWLEDGE_FILES = [
   "visual-antipatterns",
   "pacing-patterns",
   "audio-mix",
+  "motion-choreography",
+  "easing-timing",
+  "composition-contract",
+  "render-qa",
+  "story-structure",
+  "voice-direction",
+  "platform-specs",
 ] as const;
 export const KnowledgeKind = z.enum(KNOWLEDGE_FILES);
 export type KnowledgeKind = z.infer<typeof KnowledgeKind>;

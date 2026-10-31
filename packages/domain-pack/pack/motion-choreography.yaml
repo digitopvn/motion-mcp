@@ -1,0 +1,82 @@
+# Motion MCP domain pack: emotion, personality and choreography rules for animating elements inside a scene.
+# Original paraphrase informed by ak-motion-design / ak-motion-video motion craft (see NOTICE), adapted to Motion IR.
+kind: motion-choreography
+entries:
+  - id: emotion-calm-elegant
+    text: "Calm, trust or elegance: long smooth moves on gentle curves, standard or decelerate easing, 0.8-1.4 s, small travel and no overshoot. Let opacity and one other property do the work."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [1, 2, 3], pipeline_step: direction, invariant: false}
+  - id: emotion-joy-playful
+    text: "Joy or delight: upward arcs, spring-soft landings with a visible overshoot, 0.4-0.6 s per move and slightly varied stagger so the group feels alive rather than drilled."
+    tags: {role: both, scene_types: [payoff, hook], styles: [], format: [], energy: [3, 4, 5], pipeline_step: direction, invariant: false}
+  - id: emotion-urgency-confidence
+    text: "Urgency or confidence: straight horizontal or diagonal paths, snap or decelerate easing, 0.25-0.4 s, no overshoot and no wobble. Decisive motion stops exactly on its mark."
+    tags: {role: both, scene_types: [problem, hook, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: emotion-surprise-impact
+    text: "Surprise or release: the hero expands outward from its centre with emphasized easing in 0.3-0.5 s, supporting parts radiate away from it; use once per video, on the reveal."
+    tags: {role: both, scene_types: [payoff, hook, evidence], styles: [], format: [], energy: [3, 4, 5], pipeline_step: direction, invariant: false}
+  - id: direction-carries-meaning
+    text: "Pick beat direction for meaning: up reads as growth, down as settling or completion, right as progress, left as looking back, scale-out as importance, scale-in as focus or dismissal."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: personality-choose-one
+    text: "Map the brief to one motion personality (playful, premium, corporate, energetic); fix one signature easing for about 80% of beats, a three-step duration palette and one entrance verb. Borrow another for one moment at most."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: personality-premium
+    text: "Premium personality: zero overshoot, scale-in from about 0.98, short slide offsets, long holds, opacity plus at most one property. Put spring-soft and snap in motionLanguage.avoidEasing."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [1, 2], pipeline_step: animate, invariant: false}
+  - id: personality-corporate
+    text: "Corporate personality: decelerate and standard easing, 0-3% overshoot, mostly straight paths, uniform stagger and identical timing for identical element types so motion feels dependable."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [2, 3], pipeline_step: animate, invariant: false}
+  - id: personality-playful
+    text: "Playful personality: spring-soft landings with 10-20% overshoot, curved paths, a brief squash on impact and bouncing up from below as the entrance verb. Not everything bounces: keep text calm."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [3, 4], pipeline_step: animate, invariant: false}
+  - id: personality-energetic
+    text: "Energetic personality: emphasized or snap easing, entrances from the frame edge, large scale contrast and accelerating stagger, but every move still settles before the next big hit."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [4, 5], pipeline_step: animate, invariant: false}
+  - id: overlap-not-queue
+    text: "Overlap beats instead of queueing them: start the next beat 30-60% into the previous one using {after, offset} with a negative offset. About 25% overlap feels brisk, 50% fluid."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: stagger-order-patterns
+    text: "Order staggers by purpose: reading order for lists and grids, centre-out for hero clusters, reverse order for exits. Every item shares one easing; only the start time varies."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: counter-motion
+    text: "Add counter-motion for depth: when the hero travels, the background drifts the opposite way at 20-30% of the hero's distance; when the hero lifts or grows, its shadow spreads and softens."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [2, 3, 4, 5], pipeline_step: animate, invariant: false}
+  - id: depth-layer-speeds
+    text: "Give moving layers distinct speeds: background about 0.2-0.3x, content 1x, a foreground accent about 1.5x. Text is never a parallax layer; it moves with the content layer or holds."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: third-of-frame-travel
+    text: "No single tween carries an element across more than a third of the frame; break longer journeys with an arc, a speed change or a camera move so the eye can track it."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: anticipation-wind-up
+    text: "Large moves get a wind-up: 2-4 frames in the opposite direction at 10-20% of the main travel, then the action. Skip anticipation on small elements and in calm pieces."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [3, 4, 5], pipeline_step: animate, invariant: false}
+  - id: follow-through-secondary
+    text: "Secondary parts (label, underline, icon, shadow) land 0.05-0.15 s after their parent with 30-50% of its amplitude and a softer ease, and settle later, so the group never stops in one frame."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: squash-on-impact
+    text: "Squash only on impacts in energetic pieces: about 1.08 wide by 0.92 tall for 2-3 frames, keeping width times height near 1, then settle. Never squash text or premium heroes."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [4, 5], pipeline_step: animate, invariant: false}
+  - id: arcs-not-rails
+    text: "Travel on curves: offset the path midpoint slightly sideways, or ease the horizontal and vertical components differently, or add a few degrees of rotation that resolves on landing."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [2, 3, 4, 5], pipeline_step: animate, invariant: false}
+  - id: entrance-verb-by-intent
+    text: "Choose the entrance primitive by intent: slide-in for arrival in a sequence, scale-in for cards, badges and emergence, mask-reveal for headlines, draw for strokes, stagger-in for assembled parts."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: exit-verb-by-intent
+    text: "Choose exits by intent: a plain fade for gentle departures, shrink toward 0.9 for dismissal, slide toward the next element's entry side for handoffs. Never grow an element as it leaves."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: ambient-quiet-and-desynced
+    text: "Ambient motion stays at 10-20% of the primary motion's amplitude (breathing within 0.98-1.02, drifting a few pixels) and layered drifts use different cycle lengths so they never sync."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: transform-and-opacity-first
+    text: "Animate transform (translate, scale, rotate) and opacity; tweening width, height, margins, shadows or filters costs frames. Two properties per beat is the sweet spot, three is crowded."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: property-by-goal
+    text: "Match property to goal: entrance moves position plus opacity, emphasis scales, success pops scale then draws, an error shakes horizontally with no overshoot, progress grows linearly."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: fix-robotic-or-flat
+    text: "Robotic or flat motion: replace uniform timing with staggered starts, offset stop times by 0.05-0.15 s, add follow-through on one secondary part, and vary the ease between primary and secondary."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: fix-distracting-or-sluggish
+    text: "Distracting motion: cut amplitude to the minimum that reads and dim competing elements. Sluggish motion: swap standard for decelerate on entrances and trim durations to the palette."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
