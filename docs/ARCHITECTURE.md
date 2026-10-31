@@ -170,9 +170,64 @@ motion.digitop.ai ──► Cloudflare Workers static assets (apps/marketing)
   the stack with the tunnel profile, then checks `/healthz` through the public
   host. A separate job deploys the marketing site with Wrangler. Secrets come
   from GitHub Actions secrets and the VPS `.env`.
+- **Deploy staging** (`deploy-staging.yml`) runs on pushes to `dev`. See
+  [Staging](#staging).
 - **Health.** Both the image and the compose service probe `/healthz`.
 - Production renders run only in the Linux image. Windows capture is
   screenshot-based and not deterministic, so Windows is for development only.
+
+### Staging
+
+`staging.motion.digitop.ai` runs the `dev` branch with the same image recipe
+and compose file as production, isolated on every axis that holds state:
+
+| | Production | Staging |
+|---|---|---|
+| Branch and workflow | `main`, `deploy.yml` | `dev`, `deploy-staging.yml` |
+| Image tags | `:<sha12>`, `:latest` | `:staging-<sha12>`, `:staging` (never `:latest`) |
+| VPS directory | `~/motion-mcp` | `~/motion-mcp-staging` |
+| Compose project | `motion-mcp` (directory name) | `motion-mcp-staging` (`-p`) |
+| Data (`/data` volume, file stores) | `motion-mcp_motion-data` | `motion-mcp-staging_motion-data` |
+| Host port | `127.0.0.1:8787` | `127.0.0.1:8788` |
+| Env file | `~/motion-mcp/.env` | `~/motion-mcp-staging/.env` |
+| Cloudflare Tunnel | production tunnel | its own tunnel and token |
+| GitHub environment | `production` | `staging` |
+
+The workflow reuses the repository-level `VPS_HOST`, `VPS_PORT`, `VPS_USER`
+and `VPS_SSH_KEY` secrets, so staging lands on the production VPS. To use
+another host, add those four secrets to the `staging` GitHub environment;
+environment secrets override repository secrets. The GHCR pull uses the job
+token, as in production. The workflow forces `HOST_PORT` and `PUBLIC_BASE_URL`
+on the command line and stops before deploying when `~/motion-mcp-staging/.env`
+is missing or its `CLOUDFLARE_TUNNEL_TOKEN` equals production's, because a
+shared token would make the staging `cloudflared` serve production traffic.
+
+One-time setup:
+
+1. **Tunnel, DNS and TLS.** In Cloudflare Zero Trust, create a separate tunnel
+   (for example `motion-mcp-staging`) and add the public hostname
+   `staging.motion.digitop.ai` → `http://app:8787`. Cloudflare creates the
+   proxied CNAME and terminates TLS; no reverse proxy or open port is needed.
+   The hostname is two levels below `digitop.ai`, so its edge certificate must
+   cover `*.motion.digitop.ai` the same way the one for `app.motion.digitop.ai`
+   does. Optionally put a Cloudflare Access policy in front of it.
+2. **Staging `.env`.** On the VPS, create `~/motion-mcp-staging/.env` from
+   [`.env.example`](../.env.example) with values that are not production's:
+   - `CLOUDFLARE_TUNNEL_TOKEN`: the staging tunnel's token;
+   - `PUBLIC_BASE_URL=https://staging.motion.digitop.ai` and `ALLOWED_HOSTS`
+     including `staging.motion.digitop.ai`;
+   - fresh `MOTION_API_KEYS`, `ARTIFACT_SIGNING_SECRET` and
+     `CREDENTIALS_ENCRYPTION_KEY`;
+   - `STORAGE_DRIVER=local`, or a separate R2 bucket;
+   - `POLAR_ENVIRONMENT=sandbox` with sandbox credentials, or Polar left empty;
+   - a separate GitHub OAuth app whose callback is
+     `https://staging.motion.digitop.ai/api/auth/oauth/github/callback`, set in
+     `GITHUB_CALLBACK_URL`, or the GitHub variables left empty;
+   - model keys (`OPENROUTER_API_KEY` and the rest), preferably with their own
+     spend limits.
+3. **First deploy.** Push to `dev`, or run *Deploy staging* from the Actions
+   tab. The `staging` GitHub environment is created on first use; add
+   protection rules there if wanted.
 
 Gaps against ADR 0011: the compose stack has no PostgreSQL service yet (the app
 uses the file stores on the `/data` volume), and the image does not include

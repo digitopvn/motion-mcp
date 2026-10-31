@@ -1,0 +1,98 @@
+name: Deploy staging
+
+# Staging mirrors deploy.yml for the dev branch, kept apart from production:
+# its own image tags (staging-*, never latest), compose project, directory, .env, /data volume and tunnel.
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  STAGING_DIR: motion-mcp-staging
+  STAGING_PROJECT: motion-mcp-staging
+  STAGING_URL: https://staging.motion.digitop.ai
+  # Production binds 127.0.0.1:8787 on the same host.
+  STAGING_HOST_PORT: "8788"
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: meta
+        run: |
+          echo "tag=ghcr.io/${GITHUB_REPOSITORY,,}:staging-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+          echo "moving=ghcr.io/${GITHUB_REPOSITORY,,}:staging" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tag }}
+            ${{ steps.meta.outputs.moving }}
+          cache-from: type=gha,scope=staging
+          cache-to: type=gha,mode=max,scope=staging
+
+  vps:
+    needs: image
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: ${{ env.STAGING_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SSH key
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keygen -lf ~/.ssh/id_ed25519
+          ssh-keyscan -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+      - name: Check staging .env
+        # A staging tunnel token equal to production's would join the production tunnel and serve
+        # production traffic from staging, so refuse it. Only the comparison result leaves the host.
+        run: |
+          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "test -f ~/$STAGING_DIR/.env" \
+            || { echo "::error::~/$STAGING_DIR/.env is missing on the staging host. See docs/ARCHITECTURE.md (Staging)."; exit 1; }
+          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "s=\$(grep -E '^CLOUDFLARE_TUNNEL_TOKEN=.' ~/$STAGING_DIR/.env); p=\$(grep -E '^CLOUDFLARE_TUNNEL_TOKEN=' ~/motion-mcp/.env 2>/dev/null); [ -n \"\$s\" ] && [ \"\$s\" != \"\$p\" ]" \
+            || { echo "::error::Staging needs its own CLOUDFLARE_TUNNEL_TOKEN, different from production's."; exit 1; }
+      - name: Upload compose file
+        run: scp -P "${{ secrets.VPS_PORT }}" docker-compose.yml "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/$STAGING_DIR/docker-compose.yml"
+      - name: Pull and restart
+        env:
+          TAG: ${{ needs.image.outputs.tag }}
+        # Same job-token pull as production. The explicit -p keeps staging containers and volumes
+        # out of the production project even if both directories share a name prefix.
+        run: |
+          printf '%s' "${{ secrets.GITHUB_TOKEN }}" | ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "cd ~/$STAGING_DIR \
+             && docker login ghcr.io -u '${{ github.actor }}' --password-stdin \
+             && docker pull '$TAG'; rc=\$?; docker logout ghcr.io; [ \$rc -eq 0 ] \
+             && docker compose -p '$STAGING_PROJECT' --profile tunnel pull cloudflared \
+             && MOTION_IMAGE='$TAG' HOST_PORT='$STAGING_HOST_PORT' PUBLIC_BASE_URL='$STAGING_URL' docker compose -p '$STAGING_PROJECT' --profile tunnel up -d --remove-orphans \
+             && docker image prune -f"
+      - name: Verify health
+        run: |
+          for i in $(seq 1 20); do
+            if curl -fsS "$STAGING_URL/healthz"; then exit 0; fi
+            sleep 6
+          done
+          exit 1
