@@ -10,7 +10,7 @@ creative issues. It never writes renderer code. The code is
 | Mode | Who writes the `CreativeSpec` | Who critiques creative issues |
 |---|---|---|
 | `host-opus` | The calling host model, which passes `creativeSpec` to `motion_create`. The server makes no director call and bills none. | The host. The pipeline pauses and returns a critique request. |
-| `internal-opus` | `DIRECTOR_MODEL` through OpenRouter (default `anthropic/claude-opus-5.5`). Requires `OPENROUTER_API_KEY`. | The same model. |
+| `internal-opus` | `DIRECTOR_MODEL` through OpenRouter (default `anthropic/claude-opus-5.5`), which requires `OPENROUTER_API_KEY`; or, when the workspace sets its director to Claude, `CLAUDE_DIRECTOR_MODEL` on the workspace's own Anthropic API key (no director credits). | The same model, or the workspace's Claude critic model. |
 | `custom` | **Planned:** a planner model the workspace configures, which must support structured outputs. The server rejects `custom` today because no workspace model can be configured yet. | The same model. |
 
 `resolveDirectorMode` in `packages/director/src/director-mode.ts` uses explicit

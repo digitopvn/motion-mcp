@@ -1,3 +1,4 @@
+export * from "./anthropic-client.ts";
 export * from "./openrouter-client.ts";
 export * from "./portable-json-schema.ts";
 export * from "./prices.ts";

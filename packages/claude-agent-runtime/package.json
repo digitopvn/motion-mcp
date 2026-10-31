@@ -1,0 +1,18 @@
+{
+  "name": "@motion-mcp/claude-agent-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.303",
+    "@motion-mcp/motion-ir": "workspace:*",
+    "@motion-mcp/observability": "workspace:*",
+    "@motion-mcp/pi-runtime": "workspace:*",
+    "@motion-mcp/shared": "workspace:*",
+    "zod": "4.6.5"
+  }
+}

@@ -330,6 +330,36 @@ export interface ProvidersOverview {
   multix: { keys: MultixKey[] };
 }
 
+export type ClaudeStatus =
+  | "unconfigured"
+  | "connecting"
+  | "connected"
+  | "expired"
+  | "revoked"
+  | "unavailable"
+  | "blocked_by_policy";
+
+export interface ClaudeSettings {
+  director: "openrouter" | "anthropic-api";
+  critic: "openrouter" | "anthropic-api";
+  sceneWorker: "pi" | "claude-agent-sdk";
+  directorModel: string;
+  criticModel: string;
+  workerModel: string;
+  fallback: "none" | "server";
+}
+
+export interface ClaudeOverview {
+  enabled: boolean;
+  status: ClaudeStatus;
+  apiKey: { hint?: string; updatedAt: string } | null;
+  keyState?: { status: "valid" | "rejected"; checkedAt: string; message?: string };
+  settings: ClaudeSettings;
+  models: string[];
+  worker: { available: boolean; sandbox: string; reason?: string };
+  subscription: { status: "blocked_by_policy"; reason: string };
+}
+
 export type PiLoginEvent =
   | { type: "info"; message: string; links?: { url: string; label?: string }[] }
   | { type: "auth_url"; url: string; instructions?: string }

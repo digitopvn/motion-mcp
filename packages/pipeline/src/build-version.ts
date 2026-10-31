@@ -19,16 +19,33 @@ import { MotionError, toMotionError } from "@motion-mcp/shared";
 import { artifactKey } from "@motion-mcp/storage";
 import { z } from "zod";
 import type { UsageMeter } from "./billing-guard.ts";
+import type { ClaudeRole, ResolvedClaudeBackends, RoleBackend } from "./claude-providers.ts";
 import { type CritiqueUsage, jobResult, type RenderRecord, updateJobResult } from "./job-record.ts";
 import { mechanicalPatch } from "./qa.ts";
 import type { PipelineRuntime } from "./runtime.ts";
 import { materializeGeneratedAssets } from "./scene-assets.ts";
 
+/**
+ * The workspace-key backend for a model role, or undefined for the server default. Throws when the job
+ * is pinned to the workspace key, the key is unusable and the workspace chose no fallback.
+ */
+export function roleBackend(scope: JobScope, role: ClaudeRole): RoleBackend | undefined {
+  if (scope.mode !== "internal-opus") return undefined;
+  const unavailable = scope.claude?.unavailable[role];
+  if (unavailable) throw unavailable;
+  return scope.claude?.[role];
+}
+
 /** Per-job execution scope shared by every node of the graph. */
 export interface JobScope {
   rt: PipelineRuntime;
-  /** This job's scene worker: the workspace's chosen pi model, else the server default. */
+  /**
+   * This job's scene worker: the Claude Agent SDK worker when the job is pinned to it, else the
+   * workspace's chosen pi model, else the server default.
+   */
   sceneWorker?: SceneWorker;
+  /** Director/Critic backends resolved from the job's pinned Claude selection. */
+  claude?: ResolvedClaudeBackends;
   /** Images this job may generate for its scenes (quoted and reserved up front); 0 for render jobs. */
   assetImages: number;
   jobId: string;
@@ -435,11 +452,13 @@ export async function reviseVersion(
       scope.critiques.scenes[sceneId] = (scope.critiques.scenes[sceneId] ?? 0) + 1;
       if (scope.mode === "host-opus") return { ir, inspection, hostCritique: { sceneId, bundle } };
       try {
+        const backend = roleBackend(scope, "critic");
         const critique = await rt.director.critiqueScene(bundle, scope.span, {
           mode: scope.mode,
+          backend: backend && { ...backend, label: "anthropic-api" },
           signal: scope.signal,
         });
-        scope.meter.add("creative_critique", 1);
+        scope.meter.add("creative_critique", 1, { byok: Boolean(backend) });
         const applied = applyScenePatch(ir, critique.patch);
         if (applied.applied.length > 0) {
           ir = applied.ir;

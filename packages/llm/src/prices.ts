@@ -14,6 +14,10 @@ export interface ModelPrice {
 export const PRICES: Readonly<Record<string, ModelPrice>> = {
   "anthropic/claude-opus-5.5": { input: 4, output: 20, cacheRead: 0.2, cacheWrite: 5 },
   "anthropic/claude-sonnet-5": { input: 2, output: 10, cacheRead: 0.2, cacheWrite: 2.5 },
+  // Direct Anthropic API ids (workspace BYOK). Source: Anthropic pricing, 2026-10-31.
+  "claude-opus-5-5": { input: 4, output: 20, cacheRead: 0.2, cacheWrite: 5 },
+  "claude-sonnet-5-5": { input: 2, output: 10, cacheRead: 0.2, cacheWrite: 2.5 },
+  "claude-haiku-5-5": { input: 0.1, output: 0.5, cacheRead: 0.01, cacheWrite: 0.125 },
   "deepseek/deepseek-v4-flash": { input: 0.04704, output: 0.09408, cacheRead: 0.009408 },
   "google/gemini-3.1-flash-lite": { input: 0.25, output: 1.5, cacheRead: 0.025, cacheWrite: 0.0833 },
   "z-ai/glm-5.3-flash": { input: 0.04, output: 0.5, cacheRead: 0.015 },

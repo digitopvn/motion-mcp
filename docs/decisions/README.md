@@ -19,3 +19,4 @@ old one's status line to point to it.
 | [0010](0010-credit-ledger-billing.md) | An internal credit ledger (1 credit = $0.01), with Polar for top-ups and subscriptions only | Accepted |
 | [0011](0011-docker-cloudflare-deployment.md) | Docker Compose on a VPS behind a Cloudflare Tunnel, and marketing on Workers static assets | Accepted |
 | [0012](0012-domain-pack-lift-and-wrap.md) | Domain pack: lift and wrap ak-motion-video, with tag retrieval and brand aliases off by default | Accepted |
+| [0013](0013-claude-sdk-first-byok.md) | Claude roles on the workspace's own Anthropic API key through the official SDKs (`@anthropic-ai/sdk` 0.124.0, Claude Agent SDK 0.3.303), subscription OAuth blocked, sandboxed scene worker | Accepted |

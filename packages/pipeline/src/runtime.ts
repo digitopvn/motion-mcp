@@ -15,7 +15,7 @@ import { ArtifactSigner, type ArtifactUrlFn, artifactUrlFn, resolveSigningSecret
 import { JobQueue } from "./job-queue.ts";
 import { createVisionQaSource, type QaSource } from "./qa.ts";
 import { type MediaRuntime, serverMediaEnv } from "./scene-assets.ts";
-import { WorkspaceProviders } from "./workspace-providers.ts";
+import { WorkspaceProviders, type WorkspaceProvidersOptions } from "./workspace-providers.ts";
 
 /** Everything the pipeline needs, built once per process by `createRuntime`. */
 export interface PipelineRuntime {
@@ -60,6 +60,8 @@ export interface RuntimeOverrides {
   sceneWorker?: SceneWorker | null;
   media?: MediaRuntime | null;
   qaSources?: QaSource[];
+  /** Claude client seams (fake Anthropic gateway, worker, sandbox probe). */
+  claude?: WorkspaceProvidersOptions["claude"];
 }
 
 function createMedia(config: MotionConfig, logger: Logger): MediaRuntime | undefined {
@@ -131,6 +133,8 @@ export async function createRuntime(
     logger,
     defaultWorker: sceneWorker,
     workersAllowed: config.IMPLEMENTATION_MODE !== "deterministic",
+    config,
+    claude: overrides.claude,
   });
 
   const qaSources =

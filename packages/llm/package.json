@@ -8,6 +8,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "0.124.0",
     "@motion-mcp/observability": "workspace:*",
     "@motion-mcp/shared": "workspace:*",
     "zod": "4.6.5"

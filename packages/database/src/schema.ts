@@ -49,6 +49,8 @@ export const workspaces = pgTable(
     overdraftCredits: integer("overdraft_credits").notNull().default(0),
     /** `{ provider, model }` the workspace's jobs run on, when it signed in to that provider. */
     piModel: jsonb("pi_model"),
+    /** Claude role selection (`ClaudeSettings`); the Anthropic key itself lives in provider_credentials. */
+    claude: jsonb("claude_settings"),
     createdAt: createdAt(),
   },
   (t) => [index("workspaces_owner_idx").on(t.ownerId)],

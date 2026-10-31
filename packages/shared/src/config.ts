@@ -68,6 +68,23 @@ export const ConfigSchema = z.object({
    * keys, multix keys) at rest. Workspace provider management is off until it is set.
    */
   CREDENTIALS_ENCRYPTION_KEY: z.string().optional(),
+  /**
+   * Claude (workspace Anthropic API key) role defaults. A workspace may pick another model from
+   * `CLAUDE_MODELS` in the dashboard; the server itself never holds an Anthropic key.
+   */
+  CLAUDE_DIRECTOR_MODEL: z.string().default("claude-opus-5-5"),
+  CLAUDE_CRITIC_MODEL: z.string().default("claude-opus-5-5"),
+  CLAUDE_WORKER_MODEL: z.string().default("claude-sonnet-5-5"),
+  /** Comma-separated Anthropic model ids a workspace may choose for its Claude roles. */
+  CLAUDE_MODELS: z.string().default("claude-opus-5-5,claude-sonnet-5-5,claude-haiku-5-5"),
+  /**
+   * OS sandbox for the Claude Agent SDK scene worker. `bwrap` (default) needs bubblewrap and unprivileged
+   * user namespaces; when the probe fails the Claude worker is reported unavailable. `none` only for
+   * hosts that already isolate each job (for example one VM per job).
+   */
+  CLAUDE_WORKER_SANDBOX: z.enum(["bwrap", "none"]).default("bwrap"),
+  CLAUDE_WORKER_MAX_TURNS: z.coerce.number().int().min(1).max(64).default(16),
+  CLAUDE_WORKER_TIMEOUT_MS: z.coerce.number().int().min(10_000).max(1_800_000).default(360_000),
   /** Built dashboard directory; defaults to apps/dashboard/dist in the repository. */
   DASHBOARD_DIST: z.string().optional(),
 

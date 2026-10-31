@@ -81,6 +81,32 @@ describe("quoteJob", () => {
     expect(q.totalCredits).toBe(100);
   });
 
+  it("waives director and critic calls only for the workspace's own model key", () => {
+    const mediaOnly = quoteJob({ durationSeconds: 30, critiqueLoops: 1, previews: 0, byok: true });
+    expect(mediaOnly.lines.find((l) => l.operation === "creative_direction")).toMatchObject({ credits: 100 });
+    expect(mediaOnly.lines.find((l) => l.operation === "creative_critique")).toMatchObject({ credits: 40 });
+    const modelByok = quoteJob({
+      durationSeconds: 30,
+      critiqueLoops: 1,
+      previews: 0,
+      directorByok: true,
+      criticByok: true,
+    });
+    const directorOnly = quoteJob({ durationSeconds: 30, critiqueLoops: 1, previews: 0, directorByok: true });
+    expect(directorOnly.lines.find((l) => l.operation === "creative_direction")).toMatchObject({
+      credits: 0,
+    });
+    expect(directorOnly.lines.find((l) => l.operation === "creative_critique")).toMatchObject({
+      credits: 40,
+    });
+    expect(modelByok.lines.find((l) => l.operation === "creative_direction")).toMatchObject({
+      credits: 0,
+      waived: true,
+    });
+    expect(modelByok.lines.find((l) => l.operation === "creative_critique")).toMatchObject({ credits: 0 });
+    expect(modelByok.lines.find((l) => l.operation === "orchestration_job")).toMatchObject({ credits: 20 });
+  });
+
   it("rejects invalid plans", () => {
     expect(() => quoteJob({ durationSeconds: -1 })).toThrow(/Invalid job plan/);
   });
