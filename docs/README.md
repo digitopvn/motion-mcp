@@ -31,7 +31,7 @@ a bug in the doc. Parts that are still design only are marked **planned**, and
 
 | Document | Covers |
 |---|---|
-| [AGENT_RUNTIME.md](AGENT_RUNTIME.md) | Pi as the scene worker: session, tools, submit tool, path guard and isolation |
+| [AGENT_RUNTIME.md](AGENT_RUNTIME.md) | Scene workers (Pi, and the sandboxed Claude Agent SDK worker): sessions, tools, submit tool, path guard and isolation |
 | [JEV_ROUTING.md](JEV_ROUTING.md) | The typed decision layer: questions, the adapter chain, escalation caps and tracing |
 | [SEARCH.md](SEARCH.md) | Current search, and the planned hybrid search and Taste Memory |
 | [BILLING.md](BILLING.md) | Credits, reservations, the ledger, trial credits, Polar and BYOK |

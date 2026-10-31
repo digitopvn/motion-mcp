@@ -125,6 +125,42 @@ export const PiModelChoice = z.object({
 });
 export type PiModelChoice = z.infer<typeof PiModelChoice>;
 
+/** Backend for the Director and Critic roles: the server's OpenRouter key or the workspace's Anthropic key. */
+export const ModelBackend = z.enum(["openrouter", "anthropic-api"]);
+export type ModelBackend = z.infer<typeof ModelBackend>;
+
+/** Backend for scene implementation: Pi or the Claude Agent SDK (workspace Anthropic key). */
+export const WorkerBackend = z.enum(["pi", "claude-agent-sdk"]);
+export type WorkerBackend = z.infer<typeof WorkerBackend>;
+
+/**
+ * What a job does when a role is set to the workspace's Anthropic key but that key is missing or rejected:
+ * `none` fails the role clearly (the scene worker falls back to the deterministic compiler); `server`
+ * uses the server's defaults, charged in credits as usual. Keys are never swapped silently.
+ */
+export const ClaudeFallback = z.enum(["none", "server"]);
+export type ClaudeFallback = z.infer<typeof ClaudeFallback>;
+
+/** A workspace's Claude role selection, plus the last known state of its Anthropic key. */
+export const ClaudeSettings = z.object({
+  director: ModelBackend.default("openrouter"),
+  critic: ModelBackend.default("openrouter"),
+  sceneWorker: WorkerBackend.default("pi"),
+  directorModel: z.string().min(1).max(100).optional(),
+  criticModel: z.string().min(1).max(100).optional(),
+  workerModel: z.string().min(1).max(100).optional(),
+  fallback: ClaudeFallback.default("none"),
+  /** Set by the key test and when Anthropic rejects the key during a job. */
+  keyState: z
+    .object({
+      status: z.enum(["valid", "rejected"]),
+      checkedAt: Timestamp,
+      message: z.string().max(300).optional(),
+    })
+    .optional(),
+});
+export type ClaudeSettings = z.infer<typeof ClaudeSettings>;
+
 /** One personal workspace per user; the owner is its only member. */
 export const Workspace = z.object({
   id: RecordId,
@@ -132,6 +168,8 @@ export const Workspace = z.object({
   ownerUserId: RecordId,
   /** Unset: jobs use the server's default scene worker. */
   piModel: PiModelChoice.optional(),
+  /** Unset: every role uses the server defaults (OpenRouter director/critic, Pi worker). */
+  claude: ClaudeSettings.optional(),
   createdAt: Timestamp,
 });
 export type Workspace = z.infer<typeof Workspace>;
@@ -202,12 +240,13 @@ export const UsageEvent = z.object({
 export type UsageEvent = z.infer<typeof UsageEvent>;
 
 /** Which tool a stored provider sign-in belongs to. */
-export const ProviderKind = z.enum(["pi", "multix"]);
+export const ProviderKind = z.enum(["pi", "multix", "claude"]);
 export type ProviderKind = z.infer<typeof ProviderKind>;
 
 /**
- * A workspace's own provider sign-in (pi OAuth token or API key, or a multix API key), sealed with
- * AES-256-GCM. `provider` is the pi provider id, or the multix environment variable name.
+ * A workspace's own provider sign-in (pi OAuth token or API key, a multix API key, or the Anthropic API
+ * key for Claude roles), sealed with AES-256-GCM. `provider` is the pi provider id, the multix
+ * environment variable name, or `anthropic` for `kind: "claude"`.
  */
 export const ProviderCredential = z.object({
   id: RecordId,

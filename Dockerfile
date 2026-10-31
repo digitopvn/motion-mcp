@@ -10,11 +10,12 @@ ENV NODE_ENV=production \
     DATA_DIR=/data \
     PORT=8787
 
-# FFmpeg for finishing, unzip for HyperFrames' managed Chrome download, plus the shared libraries
-# chrome-headless-shell needs.
+# FFmpeg for finishing, unzip for HyperFrames' managed Chrome download, bubblewrap to sandbox the Claude
+# scene worker (it also needs unprivileged user namespaces, which Docker's default seccomp/AppArmor
+# profiles may block; see docs/AGENT_RUNTIME.md), plus the shared libraries chrome-headless-shell needs.
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
-      ca-certificates ffmpeg unzip fonts-liberation fontconfig \
+      ca-certificates ffmpeg unzip bubblewrap fonts-liberation fontconfig \
       libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libdbus-1-3 \
       libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libxext6 libx11-6 libxcb1 \
       libgbm1 libasound2 libpango-1.0-0 libcairo2 libexpat1 libglib2.0-0 \

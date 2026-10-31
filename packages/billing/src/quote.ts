@@ -17,6 +17,10 @@ export const JobPlan = z.object({
   sfx: z.number().int().min(0).max(200).default(0),
   /** Workspace uses its own provider keys for media generation. */
   byok: z.boolean().default(false),
+  /** The director runs on the workspace's own Anthropic key with no server fallback. */
+  directorByok: z.boolean().default(false),
+  /** Critique passes run on the workspace's own Anthropic key with no server fallback. */
+  criticByok: z.boolean().default(false),
 });
 export type JobPlan = z.input<typeof JobPlan>;
 
@@ -60,12 +64,18 @@ export function quoteJob(input: JobPlan): JobQuote {
   for (const [operation, quantity] of usage) {
     if (quantity <= 0) continue;
     const price = CREDIT_PRICES[operation];
-    const waived = plan.byok && price.byokWaivable;
+    const byok =
+      operation === "creative_direction"
+        ? plan.directorByok
+        : operation === "creative_critique"
+          ? plan.criticByok
+          : plan.byok;
+    const waived = byok && price.byokWaivable;
     lines.push({
       operation,
       quantity: Math.round(quantity * 1000) / 1000,
       unitCredits: price.credits,
-      credits: priceOf(operation, quantity, { byok: plan.byok }),
+      credits: priceOf(operation, quantity, { byok }),
       waived,
     });
   }

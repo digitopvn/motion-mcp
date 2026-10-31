@@ -39,7 +39,7 @@ Long-running tools return a `jobId` immediately. Poll `motion_get_project` until
 ## Director modes
 
 - `host-opus`: the calling host writes the CreativeSpec using the schema from `motion_inspect`. A valid spec skips the internal director and its cost; an invalid spec returns validation issues with no Opus spend. Use when the host is already a frontier model.
-- `internal-opus`: Motion MCP calls Opus through OpenRouter for creative direction. Use when the host is a small model or a script.
+- `internal-opus`: Motion MCP calls Opus for creative direction, through OpenRouter or on the workspace's own Anthropic API key. Use when the host is a small model or a script.
 - The server never infers the mode from model names; pass `directorMode` or rely on the workspace default.
 
 ## How it works

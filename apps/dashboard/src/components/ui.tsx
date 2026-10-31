@@ -82,6 +82,10 @@ const STATUS_TONE: Record<string, "ok" | "busy" | "bad" | "idle"> = {
   failed: "bad",
   error: "bad",
   revoked: "bad",
+  connected: "ok",
+  connecting: "busy",
+  expired: "bad",
+  blocked_by_policy: "bad",
   cancelled: "idle",
 };
 

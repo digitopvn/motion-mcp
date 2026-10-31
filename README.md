@@ -24,6 +24,9 @@ brief ─▶ Jev routing ─▶ creative direction (host Opus or internal Opus) 
 - **Jev** makes bounded, structured routing decisions (TypeSafe → cheap LLM → rules).
 - **Motion IR** is a renderer-neutral contract; HyperFrames is the first compiler target.
 - **Pi** runs cheap coding models for custom scenes, fenced to the scene file it owns.
+- **Bring your own Claude.** A workspace can store its own Anthropic API key in the dashboard and run the
+  director, the critic or a sandboxed Claude Agent SDK scene worker on it; director and critic calls on
+  that key cost no credits ([ADR 0013](docs/decisions/0013-claude-sdk-first-byok.md)).
 
 Details: [docs/README.md](docs/README.md) · [Architecture](docs/ARCHITECTURE.md) ·
 [Motion IR](docs/MOTION_IR.md) · [MCP API](docs/MCP_API.md) · [Decisions](docs/decisions/README.md)
@@ -46,7 +49,8 @@ Call `motion_inspect` first: it returns the director modes, the `CreativeSpec` J
 
 ## Develop
 
-Requirements: Node ≥ 22.19, pnpm 10, FFmpeg on `PATH`. Chrome for rendering is fetched on demand.
+Requirements: Node ≥ 22.19, pnpm 10, FFmpeg on `PATH`. Chrome for rendering is fetched on demand. The
+Claude scene worker also needs bubblewrap (`bwrap`) on Linux; see `CLAUDE_*` in `.env.example`.
 
 ```bash
 pnpm install
@@ -71,6 +75,7 @@ Docker: `docker compose up --build` (add `--profile tunnel` with `CLOUDFLARE_TUN
 | `packages/pipeline` | Execution graph, jobs, budgets |
 | `packages/director` · `jev-router` · `llm` | Creative direction, routing, OpenRouter client |
 | `packages/hyperframes-adapter` · `media` · `pi-runtime` | Rendering, FFmpeg/multix, Pi workers |
+| `packages/claude-agent-runtime` | Sandboxed Claude Agent SDK scene worker (workspace Anthropic key) |
 | `packages/domain-pack` | Motion knowledge adapted from ak-motion-video (MIT) |
 | `packages/billing` · `storage` · `database` · `observability` · `shared` | Credits, artifacts, persistence, traces, utilities |
 

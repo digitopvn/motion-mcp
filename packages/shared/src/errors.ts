@@ -15,6 +15,9 @@ export type MotionErrorCode =
   | "CANCELLED"
   | "INTERNAL";
 
+/** `MotionError.details.reason` when a model provider rejects a stored API key (revoked, expired, wrong key). */
+export const AUTH_REJECTED = "auth_rejected";
+
 /** Normalized error used across packages so MCP responses and traces stay consistent. */
 export class MotionError extends Error {
   readonly code: MotionErrorCode;

@@ -6,7 +6,7 @@ import { MotionError, newId, redact } from "@motion-mcp/shared";
 import express, { type Request, type RequestHandler, type Response, type Router } from "express";
 import { z } from "zod";
 import type { DashboardIdentity } from "./dashboard-auth.ts";
-import { bodyObject } from "./dashboard-http.ts";
+import { bodyObject, RateLimiter } from "./dashboard-http.ts";
 
 type PiProvider = ReturnType<ModelRuntime["getProviders"]>[number];
 type Authed = (fn: (req: Request, res: Response, id: DashboardIdentity) => Promise<void>) => RequestHandler;
@@ -22,6 +22,20 @@ const ModelBody = z.union([
   z.object({ provider: z.null() }),
 ]);
 const MultixBody = z.object({ value: z.string().trim().min(1).max(4096) });
+const ClaudeKeyBody = z.object({ apiKey: z.string().trim().min(1).max(512) });
+const ClaudeModel = z.string().min(1).max(100);
+const ClaudeSettingsBody = z
+  .object({
+    director: z.enum(["openrouter", "anthropic-api"]),
+    critic: z.enum(["openrouter", "anthropic-api"]),
+    sceneWorker: z.enum(["pi", "claude-agent-sdk"]),
+    directorModel: ClaudeModel,
+    criticModel: ClaudeModel,
+    workerModel: ClaudeModel,
+    fallback: z.enum(["none", "server"]),
+  })
+  .partial()
+  .strict();
 
 /** A pi prompt as the dashboard renders it; the answer goes back with the same `id`. */
 interface PublicPrompt {
@@ -196,7 +210,10 @@ export class PiLogins {
   }
 }
 
-/** `/api/providers`: a workspace's pi sign-ins, its pi model choice, and its multix keys. */
+/**
+ * `/api/providers`: a workspace's pi sign-ins, its pi model choice, its multix keys, and its Anthropic API
+ * key with the per-role Claude selection.
+ */
 export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
   const { repos, providers, logger } = rt;
   const logins = new PiLogins();
@@ -205,6 +222,14 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
   const requireEnabled = () => {
     if (!providers.enabled) {
       throw new MotionError("PROVIDER", "Provider keys are not enabled on this server");
+    }
+  };
+
+  // Saving or testing a key calls Anthropic; cap it per workspace so the routes cannot be used to probe keys.
+  const claudeChecks = new RateLimiter(10, 10 * 60 * 1000);
+  const limitClaudeChecks = (workspaceId: string) => {
+    if (!claudeChecks.allow(workspaceId)) {
+      throw new MotionError("RATE_LIMITED", "Too many Anthropic key checks. Try again in a few minutes.");
     }
   };
 
@@ -387,6 +412,65 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
       }
       logger.info("providers.multix_key_removed", { userId: user.id, workspaceId: workspace.id, name });
       res.status(204).end();
+    }),
+  );
+
+  // --- Claude (Anthropic API key) ---------------------------------------------------------------
+
+  router.get(
+    "/claude",
+    authed(async (_req, res, { workspace }) => {
+      res.json(await providers.claude.overview(workspace.id));
+    }),
+  );
+
+  router.put(
+    "/claude/api-key",
+    authed(async (req, res, { workspace, user }) => {
+      requireEnabled();
+      const { apiKey } = ClaudeKeyBody.parse(bodyObject(req));
+      limitClaudeChecks(workspace.id);
+      await providers.claude.setKey(workspace.id, apiKey);
+      logger.info("providers.claude_key_set", { userId: user.id, workspaceId: workspace.id });
+      res.json(await providers.claude.overview(workspace.id));
+    }),
+  );
+
+  router.delete(
+    "/claude/api-key",
+    authed(async (_req, res, { workspace, user }) => {
+      requireEnabled();
+      if (!(await providers.claude.deleteKey(workspace.id))) {
+        throw new MotionError("NOT_FOUND", "No Anthropic API key is stored");
+      }
+      logger.info("providers.claude_key_removed", { userId: user.id, workspaceId: workspace.id });
+      res.status(204).end();
+    }),
+  );
+
+  router.post(
+    "/claude/test",
+    authed(async (_req, res, { workspace, user }) => {
+      requireEnabled();
+      limitClaudeChecks(workspace.id);
+      const keyState = await providers.claude.testKey(workspace.id);
+      logger.info("providers.claude_key_tested", {
+        userId: user.id,
+        workspaceId: workspace.id,
+        status: keyState.status,
+      });
+      res.json({ keyState, overview: await providers.claude.overview(workspace.id) });
+    }),
+  );
+
+  router.put(
+    "/claude/settings",
+    authed(async (req, res, { workspace, user }) => {
+      requireEnabled();
+      const patch = ClaudeSettingsBody.parse(bodyObject(req));
+      const settings = await providers.claude.updateSettings(workspace.id, patch);
+      logger.info("providers.claude_settings", { userId: user.id, workspaceId: workspace.id, ...settings });
+      res.json(await providers.claude.overview(workspace.id));
     }),
   );
 

@@ -18,7 +18,7 @@ is still **planned**.
 ## Provider credentials (BYOK)
 
 Each workspace can bring its own model providers from **Dashboard > Model
-providers** (`/api/providers`). Two kinds are stored:
+providers** (`/api/providers`). Three kinds are stored:
 
 - **pi providers**, signed in with an API key, or with OAuth that grants API
   access (such as OpenRouter), through pi's own `ModelRuntime.login`. OAuth for
@@ -29,6 +29,8 @@ providers** (`/api/providers`). Two kinds are stored:
   sessions are bound to one workspace, expire after 10 minutes, and errors are
   redacted before they reach the browser.
 - **multix API keys**, limited to the env names multix providers declare.
+- **An Anthropic API key** for Claude roles, described in
+  [Claude (Anthropic API key)](#claude-anthropic-api-key).
 
 Storage and use (`packages/pipeline/src/workspace-providers.ts`):
 
@@ -52,6 +54,51 @@ Storage and use (`packages/pipeline/src/workspace-providers.ts`):
   workspace. Only image keys are used today; keys for video, speech, music and
   sound effects are stored for later steps. Every run goes through the scrubbed
   environment described in [multix environment scrubbing](#multix-environment-scrubbing).
+
+### Claude (Anthropic API key)
+
+A workspace may store one Anthropic API key and run the director, the critic
+or the scene worker on it ([ADR 0013](decisions/0013-claude-sdk-first-byok.md)).
+`WorkspaceClaude` in `packages/pipeline/src/claude-providers.ts` owns the
+handling:
+
+- Only API keys (`sk-ant-api…`) are accepted; admin keys are refused. Before a
+  key is stored it is verified with Anthropic's free `GET /v1/models`, and a
+  rejected key is not stored.
+- The key is sealed like every other credential, with
+  `${workspaceId}:claude:anthropic` as additional data. Responses carry only
+  the last 4 characters as a hint, and the key is registered with the redactor
+  before any use.
+- When Anthropic rejects a stored key, during a test or mid-job, the key is
+  marked rejected and the dashboard shows `revoked`. Jobs stop using it until
+  it is replaced or a test passes again.
+- The server holds no Anthropic key, and no role reads the server's
+  `ANTHROPIC_API_KEY`, `ANTHROPIC_BASE_URL` or `~/.claude`. Clients get the key
+  explicitly, and the agent process gets a scrubbed environment and an
+  isolated `CLAUDE_CONFIG_DIR`. A workspace key that is missing or rejected
+  either fails the role or, if the workspace chose the `server` fallback, uses
+  the server defaults billed in credits. Keys are never swapped silently.
+- Claude subscription sign-in is `blocked_by_policy`: Anthropic does not permit
+  consumer subscription credentials to power third-party hosted products, so
+  no login is offered.
+
+The dashboard routes (`apps/mcp-server/src/dashboard-providers.ts`) require a
+dashboard session, act only on the caller's workspace, and never return the
+key. Every route except `GET` needs `CREDENTIALS_ENCRYPTION_KEY`.
+
+| Route | Body | Result |
+|---|---|---|
+| `GET /api/providers/claude` | | The overview: `status`, `apiKey` (hint and update time, or `null`), `keyState`, the effective `settings`, the selectable `models`, `worker` availability and sandbox, and `subscription` (`blocked_by_policy` with the reason). |
+| `PUT /api/providers/claude/api-key` | `{ apiKey }` | Verifies and stores the key, then returns the overview. A rejected key is `invalid_input`. |
+| `DELETE /api/providers/claude/api-key` | | 204, or `not_found` when no key is stored. |
+| `POST /api/providers/claude/test` | | Re-checks the stored key: `{ keyState, overview }`. |
+| `PUT /api/providers/claude/settings` | Any of `director`, `critic` (`openrouter` or `anthropic-api`), `sceneWorker` (`pi` or `claude-agent-sdk`), `directorModel`, `criticModel`, `workerModel` (from `CLAUDE_MODELS`) and `fallback` (`none` or `server`) | Returns the overview. Moving a role onto Claude needs a stored key, and the scene worker also needs a working sandbox. |
+
+`status` is one of `unconfigured`, `connecting`, `connected`, `expired`,
+`revoked`, `unavailable` (provider keys are off on this server) or
+`blocked_by_policy`. `connecting` and `expired` are reserved for a future
+subscription sign-in and are not returned today. The response types are
+`ClaudeOverview` and `ClaudeStatus` in `claude-providers.ts`.
 
 ## Redaction
 
@@ -134,9 +181,38 @@ Pi's `cwd` is not a sandbox, so these controls apply
 - **Planned:** per-job container or mount isolation, so that the only writable
   path is the job's own directory.
 
+## Claude worker isolation
+
+The Claude Agent SDK worker runs the Claude Code binary as a separate process,
+so it gets an OS sandbox on top of the shared path guard
+([AGENT_RUNTIME.md](AGENT_RUNTIME.md#sandbox)):
+
+- bubblewrap with private namespaces except the network, the project mounted
+  read-only, only `compositions/` writable, a private temporary home and a
+  fresh `/tmp`;
+- `prlimit` caps on CPU time and file size, and no core dumps;
+- its own process group, killed as a whole on abort, timeout or task end;
+- no shell, web or subagent tools, and no settings, hooks or MCP servers from
+  the host; `/etc/claude-code` managed settings are masked inside the sandbox.
+
+Saving or testing a workspace Anthropic key calls Anthropic, so
+`PUT /api/providers/claude/api-key` and `POST /api/providers/claude/test` are
+limited to 10 calls per workspace per 10 minutes (`rate_limited`, HTTP 429).
+The key is registered for log redaction only after Anthropic accepts it.
+
+The threat it addresses is a model-driven agent with file tools reading or
+writing outside its scene, or reaching host credentials. The network stays
+open because the agent must call the Anthropic API.
+
+Docker's default seccomp and AppArmor profiles may block the unprivileged user
+namespaces bubblewrap needs. The Claude worker is then reported unavailable.
+`CLAUDE_WORKER_SANDBOX=none` removes the sandbox and keeps only the resource
+limits, the scrubbed environment and the path guard; use it only when the
+container or VM itself isolates each job.
+
 ## No public shell
 
-No public tool, and no tool granted to Pi, executes arbitrary commands. FFmpeg,
+No public tool, and no tool granted to Pi or the Claude worker, executes arbitrary commands. FFmpeg,
 HyperFrames and multix are invoked with `execFile`-style argv arrays built from
 typed parameters, with a scrubbed environment.
 

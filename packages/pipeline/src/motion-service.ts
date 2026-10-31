@@ -19,6 +19,7 @@ import { MotionError, newId, redact } from "@motion-mcp/shared";
 import { z } from "zod";
 import { reserveForJob, TrialGrants } from "./billing-guard.ts";
 import { loadVersionIr, versionDir } from "./build-version.ts";
+import type { ClaudeJobSelection } from "./claude-providers.ts";
 import type { CallerContext, MotionService } from "./contract/motion-service.ts";
 import type * as S from "./contract/tool-schemas.ts";
 import { jobResult, type RenderRecord, updateJobResult } from "./job-record.ts";
@@ -60,6 +61,21 @@ const QUALITY_PRESETS = {
 };
 
 /** Public job errors: domain codes pass through with their message; internal failures stay generic. */
+/**
+ * Quote flags for director and critic calls the workspace's own Anthropic key pays. Only a strict pin
+ * (fallback `none`) is waived up front: with `server` fallback the call may still bill credits.
+ */
+function claudeByok(
+  claude: ClaudeJobSelection | undefined,
+  internal: boolean,
+  instruction = false,
+): { directorByok: boolean; criticByok: boolean } {
+  const strict = internal && claude?.fallback === "none";
+  const directorByok = strict && claude?.director === "anthropic-api";
+  const criticByok = strict && claude?.critic === "anthropic-api" && (!instruction || directorByok);
+  return { directorByok, criticByok };
+}
+
 const INTERNAL_CODES = new Set(["INTERNAL", "RENDER", "CONFIG", "INTERRUPTED"]);
 function publicJobError(error: Job["error"]): { code: string; message: string } | undefined {
   if (!error) return undefined;
@@ -210,13 +226,14 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
           "VALIDATION",
           'directorMode "custom" needs a workspace planner model, which is not configured; use "host-opus" or "internal-opus"',
         );
-      } else if (!rt.gateway) {
+      } else if (!rt.gateway && !(await rt.providers.claude.directorAvailable(caller.workspaceId))) {
         throw new MotionError(
           "VALIDATION",
           `The internal director is not configured on this server. ${HOST_OPUS_GUIDANCE}`,
         );
       }
       await trial.ensure(caller.workspaceId);
+      const claude = await rt.providers.claude.snapshot(caller.workspaceId);
       const { quote, assetImages } = await quoteWithAssets(
         rt,
         caller.workspaceId,
@@ -225,6 +242,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
           directorMode: mode,
           critiqueLoops: mode === "host-opus" ? 0 : internalCritiqueCap,
           previews: 1,
+          ...claudeByok(claude, mode !== "host-opus"),
         },
         input.budgetCredits,
       );
@@ -266,6 +284,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             mode,
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
+            claude,
             assetImages,
           },
           (scope) =>
@@ -330,7 +349,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
               'motion_inspect { target: "capabilities" }), or set directorMode "internal-opus" to have the server interpret the instruction.',
           );
         }
-        if (!rt.gateway) {
+        if (!rt.gateway && !(await rt.providers.claude.directorAvailable(caller.workspaceId))) {
           throw new MotionError(
             "VALIDATION",
             "Free-text instructions need the internal director, which is not configured on this server; pass scenePatches instead",
@@ -343,6 +362,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
       const patches: ScenePatch[] = given.map((p) => ({ ...p, source: answering ? "host" : "user" }));
 
       await trial.ensure(caller.workspaceId);
+      const claude = await rt.providers.claude.snapshot(caller.workspaceId);
       const { quote, assetImages } = await quoteWithAssets(
         rt,
         caller.workspaceId,
@@ -351,6 +371,8 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
           directorMode: "host-opus",
           critiqueLoops: (patches.length === 0 ? 1 : 0) + (mode === "host-opus" ? 0 : internalCritiqueCap),
           previews: 1,
+          // A free-text instruction is one director call billed as a critique pass.
+          ...claudeByok(claude, mode !== "host-opus", patches.length === 0),
         },
         input.budgetCredits,
       );
@@ -391,6 +413,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             mode,
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
+            claude,
             critiques,
             assetImages,
           },
@@ -415,7 +438,8 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
           serverVersion: SERVER_VERSION,
           irVersion: MOTION_IR_VERSION,
           defaultDirectorMode: config.DEFAULT_DIRECTOR_MODE,
-          internalDirectorAvailable: Boolean(rt.gateway),
+          internalDirectorAvailable:
+            Boolean(rt.gateway) || (await rt.providers.claude.directorAvailable(caller.workspaceId)),
           directorModes: DIRECTOR_MODES,
           creativeSpecSchema: schemas.creativeSpec,
           scenePatchSchema: schemas.scenePatch,

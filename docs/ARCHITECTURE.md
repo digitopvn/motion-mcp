@@ -35,8 +35,9 @@ exactly one owning package. When upstream churns, only one wrapper changes.
 | `packages/motion-ir` | Zod schemas for Motion IR, `TastePacket`, `CreativeSpec`, `ScenePatch` and `QaIssue`, the spec compiler, the patch applier and JSON Schema export. | Stays renderer-neutral and imports nothing from renderers. |
 | `packages/director` | Director mode resolution, director prompts, spec creation, scene critique, critique bundles and host critique requests. | Calls models only through `llm`. |
 | `packages/jev-router` | `DecisionClient`, its TypeSafe, LLM and rules adapters, and the routing policies. | Returns typed answers and never generates content. |
-| `packages/llm` | The OpenRouter client, structured output with repair, the model price list and a scripted gateway for tests. | Owns the OpenRouter HTTP client. Pi reaches OpenRouter through the Pi SDK inside `pi-runtime`. |
+| `packages/llm` | The OpenRouter client, the Anthropic Messages API client for workspace keys, structured output with repair, the model price list and a scripted gateway for tests. | Owns the OpenRouter HTTP client and is the only package that imports `@anthropic-ai/sdk`. Pi reaches OpenRouter through the Pi SDK inside `pi-runtime`. |
 | `packages/pi-runtime` | Wraps the Pi SDK: sessions, tool allow-list, submit tool, path guard, prompt building and trace mapping. | The only package that imports `@earendil-works/*`. |
+| `packages/claude-agent-runtime` | The Claude Agent SDK scene worker: sandboxed agent process, tool allow-list, submit tool and a hook that reuses the Pi path guard ([ADR 0013](decisions/0013-claude-sdk-first-byok.md)). | The only package that imports `@anthropic-ai/claude-agent-sdk`. Reuses the prompt builder and guard from `pi-runtime`. |
 | `packages/hyperframes-adapter` | The deterministic IR→HTML compiler, in-process lint, the CLI `check` and `snapshot` calls, contact sheets, renders and `doctor`. | The only package that imports `@hyperframes/*` or spawns `hyperframes`. |
 | `packages/media` | FFmpeg transforms and probing, the multix runner, the capability matrix, the provider registry and the media price table. | The only package that spawns `multix` or `ffmpeg`. |
 | `packages/domain-pack` | Vendored style profiles, authored knowledge files, tag retrieval and the style index. | Read-only knowledge that is versioned with the repo ([ADR 0012](decisions/0012-domain-pack-lift-and-wrap.md)). |
@@ -50,11 +51,19 @@ exactly one owning package. When upstream churns, only one wrapper changes.
 Each kind of model has a fixed role, and each model id is configuration, not
 code:
 
-- **Worker model.** `CODER_MODEL` runs only inside `pi-runtime`.
+- **Worker model.** `CODER_MODEL` runs only inside `pi-runtime`, and a
+  workspace's Claude worker model only inside `claude-agent-runtime`.
 - **Director model.** `DIRECTOR_MODEL` runs only inside `director`.
 - **Decision model.** `DECISION_MODEL` (or TypeSafe's `JEV_MODEL`) runs only
   inside `jev-router`.
 - **Vision model.** `VISION_MODEL` runs only as a QA source in `pipeline`.
+
+A workspace that stores its own Anthropic API key can move the director, the
+critic and the scene worker onto Claude, one role at a time. The selection is
+pinned on the job when it is enqueued, and the server holds no Anthropic key of
+its own ([ADR 0013](decisions/0013-claude-sdk-first-byok.md)). Role resolution
+is `WorkspaceClaude` in `packages/pipeline/src/claude-providers.ts`, and
+`roleBackend` in `packages/pipeline/src/build-version.ts` applies it per call.
 
 ## Execution graph
 
@@ -135,8 +144,9 @@ Operationally important keys that are easy to miss:
 | `JOB_CONCURRENCY` | 1 | Jobs compile and render in-process, and renders are CPU bound, so one job runs at a time unless the host has headroom. |
 | `TRIAL_CREDITS` | 500 | Early-access credits granted once per workspace the first time it is seen. 0 disables them. See [BILLING.md](BILLING.md). |
 | `ARTIFACT_SIGNING_SECRET` | unset | HMAC secret for `/artifacts/*` URLs. When unset it is derived from `MOTION_API_KEYS`; without either, development uses a fixed value and production a per-process secret, so URLs stop working after a restart. Set it in production. |
-| `CREDENTIALS_ENCRYPTION_KEY` | unset | 32-byte key (hex or base64) that seals workspace pi sign-ins and multix keys. Unset disables Dashboard > Model providers and every job uses the server worker. See [SECURITY.md](SECURITY.md#provider-credentials-byok). |
+| `CREDENTIALS_ENCRYPTION_KEY` | unset | 32-byte key (hex or base64) that seals workspace pi sign-ins, multix keys and Anthropic API keys. Unset disables Dashboard > Model providers and every job uses the server defaults. See [SECURITY.md](SECURITY.md#provider-credentials-byok). |
 | `ASSET_IMAGES_PER_JOB` | 4 | Most scene images one create or edit job may generate through multix (0 to 12). Images use the workspace's multix keys first, else the server's; 0 turns generation off and image needs render as placeholders. See [BILLING.md](BILLING.md#byok). |
+| `CLAUDE_WORKER_SANDBOX` | `bwrap` | OS sandbox for the Claude scene worker. If bubblewrap cannot create a sandbox on the host, the Claude worker is reported unavailable. `none` is only for hosts where the container or VM already isolates each job. See [AGENT_RUNTIME.md](AGENT_RUNTIME.md#claude-agent-sdk-worker). |
 | `POLAR_ENVIRONMENT` | `sandbox` | Selects Polar's sandbox or production API. Declared for checkout creation, which is **planned**; the webhook handler does not use it. |
 | `MAX_REVISION_LOOPS` | 2 | Upper bound on QA and fix loops per job. See [JEV_ROUTING.md](JEV_ROUTING.md). |
 
@@ -154,7 +164,7 @@ Internet ──► Cloudflare ──► Cloudflare Tunnel ──► cloudflared 
                               app.motion.digitop.ai        │
                                                            ▼
                           VPS: docker compose
-                          └─ app  (ghcr.io/digitopvn/motion-mcp image; Node 22, chrome-headless-shell, FFmpeg)
+                          └─ app  (ghcr.io/digitopvn/motion-mcp image; Node 22, chrome-headless-shell, FFmpeg, bubblewrap)
                                listens on 127.0.0.1:8787 on the host, /data volume for DATA_DIR
                                       │
                                       └──► Cloudflare R2 (when STORAGE_DRIVER=r2)

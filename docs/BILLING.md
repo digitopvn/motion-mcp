@@ -25,6 +25,8 @@ What a job is charged:
   it, because the host already paid for its own model.
 - Each internal critique, and each free-text edit interpreted by the director,
   pays one critique line.
+- Director and critique lines cost zero credits when the call ran on the
+  workspace's own Anthropic key (see [BYOK](#byok)).
 - Renders pay per draft preview, and per output minute for finals.
 - Each scene image the job generates pays one `image_generation` line, or zero
   credits when the workspace's own key paid for it (see [BYOK](#byok)).
@@ -116,13 +118,26 @@ and media providers directly:
 
 - Scene images generated with the workspace's multix key are recorded as
   `image_generation` lines with `byok: true` and zero credits. The price table
-  flags which lines a workspace key may waive (`byokWaivable`); today that is
-  only third-party media generation.
-- Scene workers running on the workspace's pi sign-in spend the workspace's
-  tokens; scene implementation was never a separate credit line.
-- Orchestration, the internal creative director, critiques, renders, storage
-  and API calls are always charged, because the platform still runs and pays
-  for them.
+  flags which lines a workspace key may waive (`byokWaivable`): third-party
+  media generation, `creative_direction` and `creative_critique`.
+- Director, critique and free-text edit calls that ran on the workspace's
+  Anthropic key ([ADR 0013](decisions/0013-claude-sdk-first-byok.md)) are
+  recorded with `byok: true` and zero credits. The same calls on the server's
+  key, including a `server` fallback after the workspace key failed, are
+  charged as usual. `quoteJob` takes this per role as `directorByok` and
+  `criticByok`, separate from the media `byok` flag.
+- Scene workers running on the workspace's pi sign-in or Anthropic key spend
+  the workspace's tokens; scene implementation was never a separate credit
+  line. The Claude worker's token cost in traces is an SDK estimate; the
+  workspace's Anthropic invoice is authoritative.
+- Orchestration, renders, storage and API calls are always charged, because
+  the platform still runs and pays for them.
+- The up-front quote waives a role's line only when the job's pinned
+  selection runs that role on the workspace key with fallback `none`. With
+  fallback `server` the line stays reserved, because the job may fall back to
+  the server's key; unused credits are returned when the job settles. An edit
+  without patches waives the critique only when the director is also on the
+  workspace key.
 
 ## Limits
 

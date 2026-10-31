@@ -1,4 +1,4 @@
-# Agent Runtime (Pi)
+# Agent Runtime (Pi and Claude)
 
 Pi is the scene-implementation and patch worker. It is not the job scheduler:
 `packages/pipeline` owns job state, retries and budgets, and it calls Pi one
@@ -7,6 +7,10 @@ scene at a time through the `SceneWorker` interface. All Pi calls go through
 `prompt-builder.ts`, `trace-mapper.ts`) is the authority for the exact session
 options. The decision record is
 [ADR 0006](decisions/0006-pi-embedded-runtime.md).
+
+A workspace that stores its own Anthropic API key can run its scenes on the
+[Claude Agent SDK worker](#claude-agent-sdk-worker) instead, behind the same
+`SceneWorker` interface.
 
 ## Two build tiers
 
@@ -115,3 +119,73 @@ totals are copied onto the span when the session ends.
 - HTML produced by Pi is untrusted input. It is linted, checked and rendered
   only by the pipeline, and it is served back to clients as non-executable
   content.
+
+## Claude Agent SDK worker
+
+`ClaudeSceneWorker` in `packages/claude-agent-runtime` (`claude-worker.ts`,
+`tool-guard.ts`, `sandbox.ts`) is the authority for its options. It runs only
+for jobs whose workspace pinned the scene worker to `claude-agent-sdk`, and it
+spends the workspace's Anthropic key. The decision record is
+[ADR 0013](decisions/0013-claude-sdk-first-byok.md).
+
+It keeps Pi's contract: the same prompt builder and system prompt, one scene
+file per task, and a final submit call. The differences:
+
+- **Tools.** Only `Read`, `Write`, `Edit`, `Glob` and `Grep`, plus the
+  in-process `mcp__motion__submit_scene`. `Bash`, `WebFetch`, `WebSearch`,
+  `Task`, `Agent`, `NotebookEdit`, `Skill` and `TodoWrite` are also listed as
+  disallowed, no other MCP servers load, and permissions never prompt.
+- **Path guard.** A `PreToolUse` hook maps each Claude tool call onto the Pi
+  [path guard](#path-guard) and denies with a reason. Unknown tools are denied.
+- **Submit.** `submit_scene` accepts only the scene's own non-empty
+  `compositions/<sceneId>.html`, then interrupts the run.
+- **No ambient setup.** The agent gets a scrubbed environment (the workspace
+  key, locale, proxy and CA variables only), a private temporary home that holds
+  its `CLAUDE_CONFIG_DIR` and is deleted after the task, no filesystem settings
+  (`settingSources: []`), no persisted session, and telemetry and auto-update
+  off.
+- **Budgets.** `CLAUDE_WORKER_MAX_TURNS` and `CLAUDE_WORKER_TIMEOUT_MS` bound
+  each task, alongside the job's abort signal. Too many turns fails with
+  `budget_exceeded`, the timeout with `timeout`, and an abort with `cancelled`.
+  A run that ends without a submission is a retryable `provider` failure.
+- **Rejected key.** When Anthropic rejects the key, the task fails and the
+  workspace's key is marked rejected, so later jobs stop using it.
+- **Traces.** One `claude.execute` span with a child per scene; model calls are
+  recorded with provider `anthropic-agent-sdk` and `claude.cost_estimated`,
+  because the SDK's cost is a client-side estimate.
+
+### Sandbox
+
+The agent is a separate Claude Code process. With `CLAUDE_WORKER_SANDBOX=bwrap`
+(the default) it runs under bubblewrap:
+
+- `--unshare-all --share-net --die-with-parent --new-session`: every namespace
+  is private except the network, which the agent needs to reach the Anthropic
+  API;
+- system directories, the agent binary and CA bundles are bound read-only;
+  `/etc/claude-code` (host-managed Claude Code settings), when present, is
+  hidden behind an empty tmpfs;
+- `/tmp` is a fresh tmpfs, and the private home is the only other writable
+  path outside the project;
+- the project directory is read-only, and only its `compositions/` directory is
+  writable; the path guard narrows writes further to the scene's own file.
+
+When `prlimit` is present, it caps CPU seconds, the largest file the agent may
+write, and core dumps (off). The process runs in its own process group, and
+abort, timeout or the end of the task kills the whole group. Its stderr is
+redacted line by line before it reaches the job log.
+
+Failures are typed: an `authentication_failed` result is `auth_rejected` and
+marks the workspace key revoked (only if the job used the key that is still
+stored); a `billing_error` (for example, no credit left on the workspace's
+Anthropic account) is a `PROVIDER` error with reason `billing_error` and does
+not revoke the key. The Anthropic gateway treats HTTP 403 the same way: reason
+`permission_denied`, key left as it is.
+
+The sandbox is probed once per process. If bubblewrap is missing or cannot
+create user namespaces, which Docker's default seccomp or AppArmor profile may
+block, the Claude worker is reported unavailable on the Providers page and a
+pinned job falls back per the workspace's preference: `none` builds scenes
+with the deterministic compiler, `server` uses the server's default worker.
+Set `CLAUDE_WORKER_SANDBOX=none` only where the container or VM itself is the
+isolation boundary for each job.
