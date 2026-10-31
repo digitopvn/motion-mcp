@@ -1,0 +1,58 @@
+# Motion MCP domain pack: voice-over writing for text-to-speech, voice style, and music and SFX choice.
+# Original paraphrase informed by ak-elevenlabs, ak-creativity and ak-video (see NOTICE), adapted to Motion IR.
+kind: voice-direction
+entries:
+  - id: speakable-text-only
+    text: "Spoken text holds only words to be said: no stage directions, markdown, emoji or visual cues. Use bracketed delivery tags or break markup only if the configured voice model supports them; else they are read aloud."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: true}
+  - id: write-for-the-ear
+    text: "Write voice-over for the ear: one idea per sentence, mostly short sentences, subject first, no parentheses or nested clauses, and repeat the key noun instead of a pronoun."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: numbers-as-spoken
+    text: "Write numbers, dates, money, units and symbols as they should sound ('thirty-two percent', 'twenty twenty-six'); keep digits only in the on-screen text that shows them."
+    tags: {role: both, scene_types: [hook, evidence], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: acronyms-and-names
+    text: "Decide how each acronym is said, as letters (A-P-I) or as a word, and write it that way; give product and brand names a phonetic respelling when the voice is likely to stumble."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: punctuation-pacing
+    text: "Pace with punctuation: a comma for a breath, a full stop for a beat, an ellipsis for weight before a reveal, a dash for an abrupt turn, a line break for a longer pause between scenes."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: emphasis-sparingly
+    text: "Emphasise one or two words per sentence at most. Capitalising a single word can lift it on expressive voices; capitalised whole sentences sound shouted or get ignored."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: pause-after-proof
+    text: "Leave a short pause after a key number or claim so it lands, and place the scene cut in that pause rather than mid-phrase."
+    tags: {role: both, scene_types: [evidence, payoff], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: delivery-tag-density
+    text: "Where delivery tags are supported, use about one per change of feeling, placed just before the words it colours, and only auditory ones (warmly, whispers), never visual ones."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: read-as-arc
+    text: "Plan the read as an arc: how the first word feels, where the feeling turns and why, and how the last line lands. Unmotivated jumps between moods sound broken."
+    tags: {role: director, scene_types: [hook, payoff, cta], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}
+  - id: voice-calm
+    text: "Energy 1-2 voice: calm, reassuring or quietly authoritative; unhurried pace, lower steady register, generous pauses. Suits premium, finance, health and serious explainers."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [1, 2], pipeline_step: direction, invariant: false}
+  - id: voice-conversational
+    text: "Energy 3 voice: conversational and friendly or clear and expert; natural pace with breathing room, mid register with natural variation, engaged but not hyped."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [3], pipeline_step: direction, invariant: false}
+  - id: voice-energetic
+    text: "Energy 4-5 voice: upbeat and crisp, quick with no dead air, pitch rising into peaks, still inside the word budget; ease into a slower, warmer read for the cta."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [4, 5], pipeline_step: direction, invariant: false}
+  - id: one-voice-throughout
+    text: "Keep one voice, model and settings for the whole video; when regenerating a single scene, pass the neighbouring lines as context so tone and pace match across seams."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: music-calm
+    text: "Energy 1-2 music: ambient pads, soft piano or strings, sparse percussion, instrumental only. Avoid busy drums or a drop; the bed should feel like room tone with a pulse."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [1, 2], pipeline_step: direction, invariant: false}
+  - id: music-energetic
+    text: "Energy 3-5 music: light electronic or acoustic pulse at 3, driving electronic, pop or rock with a clear drop at 4-5. Keep it instrumental under voice; lyrics compete with narration."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [3, 4, 5], pipeline_step: direction, invariant: false}
+  - id: music-follows-edit
+    text: "Brief music as sections that follow the edit: sparse intro under the hook, steady bed under the body, a lift into the payoff, and a resolving tail under the cta."
+    tags: {role: director, scene_types: [hook, payoff, cta], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: sfx-by-scene-role
+    text: "SFX by role: one hit or riser on the hook, soft whoosh on transitions, clicks or pops on list and UI reveals, a rise into the payoff, a gentle resolve on the cta. Describe material, action and length."
+    tags: {role: both, scene_types: [hook, transition, mechanism, payoff, cta], styles: [], format: [], energy: [], pipeline_step: audio, invariant: false}
+  - id: sfx-density-high-energy
+    text: "Even at energy 4-5 keep SFX to about two or three cues per 8 s, short and dry, so the voice stays intelligible; more cues blur into noise."
+    tags: {role: both, scene_types: [], styles: [], format: [], energy: [4, 5], pipeline_step: audio, invariant: false}

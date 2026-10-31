@@ -42,6 +42,15 @@ commercial product.
 - **Attribution.** Keep the upstream `LICENSE` files and attribution headers,
   and record the upstream source and commit in the pack.
 
+- **Sibling skills are paraphrased, not vendored.** Guidance from
+  ak-motion-design, ak-motion-graphics, ak-hyperframes, ak-media-processing,
+  ak-video, ak-creativity and ak-elevenlabs lands as further tagged knowledge
+  files: motion choreography, easing and timing, the composition contract,
+  render QA, story structure, voice direction and platform specs. The pack
+  `NOTICE` records the AgentKit commit they were read at. Renderer-specific
+  skills for other engines (ak-remotion) and long-form film production
+  (ak-filmmaking) are out of scope for this pack.
+
 ## Alternatives considered
 
 | Option | Why it was not chosen |

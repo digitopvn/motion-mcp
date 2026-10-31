@@ -1,0 +1,64 @@
+# Motion MCP domain pack: HyperFrames scene-file contract for workers writing compositions/<sceneId>.html.
+# Original paraphrase informed by ak-hyperframes and ak-motion-video (see NOTICE), adapted to Motion IR.
+kind: composition-contract
+entries:
+  - id: scene-template-root
+    text: "Write compositions/<sceneId>.html as one <template> whose root div has data-composition-id equal to the scene id, data-width and data-height from the IR format, and data-duration equal to the scene duration."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: register-paused-timeline
+    text: "Create exactly one gsap.timeline({ paused: true }) and register it as window.__timelines[sceneId]. Never call play, seek, restart or timeScale; the renderer seeks the timeline frame by frame."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: true}
+  - id: pad-timeline-to-duration
+    text: "Finish the script with tl.set({}, {}, sceneDuration) so the timeline is exactly as long as the scene even when the last tween ends early."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: scene-local-positions
+    text: "Positions are scene-local seconds (index.html places the scene), so never add its absolute start. Clamp with Math.max(0, t) and end every tween by the scene duration; a negative position drifts it from the audio."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: fromto-absolute
+    text: "Animate with fromTo, explicit start and end values and an absolute numeric position, so every seek order renders the same frame; avoid chained to() calls and relative position strings."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: immediate-render-later-tweens
+    text: "Only the first tween on an element may set its pre-entrance state; every later tween on that element needs immediateRender: false, or its start values leak back to time 0."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: ease-names-are-strings
+    text: "Easing names are quoted strings such as ease: 'none' or 'power2.out'. A bare identifier throws a ReferenceError in the page and blanks the whole timeline."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: clip-attributes
+    text: "An element marked class clip needs a unique id plus data-start and data-duration in scene-local seconds. The runtime shows and hides it from those values, so do not hand-roll its visibility."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: scoped-ids-and-css
+    text: "Prefix every element id with m-<sceneId>__ and scope every CSS rule under the scene's stage id. QA maps findings to scenes by that prefix, and unscoped rules can leak into other scenes."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: colour-variables
+    text: "Take every colour from the stage's variables, such as var(--c-background), var(--c-foreground) or var(--c-accent). They are resolved from the brand palette, so a scene never needs a literal colour value."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: bundled-font-faces
+    text: "Keep the emitted @font-face rules (woff2 under assets/fonts, font-display: block) and use the role font stacks. Never link remote font CSS or name a font that is not bundled in the project."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: no-extra-script-tags
+    text: "Add no script or stylesheet links. index.html already loads GSAP from assets/vendor; a CDN request makes the render depend on the network and fails offline."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: asset-paths
+    text: "Reference images only by the assets/... paths or https URLs the scene context provides; never ../ or absolute local paths. check flags failed requests, and an unresolved asset renders as an empty box."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: frame-sized-stage
+    text: "Keep the stage at full frame size with overflow hidden, and lay content out with flex or grid inside the layout.safeArea padding. Size from the format width and height, never a literal 1920 or 1080."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: relative-motion-offsets
+    text: "Express travel with xPercent, yPercent and scale rather than pixel offsets tuned to one frame width, so the same choreography holds in every format."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: offset-parent-coordinates
+    text: "Absolute left and top are measured from the offset parent. Inside a positioned or transformed card they are card coordinates, not frame coordinates; check the parent before placing elements."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: z-index-layering
+    text: "Set paint order with CSS z-index on positioned elements: background underlay lowest, hero above, overlays on top. data-track-index is display-only and never changes what draws over what."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: declare-intended-overlap
+    text: "Mark deliberate overlap with data-layout-allow-overlap and deliberate masking (line masks, number reels) with data-layout-allow-overflow on that element. Treat every other overlap or overflow check reports as a bug."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: compose, invariant: false}
+  - id: vertical-right-edge
+    text: "In 9:16, app controls also cover roughly the right 13% of the frame besides the top and bottom bands. Keep text, faces and key UI clear of that strip, and stack split content into one column."
+    tags: {role: worker, scene_types: [], styles: [], format: ["9:16"], energy: [], pipeline_step: compose, invariant: false}
+  - id: square-portrait-wide-content
+    text: "In 1:1 and 4:5, wide content such as tables, timelines or multi-column diagrams drops columns or turns vertical with one hero enlarged; never just shrink a 16:9 arrangement to fit."
+    tags: {role: worker, scene_types: [], styles: [], format: ["1:1", "4:5"], energy: [], pipeline_step: compose, invariant: false}

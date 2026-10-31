@@ -1,0 +1,52 @@
+# Motion MCP domain pack: concrete duration, easing, stagger and spring values for seekable HyperFrames (HTML + GSAP) timelines.
+# Original paraphrase informed by ak-motion-design / ak-motion-video motion craft (see NOTICE), adapted to Motion IR.
+kind: easing-timing
+entries:
+  - id: easing-token-gsap-map
+    text: "IR beats name easing tokens; the renderer maps decelerate to power3.out, emphasized to expo.out, snap to power4.out, standard to power2.inOut, accelerate to power2.in, spring-soft to back.out(1.4)."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: easing-token-by-role
+    text: "Token by job: emphasized for the hero and long-travel entrances, decelerate for supporting entrances and count-ups, standard for on-screen repositioning and camera moves, snap for punchy hits."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: duration-by-element-size
+    text: "Scale duration with mass: labels, icons and badges 0.3-0.45 s; text lines and cards 0.45-0.7 s; panels and large images 0.7-1.0 s; full-frame hero reveals 0.9-1.4 s."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: duration-by-distance
+    text: "Scale duration with travel, taking a move of about a tenth of the frame width as 1.0x: a fifth of the width 1.3x, a third 1.5x, crossing the whole frame 1.8-2.0x."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: exit-shorter-than-entrance
+    text: "An exit lasts 60-75% of its paired entrance and uses accelerate; a 0.6 s fade-up leaves in about 0.4 s. Viewers care about what arrives, so arrivals get the time."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: palette-calm
+    text: "Calm duration palette (energy 1-2): quick 0.5 s, standard 0.8 s, slow 1.2 s. Use the slow step only for the hero, never for labels."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [1, 2], pipeline_step: animate, invariant: false}
+  - id: palette-measured
+    text: "Measured duration palette (energy 3): quick 0.35 s, standard 0.55 s, slow 0.8 s, with decelerate as the signature ease and spring-soft kept for small objects."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [3], pipeline_step: animate, invariant: false}
+  - id: palette-energetic
+    text: "Energetic duration palette (energy 4-5): quick 0.2 s, standard 0.35 s, slow 0.55 s, with emphasized or snap as the signature ease. Short plus bouncy on text reads as a glitch."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [4, 5], pipeline_step: animate, invariant: false}
+  - id: stagger-total-budget
+    text: "Cap the whole stagger window, not just the step: a micro cascade (0.02-0.04 s steps) within 0.3 s, a standard group (0.05-0.1 s) within 0.6 s, a dramatic hero set (0.12-0.2 s) within 0.9 s."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: stagger-eased-distribution
+    text: "In custom code, distribute stagger with an ease, for example each 0.05 s from the centre with power1.in, rather than flat steps; energetic pieces may let the steps accelerate toward the end."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: overshoot-budget
+    text: "Overshoot budget: 0% for errors and premium pieces, 2-5% for emphasis, 5-10% for a payoff or success pop, 15-25% only for small celebratory objects at energy 4-5."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: springs-as-eases
+    text: "Express springs as eased tweens: stiff = power4.out, soft = back.out(1.2-1.7), bouncy = elastic.out(1, 0.5) for small objects at energy 4-5 only, 0.4-0.8 s. Never simulate physics per frame."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: no-back-ease-on-scale-down
+    text: "When an element scales down onto its spot over a full-bleed backdrop (say 1.3 to 1.0), use decelerate, not spring-soft: the overshoot dips below 1.0 and exposes what sits behind it."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: ambient-cycle-timing
+    text: "Ambient cycle lengths: breathing 2-4 s, floating 3-5 s, light sweep 0.6-1.5 s with a 2-5 s rest, decorative spin 10-30 s per turn (linear). Repeat count = whole cycles that fit the hold."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: simulated-ui-timing
+    text: "Simulated product UI: the cursor travels with decelerate in 0.5-0.8 s, a press dips to 0.96 for about 3 frames, release settles in 0.2-0.3 s, and the result lands with a soft overshoot."
+    tags: {role: worker, scene_types: [mechanism, evidence], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}
+  - id: material-feel-scaling
+    text: "Tune timing to the implied material: rigid objects 1.2x duration and no overshoot, paper or cards 1.0x with 3-5%, rubbery objects 0.8x with 15-25%, liquids 1.5x, smoke or fog 2.0x and no overshoot."
+    tags: {role: worker, scene_types: [], styles: [], format: [], energy: [], pipeline_step: animate, invariant: false}

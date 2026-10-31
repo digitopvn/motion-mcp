@@ -152,7 +152,7 @@ function sceneContext(ir: MotionIR): SceneContext {
 
 function workerSkills(rt: PipelineRuntime, scene: MotionScene): string[] {
   return rt.domainPack
-    .retrieve({ role: "worker", sceneRole: scene.role, step: "compose", maxChars: 2500 })
+    .retrieve({ role: "worker", sceneRole: scene.role, step: "compose", limit: 14, maxChars: 2500 })
     .snippets.map((s) => s.text);
 }
 

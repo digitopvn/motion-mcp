@@ -1,0 +1,46 @@
+# Motion MCP domain pack: per-format delivery guidance (length, safe zones, captions, first frame, sound-off).
+# Original paraphrase informed by ak-video and ak-creativity (see NOTICE), adapted to Motion IR aspect presets.
+kind: platform-specs
+entries:
+  - id: sound-off-legible
+    text: "Plan for muted autoplay: every scene must still make sense without audio, so key claims appear as on-screen words and any voice-over is captioned."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: true}
+  - id: length-16-9
+    text: "16:9 suits players, sites and presentations: explainers 60-120 s, demos 30-90 s, teasers 15-30 s. Viewers there are more often listening, so voice and music can carry more of the story."
+    tags: {role: director, scene_types: [], styles: [], format: ["16:9"], energy: [], pipeline_step: direction, invariant: false}
+  - id: length-9-16
+    text: "9:16 short vertical feeds: aim for 15-45 s and rarely over 60 s, one complete point per video, with a hook that works without the scenes around it."
+    tags: {role: director, scene_types: [hook], styles: [], format: ["9:16"], energy: [], pipeline_step: direction, invariant: false}
+  - id: length-square-feed
+    text: "1:1 and 4:5 feed placements: 15-60 s, watched small while scrolling, so one large element per scene, headline-size text or larger, and a centre-weighted composition."
+    tags: {role: director, scene_types: [], styles: [], format: ["1:1", "4:5"], energy: [], pipeline_step: direction, invariant: false}
+  - id: safe-zone-9-16
+    text: "9:16 safe zone: besides the top 10% and bottom 20%, keep the right 12-15% clear of text and hero elements, where feed apps stack action icons."
+    tags: {role: both, scene_types: [], styles: [], format: ["9:16"], energy: [], pipeline_step: compose, invariant: false}
+  - id: safe-zone-16-9
+    text: "16:9 safe zone: keep text inside a 5% margin on every edge, and keep the bottom 12-15% free of key text where players draw progress bars and controls."
+    tags: {role: both, scene_types: [], styles: [], format: ["16:9"], energy: [], pipeline_step: compose, invariant: false}
+  - id: safe-zone-square-4-5
+    text: "1:1 and 4:5 safe zone: keep a 6-8% margin all round; grid previews may crop 4:5 to a square, so place the hook text inside the central square."
+    tags: {role: both, scene_types: [hook], styles: [], format: ["1:1", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: captions-vertical
+    text: "Vertical and 4:5 captions: line height about 3.5-4.5% of frame height, at most 2 lines of about 20-28 characters, sitting just above the bottom UI band and never over the hero or key number."
+    tags: {role: worker, scene_types: [], styles: [], format: ["9:16", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: captions-horizontal
+    text: "16:9 and 1:1 captions: line height about 5-6% of frame height, at most 2 lines of about 32-42 characters, centred in the lower band with a scrim token when the background is busy."
+    tags: {role: worker, scene_types: [], styles: [], format: ["16:9", "1:1"], energy: [], pipeline_step: compose, invariant: false}
+  - id: captions-word-sync
+    text: "Captions follow the voice word by word or phrase by phrase and change on phrase boundaries, never mid-word; an emphasised word may take the accent token."
+    tags: {role: worker, scene_types: [], styles: [], format: ["9:16", "1:1", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: first-frame-reads
+    text: "Frame zero already shows the hook: text or hero visible from the first frame, no fade up from black and no logo sting, because feeds judge the video as a still before it plays."
+    tags: {role: both, scene_types: [hook], styles: [], format: ["9:16", "1:1", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: mobile-text-density
+    text: "Phone-first formats need sparser text: about 6 words per beat on screen, headline size or larger, and nothing below caption size."
+    tags: {role: both, scene_types: [], styles: [], format: ["9:16", "1:1", "4:5"], energy: [], pipeline_step: compose, invariant: false}
+  - id: loop-friendly-vertical
+    text: "Short vertical videos often replay: keep the end card to 2.5-3 s and let the last frame cut cleanly back into the hook instead of fading to black."
+    tags: {role: director, scene_types: [cta], styles: [], format: ["9:16"], energy: [], pipeline_step: direction, invariant: false}
+  - id: multi-format-reframe
+    text: "When one video ships in several aspects, keep each scene's hero inside the centre third and re-lay out per format (split becomes stack) rather than cropping text off the frame."
+    tags: {role: director, scene_types: [], styles: [], format: [], energy: [], pipeline_step: direction, invariant: false}

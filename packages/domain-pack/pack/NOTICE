@@ -12,7 +12,16 @@ The normalized knowledge files in this directory (principles.yaml,
 quality-rubric.yaml, shot-patterns.yaml, typography.yaml,
 transition-patterns.yaml, visual-antipatterns.yaml, pacing-patterns.yaml,
 audio-mix.yaml) are original Motion MCP paraphrases informed by the same
-skill and adapted to the Motion IR vocabulary. overrides.yaml is authored by
+skill and adapted to the Motion IR vocabulary.
+
+The knowledge files motion-choreography.yaml, easing-timing.yaml,
+composition-contract.yaml, render-qa.yaml, story-structure.yaml,
+voice-direction.yaml and platform-specs.yaml are original Motion MCP
+paraphrases informed by sibling AgentKit skills (ak-motion-design,
+ak-motion-graphics, ak-motion-video, ak-hyperframes, ak-media-processing,
+ak-video, ak-creativity and ak-elevenlabs) at AgentKit commit
+abc5f076eae0f42818e41050747ff0c6157b09e6. No text or files from those skills
+are vendored. overrides.yaml is authored by
 Motion MCP and flags brand-inspired profiles without editing the vendored
 files.
 
