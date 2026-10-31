@@ -22,6 +22,20 @@ const ModelBody = z.union([
   z.object({ provider: z.null() }),
 ]);
 const MultixBody = z.object({ value: z.string().trim().min(1).max(4096) });
+const ClaudeKeyBody = z.object({ apiKey: z.string().trim().min(1).max(512) });
+const ClaudeModel = z.string().min(1).max(100);
+const ClaudeSettingsBody = z
+  .object({
+    director: z.enum(["openrouter", "anthropic-api"]),
+    critic: z.enum(["openrouter", "anthropic-api"]),
+    sceneWorker: z.enum(["pi", "claude-agent-sdk"]),
+    directorModel: ClaudeModel,
+    criticModel: ClaudeModel,
+    workerModel: ClaudeModel,
+    fallback: z.enum(["none", "server"]),
+  })
+  .partial()
+  .strict();
 
 /** A pi prompt as the dashboard renders it; the answer goes back with the same `id`. */
 interface PublicPrompt {
@@ -196,7 +210,10 @@ export class PiLogins {
   }
 }
 
-/** `/api/providers`: a workspace's pi sign-ins, its pi model choice, and its multix keys. */
+/**
+ * `/api/providers`: a workspace's pi sign-ins, its pi model choice, its multix keys, and its Anthropic API
+ * key with the per-role Claude selection.
+ */
 export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
   const { repos, providers, logger } = rt;
   const logins = new PiLogins();
@@ -387,6 +404,63 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
       }
       logger.info("providers.multix_key_removed", { userId: user.id, workspaceId: workspace.id, name });
       res.status(204).end();
+    }),
+  );
+
+  // --- Claude (Anthropic API key) ---------------------------------------------------------------
+
+  router.get(
+    "/claude",
+    authed(async (_req, res, { workspace }) => {
+      res.json(await providers.claude.overview(workspace.id));
+    }),
+  );
+
+  router.put(
+    "/claude/api-key",
+    authed(async (req, res, { workspace, user }) => {
+      requireEnabled();
+      const { apiKey } = ClaudeKeyBody.parse(bodyObject(req));
+      await providers.claude.setKey(workspace.id, apiKey);
+      logger.info("providers.claude_key_set", { userId: user.id, workspaceId: workspace.id });
+      res.json(await providers.claude.overview(workspace.id));
+    }),
+  );
+
+  router.delete(
+    "/claude/api-key",
+    authed(async (_req, res, { workspace, user }) => {
+      requireEnabled();
+      if (!(await providers.claude.deleteKey(workspace.id))) {
+        throw new MotionError("NOT_FOUND", "No Anthropic API key is stored");
+      }
+      logger.info("providers.claude_key_removed", { userId: user.id, workspaceId: workspace.id });
+      res.status(204).end();
+    }),
+  );
+
+  router.post(
+    "/claude/test",
+    authed(async (_req, res, { workspace, user }) => {
+      requireEnabled();
+      const keyState = await providers.claude.testKey(workspace.id);
+      logger.info("providers.claude_key_tested", {
+        userId: user.id,
+        workspaceId: workspace.id,
+        status: keyState.status,
+      });
+      res.json({ keyState, overview: await providers.claude.overview(workspace.id) });
+    }),
+  );
+
+  router.put(
+    "/claude/settings",
+    authed(async (req, res, { workspace, user }) => {
+      requireEnabled();
+      const patch = ClaudeSettingsBody.parse(bodyObject(req));
+      const settings = await providers.claude.updateSettings(workspace.id, patch);
+      logger.info("providers.claude_settings", { userId: user.id, workspaceId: workspace.id, ...settings });
+      res.json(await providers.claude.overview(workspace.id));
     }),
   );
 

@@ -35,8 +35,8 @@ export interface CreditPrice {
   estCostUsd: number;
   /**
    * True when the cost is a third-party provider charge that disappears if the workspace brings its own
-   * key (BYOK). Platform work (orchestration, rendering, storage, API) and the internal Opus director are
-   * never waived because the platform still pays for them.
+   * key (BYOK). Platform work (orchestration, rendering, storage, API) is never waived. Director and critic
+   * calls are waived only when they ran on the workspace's own Anthropic key; on the server key they bill.
    */
   byokWaivable: boolean;
   basis: string;
@@ -47,14 +47,14 @@ export const CREDIT_PRICES: Readonly<Record<BillableOperation, CreditPrice>> = O
     credits: 100,
     unit: "director call",
     estCostUsd: 0.4,
-    byokWaivable: false,
+    byokWaivable: true,
     basis: "Internal Opus director: ~40k input + ~8k output tokens incl. one schema-repair retry",
   },
   creative_critique: {
     credits: 40,
     unit: "critique pass",
     estCostUsd: 0.15,
-    byokWaivable: false,
+    byokWaivable: true,
     basis: "Opus/vision critique over a contact sheet: ~15k input incl. images + ~2k output tokens",
   },
   render_minute_hd: {

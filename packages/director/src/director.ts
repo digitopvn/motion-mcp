@@ -40,7 +40,17 @@ export interface CreateCreativeSpecInput {
   customModel?: string;
   /** Host-authored spec for `host-opus` mode. */
   creativeSpec?: unknown;
+  /** `internal-opus` only: run on this gateway and model (the workspace's own Anthropic key). */
+  backend?: DirectorBackend;
   signal?: AbortSignal;
+}
+
+/** A per-call gateway and model that replaces the configured director for one job. */
+export interface DirectorBackend {
+  gateway: ModelGateway;
+  model: string;
+  /** Trace label for the backend, e.g. `anthropic-api`. */
+  label?: string;
 }
 
 export interface CreativeSpecResult {
@@ -54,6 +64,8 @@ export interface CreativeSpecResult {
 export interface CritiqueOptions {
   mode: DirectorMode;
   customModel?: string;
+  /** `internal-opus` only: run on this gateway and model (the workspace's own Anthropic key). */
+  backend?: DirectorBackend;
   signal?: AbortSignal;
 }
 
@@ -143,8 +155,7 @@ export class Director {
       throw new MotionError("VALIDATION", `brief exceeds ${MAX_BRIEF_CHARS} characters`);
     }
     const format = input.format ? parseFormat(input.format) : undefined;
-    const model = this.modelFor(input.mode, input.customModel);
-    const gateway = this.requireGateway();
+    const { model, gateway, label } = this.backendFor(input.mode, input.customModel, input.backend);
 
     return span.run(
       "director.spec",
@@ -174,7 +185,7 @@ export class Director {
         });
         return { spec, mode: input.mode, source: "model" as const, model, modelCalls: result.calls };
       },
-      { "director.mode": input.mode, "director.model": model },
+      { "director.mode": input.mode, "director.model": model, "director.backend": label },
     );
   }
 
@@ -190,8 +201,7 @@ export class Director {
         "host-opus critiques are authored by the host; use buildHostCritiqueRequest instead of critiqueScene",
       );
     }
-    const model = this.modelFor(options.mode, options.customModel);
-    const gateway = this.requireGateway();
+    const { model, gateway, label } = this.backendFor(options.mode, options.customModel, options.backend);
     const sceneId = bundle.sceneIR.id;
 
     return span.run(
@@ -231,8 +241,24 @@ export class Director {
         });
         return { patch, model, modelCalls: result.calls };
       },
-      { "director.mode": options.mode, "director.model": model, "scene.id": sceneId },
+      {
+        "director.mode": options.mode,
+        "director.model": model,
+        "director.backend": label,
+        "scene.id": sceneId,
+      },
     );
+  }
+
+  private backendFor(
+    mode: DirectorMode,
+    customModel: string | undefined,
+    backend: DirectorBackend | undefined,
+  ): { model: string; gateway: ModelGateway; label: string } {
+    if (backend && mode === "internal-opus") {
+      return { model: backend.model, gateway: backend.gateway, label: backend.label ?? "custom" };
+    }
+    return { model: this.modelFor(mode, customModel), gateway: this.requireGateway(), label: "server" };
   }
 
   private modelFor(mode: DirectorMode, customModel?: string): string {

@@ -13,6 +13,7 @@ import type {
   ProvidersOverview,
 } from "../lib/types.ts";
 import { useAction, useApi, useDocumentTitle } from "../lib/use-api.ts";
+import { ClaudeSection } from "./claude-provider.tsx";
 
 const POLL_MS = 1500;
 const ACTIVE = new Set<PiLogin["status"]>(["running", "waiting"]);
@@ -44,14 +45,15 @@ export function ProvidersPage() {
         intro="Bring your own model accounts. Jobs in this workspace use them instead of the server's defaults. Keys are encrypted at rest and never shown again after you save them."
       />
       <p className="notice">
-        Your keys pay the model and media providers directly, so media generated with them costs no credits.
-        Motion still charges credits for orchestration, the creative director and rendering, which run on our
-        side.
+        Your keys pay the model and media providers directly, so media generated with them, and director or
+        critic calls made with your Anthropic key, cost no credits. Motion still charges credits for
+        orchestration and rendering, and for the director when it runs on the server's models.
       </p>
       <Async state={overview} label="Loading providers">
         {(data) =>
           data.enabled ? (
             <>
+              <ClaudeSection />
               <PiSection data={data} reload={overview.reload} />
               <MultixSection keys={data.multix.keys} reload={overview.reload} />
             </>

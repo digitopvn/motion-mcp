@@ -34,10 +34,12 @@ import {
   type RevisionResult,
   renderVersion,
   reviseVersion,
+  roleBackend,
   type SceneOverrides,
   storeVersionArtifacts,
   versionDir,
 } from "./build-version.ts";
+import type { ClaudeJobSelection } from "./claude-providers.ts";
 import type { CreateInput } from "./contract/tool-schemas.ts";
 import { type CritiqueUsage, type JobResult, jobResult, updateJobResult } from "./job-record.ts";
 import type { PipelineRuntime } from "./runtime.ts";
@@ -67,6 +69,8 @@ export interface JobMeta {
   critiques?: CritiqueUsage;
   /** Image allowance for scene assets, included in the quote. */
   assetImages?: number;
+  /** Claude backends pinned at enqueue; absent = server defaults for every role. */
+  claude?: ClaudeJobSelection;
 }
 
 /**
@@ -122,10 +126,27 @@ export async function executeJob(
       status: "running",
       progress: { stage: "starting", pct: 1, message: "" },
     });
-    try {
-      scope.sceneWorker = await rt.providers.sceneWorkerFor(meta.workspaceId);
-    } catch (err) {
-      logger.warn("providers.worker_unavailable", { jobId: meta.jobId, message: toMotionError(err).message });
+    scope.claude = await rt.providers.claude.resolve(meta.workspaceId, meta.claude);
+    warnings.push(...scope.claude.warnings);
+    if (meta.claude) {
+      span.setAttributes({
+        "claude.director": meta.claude.director,
+        "claude.critic": meta.claude.critic,
+        "claude.scene_worker": meta.claude.sceneWorker,
+        "claude.fallback": meta.claude.fallback,
+      });
+    }
+    if (scope.claude.worker !== undefined) {
+      scope.sceneWorker = scope.claude.worker ?? undefined;
+    } else {
+      try {
+        scope.sceneWorker = await rt.providers.sceneWorkerFor(meta.workspaceId);
+      } catch (err) {
+        logger.warn("providers.worker_unavailable", {
+          jobId: meta.jobId,
+          message: toMotionError(err).message,
+        });
+      }
     }
     outcome = await body(scope);
     span.end();
@@ -396,6 +417,7 @@ export async function runCreateJob(scope: JobScope, input: CreateJobInput): Prom
             })
             .snippets.map((s) => s.text),
         ];
+  const backend = roleBackend(scope, "director");
   const spec = await rt.director.createCreativeSpec(
     {
       brief: input.brief,
@@ -403,11 +425,12 @@ export async function runCreateJob(scope: JobScope, input: CreateJobInput): Prom
       mode: scope.mode,
       creativeSpec: input.creativeSpec,
       domainContext,
+      backend: backend && { ...backend, label: "anthropic-api" },
       signal: scope.signal,
     },
     scope.span,
   );
-  if (spec.source === "model") scope.meter.add("creative_direction", 1);
+  if (spec.source === "model") scope.meter.add("creative_direction", 1, { byok: Boolean(backend) });
 
   const ir = applyCanvas(
     compileCreativeSpec(spec.spec, { id: scope.projectId, duration: input.durationSeconds }),
@@ -445,7 +468,8 @@ export async function patchesFromInstruction(
   ir: MotionIR,
   instruction: string,
 ): Promise<ScenePatch[]> {
-  const gateway = scope.rt.gateway;
+  const backend = roleBackend(scope, "director");
+  const gateway = backend?.gateway ?? scope.rt.gateway;
   if (!gateway) throw new MotionError("CONFIG", "No model gateway configured for instruction edits");
   const scenes = new Map(ir.scenes.map((s) => [s.id, new Set(s.elements.map((e) => e.id))]));
   const EditPlan = z.object({ patches: z.array(ScenePatch).min(1).max(12) }).superRefine((plan, ctx) => {
@@ -478,7 +502,7 @@ export async function patchesFromInstruction(
   }));
   const result = await scope.span.run("director.edit", (span) =>
     chat(gateway, {
-      model: selectModel("polish", scope.rt.config),
+      model: backend?.model ?? selectModel("polish", scope.rt.config),
       messages: [
         { role: "system", content: EDIT_SYSTEM_PROMPT },
         {
@@ -497,7 +521,7 @@ export async function patchesFromInstruction(
       span,
     }),
   );
-  scope.meter.add("creative_critique", 1);
+  scope.meter.add("creative_critique", 1, { byok: Boolean(backend) });
   return (result.parsed?.patches ?? []).map((p) => ({ ...p, source: "user" as const }));
 }
 

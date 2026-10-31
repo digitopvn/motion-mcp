@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@motion-mcp/billing": "workspace:*",
+    "@motion-mcp/claude-agent-runtime": "workspace:*",
     "@motion-mcp/database": "workspace:*",
     "@motion-mcp/director": "workspace:*",
     "@motion-mcp/domain-pack": "workspace:*",

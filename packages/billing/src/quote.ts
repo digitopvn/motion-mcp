@@ -17,6 +17,8 @@ export const JobPlan = z.object({
   sfx: z.number().int().min(0).max(200).default(0),
   /** Workspace uses its own provider keys for media generation. */
   byok: z.boolean().default(false),
+  /** Director and critic calls run on the workspace's own Anthropic key. */
+  modelByok: z.boolean().default(false),
 });
 export type JobPlan = z.input<typeof JobPlan>;
 
@@ -33,6 +35,8 @@ export interface JobQuote {
   totalCredits: number;
   totalUsd: number;
 }
+
+const MODEL_OPERATIONS: ReadonlySet<BillableOperation> = new Set(["creative_direction", "creative_critique"]);
 
 /** Estimate the credits a video job will consume before it runs (used to size the reservation). */
 export function quoteJob(input: JobPlan): JobQuote {
@@ -60,12 +64,13 @@ export function quoteJob(input: JobPlan): JobQuote {
   for (const [operation, quantity] of usage) {
     if (quantity <= 0) continue;
     const price = CREDIT_PRICES[operation];
-    const waived = plan.byok && price.byokWaivable;
+    const byok = MODEL_OPERATIONS.has(operation) ? plan.modelByok : plan.byok;
+    const waived = byok && price.byokWaivable;
     lines.push({
       operation,
       quantity: Math.round(quantity * 1000) / 1000,
       unitCredits: price.credits,
-      credits: priceOf(operation, quantity, { byok: plan.byok }),
+      credits: priceOf(operation, quantity, { byok }),
       waived,
     });
   }

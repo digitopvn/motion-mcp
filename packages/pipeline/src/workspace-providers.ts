@@ -10,6 +10,7 @@ import {
   type SceneWorker,
 } from "@motion-mcp/pi-runtime";
 import { type Logger, MotionError, registerSecret, type SealedBox } from "@motion-mcp/shared";
+import { WorkspaceClaude, type WorkspaceClaudeOptions } from "./claude-providers.ts";
 
 const piAad = (workspaceId: string, provider: string) => `${workspaceId}:pi:${provider}`;
 const multixAad = (workspaceId: string, name: string) => `${workspaceId}:multix:${name}`;
@@ -105,14 +106,29 @@ export interface WorkspaceProvidersOptions {
   defaultWorker?: SceneWorker;
   /** `false` when the server runs deterministic-only implementation. */
   workersAllowed: boolean;
+  /** Claude role defaults and worker limits. */
+  config: WorkspaceClaudeOptions["config"];
+  /** Test seams for the Claude clients. */
+  claude?: Pick<WorkspaceClaudeOptions, "createGateway" | "createWorker" | "probe">;
 }
 
-/** Workspace-owned model providers: pi sign-ins (OAuth or API key) and multix API keys. */
+/** Workspace-owned model providers: pi sign-ins (OAuth or API key), multix API keys and the Anthropic key. */
 export class WorkspaceProviders {
   private readonly runtimes = new Map<string, Promise<ModelRuntime>>();
   private readonly workers = new Map<string, { key: string; worker: PiWorker }>();
+  /** The workspace's Anthropic API key and per-role Claude selection. */
+  readonly claude: WorkspaceClaude;
 
-  constructor(private readonly opts: WorkspaceProvidersOptions) {}
+  constructor(private readonly opts: WorkspaceProvidersOptions) {
+    this.claude = new WorkspaceClaude({
+      repos: opts.repos,
+      box: opts.box,
+      logger: opts.logger,
+      config: opts.config,
+      workersAllowed: opts.workersAllowed,
+      ...opts.claude,
+    });
+  }
 
   get enabled(): boolean {
     return this.opts.box !== undefined;

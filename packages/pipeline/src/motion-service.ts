@@ -210,7 +210,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
           "VALIDATION",
           'directorMode "custom" needs a workspace planner model, which is not configured; use "host-opus" or "internal-opus"',
         );
-      } else if (!rt.gateway) {
+      } else if (!rt.gateway && !(await rt.providers.claude.directorAvailable(caller.workspaceId))) {
         throw new MotionError(
           "VALIDATION",
           `The internal director is not configured on this server. ${HOST_OPUS_GUIDANCE}`,
@@ -266,6 +266,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             mode,
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
+            claude: await rt.providers.claude.snapshot(caller.workspaceId),
             assetImages,
           },
           (scope) =>
@@ -330,7 +331,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
               'motion_inspect { target: "capabilities" }), or set directorMode "internal-opus" to have the server interpret the instruction.',
           );
         }
-        if (!rt.gateway) {
+        if (!rt.gateway && !(await rt.providers.claude.directorAvailable(caller.workspaceId))) {
           throw new MotionError(
             "VALIDATION",
             "Free-text instructions need the internal director, which is not configured on this server; pass scenePatches instead",
@@ -391,6 +392,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             mode,
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
+            claude: await rt.providers.claude.snapshot(caller.workspaceId),
             critiques,
             assetImages,
           },
@@ -415,7 +417,8 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
           serverVersion: SERVER_VERSION,
           irVersion: MOTION_IR_VERSION,
           defaultDirectorMode: config.DEFAULT_DIRECTOR_MODE,
-          internalDirectorAvailable: Boolean(rt.gateway),
+          internalDirectorAvailable:
+            Boolean(rt.gateway) || (await rt.providers.claude.directorAvailable(caller.workspaceId)),
           directorModes: DIRECTOR_MODES,
           creativeSpecSchema: schemas.creativeSpec,
           scenePatchSchema: schemas.scenePatch,
@@ -569,6 +572,7 @@ export function createMotionService(rt: PipelineRuntime): PipelineMotionService 
             mode: project.directorMode,
             reservation,
             limitCredits: input.budgetCredits ?? reservation.credits,
+            claude: await rt.providers.claude.snapshot(caller.workspaceId),
           },
           (s) =>
             runRenderJob(s, { version, quality: input.quality, renderId, currentVersion: project.irVersion }),
