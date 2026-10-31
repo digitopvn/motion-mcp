@@ -19,7 +19,7 @@ env:
   STAGING_DIR: motion-mcp-staging
   STAGING_PROJECT: motion-mcp-staging
   STAGING_URL: https://staging.motion.digitop.ai
-  # Production binds 127.0.0.1:8787 on the same host.
+  # Off production's 8787, so staging can also share a host with production.
   STAGING_HOST_PORT: "8788"
 
 jobs:

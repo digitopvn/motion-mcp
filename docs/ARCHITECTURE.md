@@ -194,6 +194,7 @@ and compose file as production, isolated on every axis that holds state:
 | | Production | Staging |
 |---|---|---|
 | Branch and workflow | `main`, `deploy.yml` | `dev`, `deploy-staging.yml` |
+| Host (`VPS_*` secrets) | repository secrets | `staging` environment secrets, a separate VPS (`dev` user) |
 | Image tags | `:<sha12>`, `:latest` | `:staging-<sha12>`, `:staging` (never `:latest`) |
 | VPS directory | `~/motion-mcp` | `~/motion-mcp-staging` |
 | Compose project | `motion-mcp` (directory name) | `motion-mcp-staging` (`-p`) |
@@ -203,10 +204,11 @@ and compose file as production, isolated on every axis that holds state:
 | Cloudflare Tunnel | production tunnel | its own tunnel and token |
 | GitHub environment | `production` | `staging` |
 
-The workflow reuses the repository-level `VPS_HOST`, `VPS_PORT`, `VPS_USER`
-and `VPS_SSH_KEY` secrets, so staging lands on the production VPS. To use
-another host, add those four secrets to the `staging` GitHub environment;
-environment secrets override repository secrets. The GHCR pull uses the job
+The `staging` GitHub environment holds its own `VPS_HOST`, `VPS_PORT`,
+`VPS_USER` and `VPS_SSH_KEY` (a deploy key used only by staging), which
+override the repository-level production values, and it accepts deployments
+only from `dev`. Without them, staging would land on the production VPS, which
+the separate port, directory and project also allow. The GHCR pull uses the job
 token, as in production. The workflow forces `HOST_PORT` and `PUBLIC_BASE_URL`
 on the command line and stops before deploying when `~/motion-mcp-staging/.env`
 is missing or its `CLOUDFLARE_TUNNEL_TOKEN` equals production's, because a
