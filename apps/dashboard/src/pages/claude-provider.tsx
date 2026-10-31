@@ -126,7 +126,7 @@ function ClaudePanel({ data, reload }: { data: ClaudeOverview; reload: () => voi
               {tested}
             </p>
           ) : null}
-          <RoleSettings data={data} reload={reload} />
+          <RoleSettings key={JSON.stringify(data.settings)} data={data} reload={reload} />
         </>
       ) : null}
 
@@ -243,7 +243,7 @@ function RoleSettings({ data, reload }: { data: ClaudeOverview; reload: () => vo
             checked={form.fallback === "none"}
             onChange={() => set("fallback", "none")}
           />
-          Stop the job (never spend server credits instead)
+          Never spend server credits (director or critic steps fail; scenes use the built-in compiler)
         </label>
         <label className="choice-option">
           <input

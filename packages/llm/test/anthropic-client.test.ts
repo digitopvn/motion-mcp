@@ -189,7 +189,13 @@ describe("AnthropicClient", () => {
     const client = new AnthropicClient({ apiKey: KEY, client: sdk.client });
     await client.verifyKey();
     expect(sdk.listed).toBe(1);
-    sdk.failList(new Anthropic.PermissionDeniedError(403, undefined, "nope", new Headers()));
+    sdk.failList(new Anthropic.AuthenticationError(401, undefined, "nope", new Headers()));
     await expect(client.verifyKey()).rejects.toMatchObject({ details: { reason: AUTH_REJECTED } });
+    // A 403 is a permission or region problem, not a bad key: it must not revoke the stored key.
+    sdk.failList(new Anthropic.PermissionDeniedError(403, undefined, "nope", new Headers()));
+    await expect(client.verifyKey()).rejects.toMatchObject({
+      code: "PROVIDER",
+      details: { reason: "permission_denied" },
+    });
   });
 });

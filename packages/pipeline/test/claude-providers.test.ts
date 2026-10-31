@@ -164,6 +164,19 @@ describe("WorkspaceClaude", () => {
     expect(after.unavailable.director).toBeDefined();
   });
 
+  it("does not mark a newly saved key revoked when a job still running on the old key fails", async () => {
+    const c = claude();
+    await c.setKey(WS, KEY);
+    await c.updateSettings(WS, { sceneWorker: "claude-agent-sdk" });
+    const resolved = await c.resolve(WS, await c.snapshot(WS));
+    await new Promise((r) => setTimeout(r, 5));
+    await c.setKey(WS, `${KEY.slice(0, -1)}2`);
+    await expect(resolved.worker?.buildScene({} as Parameters<SceneWorker["buildScene"]>[0])).rejects.toThrow(
+      /invalid/,
+    );
+    expect((await c.overview(WS)).status).toBe("connected");
+  });
+
   it("reports unavailable without an encryption key and blocks subscription sign-in", async () => {
     const view = await claude(null).overview(WS);
     expect(view.status).toBe("unavailable");

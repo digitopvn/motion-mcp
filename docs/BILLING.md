@@ -124,17 +124,20 @@ and media providers directly:
   Anthropic key ([ADR 0013](decisions/0013-claude-sdk-first-byok.md)) are
   recorded with `byok: true` and zero credits. The same calls on the server's
   key, including a `server` fallback after the workspace key failed, are
-  charged as usual. `quoteJob` takes this as `modelByok`, separate from the
-  media `byok` flag.
+  charged as usual. `quoteJob` takes this per role as `directorByok` and
+  `criticByok`, separate from the media `byok` flag.
 - Scene workers running on the workspace's pi sign-in or Anthropic key spend
   the workspace's tokens; scene implementation was never a separate credit
   line. The Claude worker's token cost in traces is an SDK estimate; the
   workspace's Anthropic invoice is authoritative.
 - Orchestration, renders, storage and API calls are always charged, because
   the platform still runs and pays for them.
-- Reservations are not reduced for model BYOK: the quote that sizes the
-  reservation still includes director and critique lines, and the unused
-  credits are returned when the job settles.
+- The up-front quote waives a role's line only when the job's pinned
+  selection runs that role on the workspace key with fallback `none`. With
+  fallback `server` the line stays reserved, because the job may fall back to
+  the server's key; unused credits are returned when the job settles. An edit
+  without patches waives the critique only when the director is also on the
+  workspace key.
 
 ## Limits
 

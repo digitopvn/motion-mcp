@@ -239,6 +239,16 @@ describe("Claude provider API", () => {
     expect((await overviewOf(owner.cookie)).status).toBe("unconfigured");
     expect(keysUsed).not.toContain(AMBIENT_KEY);
   });
+
+  it("rate limits key checks per workspace", async () => {
+    const statuses: number[] = [];
+    for (let i = 0; i < 11; i++) {
+      statuses.push((await send("POST", "/api/providers/claude/test", other.cookie)).status);
+    }
+    expect(statuses.slice(0, 10).every((s) => s === 404)).toBe(true);
+    expect(statuses[10]).toBe(429);
+    expect((await overviewOf(owner.cookie)).status).toBe("unconfigured");
+  });
 });
 
 describe.skipIf(!canRender)("Claude director on the workspace key", { timeout: 300_000 }, () => {

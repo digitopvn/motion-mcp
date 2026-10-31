@@ -191,10 +191,20 @@ export function toAnthropicError(err: unknown, model: string, signal?: AbortSign
       details: { model },
     });
   }
-  if (err instanceof Anthropic.AuthenticationError || err instanceof Anthropic.PermissionDeniedError) {
+  if (err instanceof Anthropic.AuthenticationError) {
     return new MotionError("PROVIDER", `Anthropic rejected the API key (HTTP ${err.status})`, {
       details: { model, status: err.status, reason: AUTH_REJECTED },
     });
+  }
+  // A valid key without access to this model or resource: not a revoked key.
+  if (err instanceof Anthropic.PermissionDeniedError) {
+    return new MotionError(
+      "PROVIDER",
+      redact(`Anthropic denied the request (HTTP 403): ${err.message}`).slice(0, 400),
+      {
+        details: { model, status: err.status, reason: "permission_denied" },
+      },
+    );
   }
   if (err instanceof Anthropic.APIError) {
     const status = typeof err.status === "number" ? err.status : 0;

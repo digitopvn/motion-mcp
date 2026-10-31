@@ -28,6 +28,7 @@ export interface SandboxProbe {
   reason?: string;
 }
 
+const MANAGED_SETTINGS_DIR = "/etc/claude-code";
 const SYSTEM_RO_DIRS = ["/usr", "/bin", "/sbin", "/lib", "/lib32", "/lib64", "/etc"];
 const probeCache = new Map<SandboxMode, SandboxProbe>();
 
@@ -98,6 +99,9 @@ export function sandboxArgv(policy: SandboxPolicy, command: string, args: readon
 
   const bw = ["bwrap", "--die-with-parent", "--new-session", "--unshare-all", "--share-net"];
   for (const dir of SYSTEM_RO_DIRS) bw.push("--ro-bind-try", dir, dir);
+  // Hide host-managed Claude Code settings so the agent only sees the options passed in code. The
+  // directory must already exist: bwrap cannot create a mount point inside the read-only /etc bind.
+  if (existsSync(MANAGED_SETTINGS_DIR)) bw.push("--tmpfs", MANAGED_SETTINGS_DIR);
   bw.push("--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp");
   // The SDK's native binary lives in node_modules; bind its directory so it can start.
   if (command.startsWith("/")) bw.push("--ro-bind", dirname(command), dirname(command));
@@ -149,11 +153,21 @@ export function createSandboxSpawn(policy: SandboxPolicy): SandboxSpawn {
       children.add(child);
       child.once("exit", () => children.delete(child));
       child.stderr?.setEncoding("utf8");
+      // Buffer by line so a secret split across chunks is still redacted whole.
+      let pending = "";
+      const emit = (line: string) => {
+        if (line.trim()) policy.onStderr?.(redact(line).slice(0, 500));
+      };
       child.stderr?.on("data", (chunk: string) => {
-        for (const line of chunk.split("\n")) {
-          if (line.trim()) policy.onStderr?.(redact(line).slice(0, 500));
+        const lines = (pending + chunk).split("\n");
+        pending = lines.pop() ?? "";
+        if (pending.length > 8192) {
+          emit(pending);
+          pending = "";
         }
+        for (const line of lines) emit(line);
       });
+      child.stderr?.on("end", () => emit(pending));
       options.signal?.addEventListener("abort", () => killGroup(child, "SIGKILL"), { once: true });
       // The SDK calls kill() on close/abort; widen it to the process group.
       child.kill = (signal?: NodeJS.Signals | number) => {

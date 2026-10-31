@@ -264,6 +264,31 @@ describe("ClaudeSceneWorker.buildScene", () => {
     expect(err).toMatchObject({ code: "PROVIDER", retryable: false, details: { reason: AUTH_REJECTED } });
   });
 
+  it("reports a billing error without treating the key as rejected", async () => {
+    const steps: Step[] = [
+      {
+        message: {
+          type: "assistant",
+          parent_tool_use_id: null,
+          error: "billing_error",
+          message: { content: [{ type: "text", text: "Credit balance is too low" }] },
+        } as unknown as SDKMessage,
+      },
+      {
+        message: result({
+          subtype: "error_during_execution",
+          is_error: true,
+          errors: ["billing"],
+          num_turns: 1,
+        }),
+      },
+    ];
+    const err = await worker(steps, fresh())
+      .buildScene({ projectDir, sceneId: "intro", sceneIR: scene, context })
+      .catch((e: unknown) => e);
+    expect(err).toMatchObject({ code: "PROVIDER", details: { reason: "billing_error" } });
+  });
+
   it("reports turn limits, timeouts and cancellation with typed errors", async () => {
     const turns = await worker([{ message: result({ subtype: "error_max_turns", errors: [] }) }], fresh(), {
       maxTurns: 2,

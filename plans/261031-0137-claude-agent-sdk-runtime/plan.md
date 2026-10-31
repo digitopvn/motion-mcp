@@ -28,12 +28,12 @@ or `claude-agent-sdk`. Subscription OAuth is visible but `blocked_by_policy` wit
 - Live billable calls in CI.
 
 ## Phases
-1. [ ] `AnthropicClient` gateway in `packages/llm` + prices.
-2. [ ] `ClaudeSceneWorker` in `packages/claude-agent-runtime` (sandboxed spawn, path-guard hook).
-3. [ ] Storage + `WorkspaceProviders` Claude credential/settings + role resolution; job snapshot.
-4. [ ] Director/Critic per-call gateway; BYOK metering.
-5. [ ] Dashboard API `/api/providers/claude*` + Providers page section.
-6. [ ] Tests (mocked SDK), docs (ADR 0013, ARCHITECTURE, AGENT_RUNTIME, SECURITY, MCP_API, BILLING,
+1. [x] `AnthropicClient` gateway in `packages/llm` + prices.
+2. [x] `ClaudeSceneWorker` in `packages/claude-agent-runtime` (sandboxed spawn, path-guard hook).
+3. [x] Storage + `WorkspaceProviders` Claude credential/settings + role resolution; job snapshot.
+4. [x] Director/Critic per-call gateway; BYOK metering.
+5. [x] Dashboard API `/api/providers/claude*` + Providers page section.
+6. [x] Tests (mocked SDK), docs (ADR 0013, ARCHITECTURE, AGENT_RUNTIME, SECURITY, MCP_API, BILLING,
        README, .env.example, Dockerfile), review, PR → dev.
 
 ## Acceptance

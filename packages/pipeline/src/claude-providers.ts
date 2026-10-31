@@ -207,8 +207,8 @@ export class WorkspaceClaude {
     if (!API_KEY.test(key)) {
       throw new MotionError("VALIDATION", "That does not look like an Anthropic API key (sk-ant-api…)");
     }
-    registerSecret(key);
     await this.verify(key);
+    registerSecret(key);
     await this.opts.repos.providerCredentials.put({
       workspaceId,
       kind: KIND,
@@ -333,9 +333,10 @@ export class WorkspaceClaude {
     if (!selection) return out;
     const workspace = await this.opts.repos.workspaces.get(workspaceId);
     let key: string | undefined;
+    let version: string | undefined;
     let problem: string | undefined;
     try {
-      key = await this.readKey(workspaceId);
+      ({ key, version } = (await this.readStored(workspaceId)) ?? {});
       if (!key) problem = "no Anthropic API key is stored";
       else if (workspace?.claude?.keyState?.status === "rejected") {
         problem = "the stored Anthropic API key was rejected";
@@ -352,7 +353,11 @@ export class WorkspaceClaude {
     for (const [role, model] of roles) {
       if (selection[role] !== "anthropic-api") continue;
       if (key) {
-        out[role] = { gateway: this.watchGateway(workspaceId, this.gatewayFor(key)), model, byok: true };
+        out[role] = {
+          gateway: this.watchGateway(workspaceId, version, this.gatewayFor(key)),
+          model,
+          byok: true,
+        };
       } else if (selection.fallback === "server") {
         out.warnings.push(`Claude ${role} unavailable (${problem}); used the server default`);
       } else {
@@ -378,7 +383,7 @@ export class WorkspaceClaude {
             maxTurns: this.opts.config.CLAUDE_WORKER_MAX_TURNS,
             timeoutMs: this.opts.config.CLAUDE_WORKER_TIMEOUT_MS,
           });
-        out.worker = this.watchWorker(workspaceId, worker);
+        out.worker = this.watchWorker(workspaceId, version, worker);
       } else if (selection.fallback === "server") {
         out.warnings.push(`Claude scene worker unavailable (${why}); used the server default`);
       } else {
@@ -390,12 +395,17 @@ export class WorkspaceClaude {
   }
 
   private async readKey(workspaceId: string): Promise<string | undefined> {
+    return (await this.readStored(workspaceId))?.key;
+  }
+
+  /** The stored key plus its `updatedAt`, which identifies this key among later replacements. */
+  private async readStored(workspaceId: string): Promise<{ key: string; version: string } | undefined> {
     if (!this.opts.box) return undefined;
     const record = await this.opts.repos.providerCredentials.get(workspaceId, KIND, PROVIDER);
     if (!record) return undefined;
     const key = this.opts.box.open(record, aad(workspaceId));
     registerSecret(key);
-    return key;
+    return { key, version: record.updatedAt };
   }
 
   private async setKeyState(workspaceId: string, state: ClaudeSettings["keyState"]): Promise<void> {
@@ -405,11 +415,23 @@ export class WorkspaceClaude {
     await this.opts.repos.workspaces.update(workspaceId, { claude: { ...current, keyState: state } });
   }
 
-  /** Record a key Anthropic rejected mid-job so the dashboard shows `revoked` and later jobs stop using it. */
-  private async onAuthRejected(workspaceId: string, err: unknown): Promise<void> {
+  /**
+   * Record a key Anthropic rejected mid-job so the dashboard shows `revoked` and later jobs stop using it.
+   * `version` is the key the job resolved; if the workspace has since saved a new key, the rejection is
+   * about the old one and the new key's state is left alone.
+   */
+  private async onAuthRejected(
+    workspaceId: string,
+    version: string | undefined,
+    err: unknown,
+  ): Promise<void> {
     const error = toMotionError(err);
     if (error.details?.reason !== AUTH_REJECTED) return;
     this.opts.logger.warn("providers.claude_key_rejected", { workspaceId });
+    const current = await this.opts.repos.providerCredentials
+      .get(workspaceId, KIND, PROVIDER)
+      .catch(() => undefined);
+    if (!current || current.updatedAt !== version) return;
     await this.setKeyState(workspaceId, {
       status: "rejected",
       checkedAt: nowIso(),
@@ -417,25 +439,29 @@ export class WorkspaceClaude {
     }).catch(() => undefined);
   }
 
-  private watchGateway(workspaceId: string, gateway: ModelGateway): ModelGateway {
+  private watchGateway(
+    workspaceId: string,
+    version: string | undefined,
+    gateway: ModelGateway,
+  ): ModelGateway {
     return {
       complete: async (request: CompletionRequest): Promise<Completion> => {
         try {
           return await gateway.complete(request);
         } catch (err) {
-          await this.onAuthRejected(workspaceId, err);
+          await this.onAuthRejected(workspaceId, version, err);
           throw err;
         }
       },
     };
   }
 
-  private watchWorker(workspaceId: string, worker: SceneWorker): SceneWorker {
+  private watchWorker(workspaceId: string, version: string | undefined, worker: SceneWorker): SceneWorker {
     const guard = async <T>(task: () => Promise<T>): Promise<T> => {
       try {
         return await task();
       } catch (err) {
-        await this.onAuthRejected(workspaceId, err);
+        await this.onAuthRejected(workspaceId, version, err);
         throw err;
       }
     };

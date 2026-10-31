@@ -163,6 +163,8 @@ The agent is a separate Claude Code process. With `CLAUDE_WORKER_SANDBOX=bwrap`
   is private except the network, which the agent needs to reach the Anthropic
   API;
 - system directories, the agent binary and CA bundles are bound read-only;
+  `/etc/claude-code` (host-managed Claude Code settings), when present, is
+  hidden behind an empty tmpfs;
 - `/tmp` is a fresh tmpfs, and the private home is the only other writable
   path outside the project;
 - the project directory is read-only, and only its `compositions/` directory is
@@ -170,7 +172,15 @@ The agent is a separate Claude Code process. With `CLAUDE_WORKER_SANDBOX=bwrap`
 
 When `prlimit` is present, it caps CPU seconds, the largest file the agent may
 write, and core dumps (off). The process runs in its own process group, and
-abort, timeout or the end of the task kills the whole group.
+abort, timeout or the end of the task kills the whole group. Its stderr is
+redacted line by line before it reaches the job log.
+
+Failures are typed: an `authentication_failed` result is `auth_rejected` and
+marks the workspace key revoked (only if the job used the key that is still
+stored); a `billing_error` (for example, no credit left on the workspace's
+Anthropic account) is a `PROVIDER` error with reason `billing_error` and does
+not revoke the key. The Anthropic gateway treats HTTP 403 the same way: reason
+`permission_denied`, key left as it is.
 
 The sandbox is probed once per process. If bubblewrap is missing or cannot
 create user namespaces, which Docker's default seccomp or AppArmor profile may

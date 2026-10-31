@@ -193,7 +193,12 @@ so it gets an OS sandbox on top of the shared path guard
 - `prlimit` caps on CPU time and file size, and no core dumps;
 - its own process group, killed as a whole on abort, timeout or task end;
 - no shell, web or subagent tools, and no settings, hooks or MCP servers from
-  the host.
+  the host; `/etc/claude-code` managed settings are masked inside the sandbox.
+
+Saving or testing a workspace Anthropic key calls Anthropic, so
+`PUT /api/providers/claude/api-key` and `POST /api/providers/claude/test` are
+limited to 10 calls per workspace per 10 minutes (`rate_limited`, HTTP 429).
+The key is registered for log redaction only after Anthropic accepts it.
 
 The threat it addresses is a model-driven agent with file tools reading or
 writing outside its scene, or reaching host credentials. The network stays

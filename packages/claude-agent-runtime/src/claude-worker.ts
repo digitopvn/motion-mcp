@@ -268,9 +268,14 @@ export class ClaudeSceneWorker implements SceneWorker {
     };
 
     const homeDir = await mkdtemp(join(tmpdir(), "motion-claude-"));
-    await mkdir(join(homeDir, ".claude"), { recursive: true });
     const compositionsDir = join(projectDir, "compositions");
-    await mkdir(compositionsDir, { recursive: true });
+    try {
+      await mkdir(join(homeDir, ".claude"), { recursive: true });
+      await mkdir(compositionsDir, { recursive: true });
+    } catch (err) {
+      await rm(homeDir, { recursive: true, force: true }).catch(() => undefined);
+      throw err;
+    }
     const stderrTail: string[] = [];
     const sandbox = createSandboxSpawn({
       mode: this.sandbox,
@@ -293,6 +298,8 @@ export class ClaudeSceneWorker implements SceneWorker {
     const timer = setTimeout(() => stop("timeout"), this.timeoutMs);
     const onAbort = () => stop("cancelled");
     input.signal?.addEventListener("abort", onAbort, { once: true });
+    // A cancel that landed during setup never fires the listener.
+    if (input.signal?.aborted) onAbort();
 
     let authFailure = false;
     let resultErrors: string[] = [];
@@ -375,6 +382,12 @@ export class ClaudeSceneWorker implements SceneWorker {
         details: { ...details, reason: AUTH_REJECTED },
       });
     }
+    // Out of Anthropic credit: the key is still valid, so it is not marked revoked.
+    if (counters.lastError === "billing_error" && !submission) {
+      throw new MotionError("PROVIDER", "The workspace's Anthropic account has no usable credit", {
+        details: { ...details, reason: "billing_error" },
+      });
+    }
     switch (stopReason) {
       case "cancelled":
         throw new MotionError("CANCELLED", "scene task cancelled", { details });
@@ -415,7 +428,7 @@ export class ClaudeSceneWorker implements SceneWorker {
       if (message.error) {
         counters.lastError = message.error;
         return {
-          authFailure: message.error === "authentication_failed" || message.error === "billing_error",
+          authFailure: message.error === "authentication_failed",
         };
       }
       return {};

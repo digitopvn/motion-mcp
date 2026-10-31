@@ -6,7 +6,7 @@ import { MotionError, newId, redact } from "@motion-mcp/shared";
 import express, { type Request, type RequestHandler, type Response, type Router } from "express";
 import { z } from "zod";
 import type { DashboardIdentity } from "./dashboard-auth.ts";
-import { bodyObject } from "./dashboard-http.ts";
+import { bodyObject, RateLimiter } from "./dashboard-http.ts";
 
 type PiProvider = ReturnType<ModelRuntime["getProviders"]>[number];
 type Authed = (fn: (req: Request, res: Response, id: DashboardIdentity) => Promise<void>) => RequestHandler;
@@ -225,6 +225,14 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
     }
   };
 
+  // Saving or testing a key calls Anthropic; cap it per workspace so the routes cannot be used to probe keys.
+  const claudeChecks = new RateLimiter(10, 10 * 60 * 1000);
+  const limitClaudeChecks = (workspaceId: string) => {
+    if (!claudeChecks.allow(workspaceId)) {
+      throw new MotionError("RATE_LIMITED", "Too many Anthropic key checks. Try again in a few minutes.");
+    }
+  };
+
   /**
    * OAuth that signs in to a personal subscription (Claude Pro/Max, ChatGPT Plus/Pro, Copilot, ...) is not
    * offered: those plans cover the vendor's own apps, and a hosted service running jobs on them can get
@@ -421,6 +429,7 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
     authed(async (req, res, { workspace, user }) => {
       requireEnabled();
       const { apiKey } = ClaudeKeyBody.parse(bodyObject(req));
+      limitClaudeChecks(workspace.id);
       await providers.claude.setKey(workspace.id, apiKey);
       logger.info("providers.claude_key_set", { userId: user.id, workspaceId: workspace.id });
       res.json(await providers.claude.overview(workspace.id));
@@ -443,6 +452,7 @@ export function providerRoutes(rt: PipelineRuntime, authed: Authed): Router {
     "/claude/test",
     authed(async (_req, res, { workspace, user }) => {
       requireEnabled();
+      limitClaudeChecks(workspace.id);
       const keyState = await providers.claude.testKey(workspace.id);
       logger.info("providers.claude_key_tested", {
         userId: user.id,
